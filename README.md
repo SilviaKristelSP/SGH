@@ -10,7 +10,7 @@ __Proyecto de la materia: Desarrollo de software__
  - [👩 Silvia Kristel Sanchez Piña](https://github.com/SilviaKristelSP)
  - [👨 José Rodrigo Sánchez Méndez](https://github.com/Rodri-Soft)
  - [👨 Marlon Montiel Pérez](https://github.com/sufragad0r)
- - [👩 Katia Sarai Molina López](https://github.com/sufragad0r)
+ - [👩 Katia Sarai Molina López](https://github.com/KatiaMolina)
 
 
 
