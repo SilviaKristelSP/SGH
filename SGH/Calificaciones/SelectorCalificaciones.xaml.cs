@@ -26,7 +26,7 @@ namespace SGH.Calificaciones
 
         private void calificacionEstudiante_Click(object sender, RoutedEventArgs e)
         {
-            CalificacionesEstudiante ventana = new CalificacionesEstudiante();
+            BuscadorEstudiante ventana = new BuscadorEstudiante();
             this.Close();
             ventana.Show();
         }
