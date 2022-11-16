@@ -266,6 +266,7 @@
     <Resource Include="Recursos\FondoLogIn.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Recursos\Profile-user.png" />
     <Resource Include="Recursos\Cap.png" />
     <Resource Include="Recursos\Open-book.png" />
     <Resource Include="Recursos\Teacher.png" />

@@ -13,7 +13,8 @@
         TextOptions.TextFormattingMode="Ideal" 
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="{DynamicResource MaterialDesignFont}">
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Icon="/Recursos/Logo_sgh.png">
 
     <Grid>
 
@@ -23,13 +24,9 @@
 
         <StackPanel  Margin="0,0,500,0">
 
-            <TextBlock Margin="0 170 0 0" HorizontalAlignment="Center"
-                FontFamily="roboto"        
-                Text="Bienvenido"
-                FontSize="50"
-                FontWeight="Medium"
-                />
-            
+            <TextBlock Margin="0 130 0 0" HorizontalAlignment="Center" FontSize="50"
+                FontFamily="roboto" Text="Bienvenido" FontWeight="Medium"      
+                TextWrapping="Wrap" VerticalAlignment="Center"/>
 
             <Label HorizontalAlignment="Center" HorizontalContentAlignment="left" Padding="0 10 10 0"
                FontSize="13" FontWeight="Medium" Margin="0 30 0 -58"

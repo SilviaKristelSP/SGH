@@ -1,4 +1,5 @@
-﻿using ShowMeTheXAML;
+﻿using SGH.Vistas.LogIn;
+using ShowMeTheXAML;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using SGH.Modelos;
 
 namespace SGH.Vistas.MenuPrincipal
 {
@@ -20,9 +22,25 @@ namespace SGH.Vistas.MenuPrincipal
     /// </summary>
     public partial class MenuPrincipalSGH : Window
     {
+
+        private static Administrador administradorMenu;
+
         public MenuPrincipalSGH()
         {
             InitializeComponent();
-        }       
+            //LogInSGH logInSGH = new LogInSGH();
+            //administradorMenu = logInSGH.GetUsuario();
+            //SetInformacionAdministrador(administradorMenu);
+
+  
+        }   
+        
+        public void SetInformacionAdministrador(Administrador administrador)
+        {
+
+            toggleAdministrador.Content = administrador.NombreCompleto.ToUpper().First();
+            textBlockAdministrador.Text = administrador.NombreCompleto;
+
+        }
     }
 }
