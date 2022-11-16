@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShowMeTheXAML;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,6 @@ namespace SGH.Vistas.MenuPrincipal
         public MenuPrincipalSGH()
         {
             InitializeComponent();
-        }
+        }       
     }
 }

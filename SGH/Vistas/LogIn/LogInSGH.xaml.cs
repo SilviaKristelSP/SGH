@@ -6,6 +6,7 @@ using SGH.Vistas.MenuPrincipal;
 using SGH.Vistas.Excepciones;
 using SGH.ServiceReferenceSGH;
 using System;
+using SGH.Modelos;
 
 namespace SGH.Vistas.LogIn
 {
@@ -13,24 +14,25 @@ namespace SGH.Vistas.LogIn
     public partial class LogInSGH : Window
     {
         
-        //private SGHContext sghContext = new SGHContext();
-        private static Administrador administrador = new ServiceReferenceSGH.Administrador();        
+        private SGHContext sghContext = new SGHContext();
+        private static Administrador administrador = new Administrador();        
 
         public LogInSGH()
         {
             InitializeComponent();
         }
 
-        private void InicioSesion(object sender, RoutedEventArgs e)
+        private async void InicioSesion(object sender, RoutedEventArgs e)
         {
 
-            ServiceSGHClient serviceSGHClient = new ServiceSGHClient();              
-
+            ServiceSGHClient serviceSGHClient = new ServiceSGHClient();
+            //string text = await serviceSGHClient.ExisteUsuarioAsync(textBoxLogInCorreo.Text);
+            //Console.WriteLine(text);
             try
             {
 
-                //Administrador usuarioAdministrador = ExisteUsuario();
-                Administrador usuarioAdministrador = serviceSGHClient.ExisteUsuario(textBoxLogInCorreo.Text);
+                Administrador usuarioAdministrador = ExisteUsuario();
+                //Object usuarioAdministrador2 = serviceSGHClient.ExisteUsuario(textBoxLogInCorreo.Text);                
                 bool existeUsuario = usuarioAdministrador == null ? false : true;
 
                 if (!existeUsuario)
@@ -80,16 +82,16 @@ namespace SGH.Vistas.LogIn
 
         }
 
-        //public Administrador ExisteUsuario()
-        //{
-           
-        //    Administrador administrador = 
-        //        sghContext.Administradors.Where(
-        //            admin => admin.Correo == textBoxLogInCorreo.Text).FirstOrDefault();
+        public Administrador ExisteUsuario()
+        {
 
-            
-        //    return administrador;
-        //}
+            Administrador administrador =
+                sghContext.Administradors.Where(
+                    admin => admin.Correo == textBoxLogInCorreo.Text).FirstOrDefault();
+
+
+            return administrador;
+        }
 
         public void SetUsuario(Administrador administradorAutenticado)
         {

@@ -86,6 +86,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contratos\AdministradorContract.cs" />
     <Compile Include="Modelos\Administrador.cs">
       <DependentUpon>ServidorSGHContext.tt</DependentUpon>
     </Compile>

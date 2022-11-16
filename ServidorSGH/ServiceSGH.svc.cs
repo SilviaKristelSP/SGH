@@ -52,7 +52,10 @@ namespace ServidorSGH
             Administrador administrador =
                     sghContext.Administradors.Where(
                     admin => admin.Correo == correo
-                    ).FirstOrDefault();            
+                    ).FirstOrDefault();
+
+            
+            
 
             return administrador;
         }

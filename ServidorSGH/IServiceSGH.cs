@@ -24,7 +24,7 @@ namespace ServidorSGH
         String GetRFCUsuario();
 
         [OperationContract]
-        Administrador ExisteUsuario(string correo);
+        Administrador ExisteUsuario(string correo); 
 
         // TODO: agregue aquí sus operaciones de servicio
     }
@@ -50,5 +50,5 @@ namespace ServidorSGH
             get { return stringValue; }
             set { stringValue = value; }
         }
-    }
+    }    
 }
