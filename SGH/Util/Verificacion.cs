@@ -21,13 +21,23 @@ namespace SGH.Util
             return true;
         }
 
-        public static bool VerificarDatos(Estudiante estudiante)
+        public static int VerificarDatos(Estudiante estudiante)
         {
-            if (VerificarNombre(estudiante.nombre) && VerificarExistencia(estudiante))
+            if (estudiante == null) 
             {
-                return true;
+                return -3;
             }
-            return false;
+
+            if (!VerificarNombre(estudiante.nombre))
+            {
+                return -1;
+            }
+            if (!VerificarExistencia(estudiante)) 
+            {
+                return -2;
+            }
+
+            return 0;
         }
     }
 }
