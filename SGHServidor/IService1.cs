@@ -5,13 +5,12 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
-using ServidorSGH.Modelos;
 
-namespace ServidorSGH
+namespace SGHServidor
 {
     // NOTA: puede usar el comando "Rename" del menú "Refactorizar" para cambiar el nombre de interfaz "IService1" en el código y en el archivo de configuración a la vez.
     [ServiceContract]
-    public interface IServiceSGH
+    public interface IService1
     {
 
         [OperationContract]
@@ -19,12 +18,6 @@ namespace ServidorSGH
 
         [OperationContract]
         CompositeType GetDataUsingDataContract(CompositeType composite);
-
-        [OperationContract]
-        String GetRFCUsuario();
-
-        [OperationContract]
-        Administrador ExisteUsuario(string correo); 
 
         // TODO: agregue aquí sus operaciones de servicio
     }
@@ -50,5 +43,5 @@ namespace ServidorSGH
             get { return stringValue; }
             set { stringValue = value; }
         }
-    }    
+    }
 }

@@ -4,7 +4,7 @@ using System.Data.Entity.Core;
 using SGH.Vistas.Alertas;
 using SGH.Vistas.MenuPrincipal;
 using SGH.Vistas.Excepciones;
-using SGH.ServiceReferenceSGH;
+
 using System;
 using SGH.Modelos;
 
@@ -22,17 +22,12 @@ namespace SGH.Vistas.LogIn
             InitializeComponent();
         }
 
-        private async void InicioSesion(object sender, RoutedEventArgs e)
-        {
-
-            ServiceSGHClient serviceSGHClient = new ServiceSGHClient();
-            //string text = await serviceSGHClient.ExisteUsuarioAsync(textBoxLogInCorreo.Text);
-            //Console.WriteLine(text);
+        private void InicioSesion(object sender, RoutedEventArgs e)
+        {           
             try
             {
 
-                Administrador usuarioAdministrador = ExisteUsuario();
-                //Object usuarioAdministrador2 = serviceSGHClient.ExisteUsuario(textBoxLogInCorreo.Text);                
+                Administrador usuarioAdministrador = ExisteUsuario();                                
                 bool existeUsuario = usuarioAdministrador == null ? false : true;
 
                 if (!existeUsuario)
@@ -78,8 +73,6 @@ namespace SGH.Vistas.LogIn
                 stackPanelBlack.Visibility = Visibility.Collapsed;
 
             }
-
-
         }
 
         public Administrador ExisteUsuario()
