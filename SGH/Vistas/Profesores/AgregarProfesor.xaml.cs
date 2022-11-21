@@ -18,6 +18,8 @@ using SGH.Utiles;
 using Microsoft.Win32;
 using System.IO;
 using SGH.Vistas.Alertas;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace SGH.Vistas.Profesores
 {
@@ -58,7 +60,7 @@ namespace SGH.Vistas.Profesores
             {
                 Label labelDinamico = new Label();
                 labelDinamico.FontSize = 14;
-                labelDinamico.FontWeight = FontWeights.Bold;
+                labelDinamico.FontWeight = System.Windows.FontWeights.Bold;
                 labelDinamico.Content = "Semestre " + i;
                 wpMaterias.Children.Add(labelDinamico);
                 foreach (Materia materia in listaMaterias)
@@ -113,6 +115,9 @@ namespace SGH.Vistas.Profesores
             {
                 formularioAprobado = false;
             }else if (tbNombreTitulo.Text.Equals(""))
+            {
+                formularioAprobado = false;
+            }else if (tbNombreFoto.Text.Equals(""))
             {
                 formularioAprobado = false;
             }
@@ -197,8 +202,33 @@ namespace SGH.Vistas.Profesores
 
         private void clickAgregarFoto(object sender, RoutedEventArgs e)
         {
-
+            DatosArchivo archivoImg = Util.convertirImgABitesYBitMap();
+            if(archivoImg != null)
+            {                
+                Console.WriteLine(archivoImg.ImagenBitMap.ToString());
+                imgFoto.Source = archivoImg.ImagenBitMap;
+                tbNombreFoto.Text = archivoImg.NombreArchivo;
+                persona.Foto = archivoImg.ImgEnByte;
+            }
         }
+
+        private BitmapImage convertirABitmapImg(Bitmap bmp, byte[] imagen)
+        {
+            using (var memory = new MemoryStream(imagen))
+            {
+                bmp.Save(memory, ImageFormat.Png);
+                memory.Position = 0;
+
+                var bitmapImage = new BitmapImage();
+                bitmapImage.BeginInit();
+                bitmapImage.StreamSource = memory;
+                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapImage.EndInit();
+                bitmapImage.Freeze();
+
+                return bitmapImage;
+            }
+        } 
 
         private void clickAgregarProfesor(object sender, RoutedEventArgs e)
         {

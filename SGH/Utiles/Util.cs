@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SGH.Modelos;
+using System.Windows.Media.Imaging;
 
 namespace SGH.Utiles
 {
@@ -59,5 +60,33 @@ namespace SGH.Utiles
         {
             return xPersona.Nombre + xPersona.ApellidoPaterno + xPersona.ApellidoMaterno;
         }
+
+        public static DatosArchivo convertirImgABitesYBitMap()
+        {
+            OpenFileDialog abrir = new OpenFileDialog();
+            DatosArchivo datos = new DatosArchivo();
+            abrir.InitialDirectory = "c:\\";
+            abrir.Filter = "Archivos jpg (.jpg)|*.jpg|Archivos png (.png)|*.png";
+            abrir.FilterIndex = 1;
+            abrir.RestoreDirectory = true;
+
+            if (abrir.ShowDialog() == true)
+            {
+                datos.NombreArchivo = System.IO.Path.GetFileName(abrir.FileName);
+                byte[] file = null;
+                Stream myStream = abrir.OpenFile();
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    myStream.CopyTo(ms);
+                    file = ms.ToArray();
+                    datos.ImgEnByte = file;
+                }
+                Uri imgUri = new Uri(abrir.FileName);
+                datos.ImagenBitMap = new BitmapImage(imgUri);
+                return datos;
+            }
+            return null;
+        }
     }
 }
+

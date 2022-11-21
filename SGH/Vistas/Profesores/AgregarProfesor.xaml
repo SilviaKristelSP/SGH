@@ -385,17 +385,19 @@
         </Button>
 
         <Label Content="Foto" HorizontalAlignment="Left" Margin="655,270,0,0" VerticalAlignment="Top"/>
-        <Image x:Name="imgFoto" Source="/Recursos/imagen_persona.png" HorizontalAlignment="Left" Height="145" Margin="697,0,0,0" VerticalAlignment="Center" Width="145" Stretch="UniformToFill"/>
-        <Button Background="#6B4240" BorderBrush="#6B4240" HorizontalAlignment="Left" Margin="851,382,0,0" VerticalAlignment="Top" Width="30" Height="30" Padding="1" Click="clickAgregarFoto">
+        <Image x:Name="imgFoto" Source="/Recursos/imagen_persona.png" HorizontalAlignment="Left" Height="145" Margin="697,264,0,0" VerticalAlignment="Top" Width="145" Stretch="UniformToFill"/>
+        <Button Background="#6B4240" BorderBrush="#6B4240" HorizontalAlignment="Left" Margin="851,382,0,0" VerticalAlignment="Top" Width="30" Height="30" Padding="1" Click="clickAgregarFoto" Cursor="Hand">
             <Image Source="/Recursos/simbolo_mas.png" Width="18" Height="18"/>
         </Button>
+        <TextBlock x:Name="tbNombreFoto" HorizontalAlignment="Left" Margin="706,419,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="134" Height="14" FontSize="10" Foreground="#fafbfb"/>
+
+
 
         <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="291,441,34,92">
             <WrapPanel x:Name="wpMaterias" Height="120" Width="650" Margin="10"/>
         </ScrollViewer>
         <Button Content="Agregar" HorizontalAlignment="Left" Margin="308,614,0,0" VerticalAlignment="Top" Width="640" Background="#6D1814" BorderBrush="#6D1814" Click="clickAgregarProfesor"/>
-
-
+        
 
 
 
