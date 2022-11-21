@@ -90,9 +90,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="System\Drawing\FontWeights.cs" />
+    <Compile Include="Utiles\DatosArchivo.cs" />
+    <Compile Include="Utiles\Util.cs" />
     <Compile Include="Vistas\Excepciones\ErrorAlertException.cs" />
+    <Compile Include="Vistas\Profesores\AgregarProfesor.xaml.cs">
+      <DependentUpon>AgregarProfesor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vistas\MenuPrincipal\MenuPrincipalSGH.xaml.cs">
       <DependentUpon>MenuPrincipalSGH.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Profesores\ConsultarProfesor.xaml.cs">
+      <DependentUpon>ConsultarProfesor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Profesores\Profesores.xaml.cs">
+      <DependentUpon>Profesores.xaml</DependentUpon>
     </Compile>
     <Page Include="Vistas\Alertas\MessageBoxConfirmation.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -101,6 +113,10 @@
     <Page Include="Vistas\Alertas\MessageBoxCustom.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Vistas\Profesores\AgregarProfesor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Vistas\LogIn\LogInSGH.xaml">
       <SubType>Designer</SubType>
@@ -199,6 +215,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Vistas\Profesores\ConsultarProfesor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\Profesores\Profesores.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -248,6 +272,9 @@
     <Resource Include="Recursos\FondoLogIn.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Recursos\simbolo_mas.png" />
+    <Resource Include="Recursos\imagen_persona.png" />
+    <Resource Include="Recursos\img_PDF.png" />
     <Resource Include="Recursos\Score.png" />
     <Resource Include="Recursos\Logout.png" />
     <Resource Include="Recursos\Profile-user.png" />
