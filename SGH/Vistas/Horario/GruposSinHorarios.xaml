@@ -1,0 +1,53 @@
+﻿<Window x:Class="SGH.Horarios.GruposSinHorarios"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SGH.Horarios"
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="Seleccione un grupo" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Label Content="Generacion de horarios" FontWeight="Bold" FontSize="20"></Label>
+            <Label Content="Elige un grupo para continuar:" HorizontalAlignment="Center"></Label>
+        </StackPanel>
+
+        <Grid Grid.Row="1" Margin="10">
+            <DataGrid x:Name="dg_GruposSinHorario" AutoGenerateColumns="False" >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Semestre}" Header="Semestre" IsReadOnly="True" Width="1*" CanUserReorder="False" CanUserSort="False" CanUserResize="False"></DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding Grupo}" Header="Grupo" IsReadOnly="True" Width="1*" CanUserReorder="False" CanUserSort="False" CanUserResize="False"></DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+
+        <Grid Grid.Row="2" Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="3*"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" Content="Regresar" Background="#FFB73A3A" BorderBrush="#FFB73A3A" Click="clickRegresar"></Button>
+            <Button Grid.Column="2" Content="Generar horario" Background="#FF44B73A" BorderBrush="#FF44B73A" Click="clickGenerarHorario" />
+
+        </Grid>
+
+    </Grid>
+</Window>

@@ -46,7 +46,7 @@
 
             <Label HorizontalAlignment="Center" HorizontalContentAlignment="left" Padding="0 10 10 0"
                FontSize="13" FontWeight="Medium" Margin="0 20 0 -40"
-               Background="{x:Null}" Foreground="Black" Content="Constraseña" Width="336" Height="31" />
+               Background="{x:Null}" Foreground="Black" Content="Contraseña" Width="336" Height="31" />
 
             <Border HorizontalAlignment="Center" Margin="0 40 0 0" CornerRadius="4,4,4,4" Height="40"
                     BorderThickness="1.6" BorderBrush="#FF545454" Width="340">
