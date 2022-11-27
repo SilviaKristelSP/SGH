@@ -35,6 +35,8 @@ namespace SGH.Vistas.Horario.Consulta
         public List<int> arregloDiecisiete = new List<int>();
         public List<int> arregloDieciocho = new List<int>();
         public List<int> arregloDiecinueve = new List<int>();
+        public List<int> arregloVeinte = new List<int>();
+
 
         public List<int> arregloLunes = new List<int>();
         public List<int> arregloMartes = new List<int>();
@@ -67,56 +69,40 @@ namespace SGH.Vistas.Horario.Consulta
             SetRangosHoras(arregloDiecisiete, 66, 71);
             SetRangosHoras(arregloDieciocho, 72, 77);
             SetRangosHoras(arregloDiecinueve, 78, 83);
+            SetRangosHoras(arregloVeinte, 84, 89);
 
             int cantidadHoras = 13;
             int indexLimiteIzquierdo = 6;
 
             for (int i = 1; i <= cantidadHoras; i++)
             {
-
                 int indexLunes = (indexLimiteIzquierdo * i) + 1;
-                arregloLunes.Add(indexLunes);
-                
+                arregloLunes.Add(indexLunes);                
             }
 
             for (int i = 1; i <= cantidadHoras; i++)
             {
-
                 int indexMartes = (indexLimiteIzquierdo * i) + 2;
                 arregloMartes.Add(indexMartes);
-
             }
 
             for (int i = 1; i <= cantidadHoras; i++)
             {
-
                 int indexMiercoles = (indexLimiteIzquierdo * i) + 3;
                 arregloMiercoles.Add(indexMiercoles);
-
             }
 
             for (int i = 1; i <= cantidadHoras; i++)
             {
-
                 int indexJueves = (indexLimiteIzquierdo * i) + 4;
                 arregloJueves.Add(indexJueves);
-
             }
 
             for (int i = 1; i <= cantidadHoras; i++)
             {
-
                 int indexViernes = (indexLimiteIzquierdo * i) + 5;
                 arregloViernes.Add(indexViernes);
-
-            }
-
-            foreach (var item in arregloViernes)
-            {
-                Console.WriteLine(item);
-            }
-
-
+            }          
         }
 
         public void SetRangosHoras(List<int> arreglo, int limiteInferior, int limiteSuperior)
@@ -136,37 +122,154 @@ namespace SGH.Vistas.Horario.Consulta
             Border border = (Border)listBoxConsultaHorario.SelectedItem;
             TextBlock textBlock = (TextBlock)border.Child;
 
-            //int posicion = listBoxConsultaHorario.SelectedIndex;
+            int posicion = listBoxConsultaHorario.SelectedIndex;
             //Border borderNuevo = CrearElemento("Hola Mundo", border.Background.ToString());
 
             //listBoxConsultaHorario.Items[posicion] = borderNuevo;
 
 
+            Console.WriteLine(GetHora(posicion));
 
-
-
-
-
-
-
-
-            Console.WriteLine(textBlock.Text);
+                        
         }
 
         public string GetHora(int posicion)
         {
-            string hora;
 
-            if (arregloSiete.Contains(posicion))
+            string hora;
+            int contadorPreguntas = 0;
+            int mitadNivelUno = 41;
+            int mitadSuperiorNivelDos = 17;            
+            int mitadSuperiorInferiorNivelTres = 29;                        
+            int mitadInferiorNivelDos = 65;
+            int mitadInferiorSuperiorNivelTres = 53;
+            int mitadInferiorInferiorNivelTres = 77;
+
+
+            if (posicion <= mitadNivelUno)
             {
-                hora = "7-8";
+                contadorPreguntas++;
+
+                if (posicion <= mitadSuperiorNivelDos)
+                {
+                    contadorPreguntas++;
+                    if (arregloSiete.Contains(posicion))
+                    {
+                        contadorPreguntas++;
+                        hora = "7-8";
+                    }
+                    else
+                    {
+                        contadorPreguntas++;
+                        hora = "8-9";
+                    }
+                }
+                else
+                {
+                    contadorPreguntas++;
+                    if (posicion <= mitadSuperiorInferiorNivelTres)
+                    {
+
+                        contadorPreguntas++;
+                        if (arregloNueve.Contains(posicion))
+                        {
+                            contadorPreguntas++;
+                            hora = "9-10";
+                        }
+                        else
+                        {
+                            contadorPreguntas++;
+                            hora = "10-11";
+                        }
+                    }
+                    else
+                    {
+                        contadorPreguntas++;
+                        if (arregloOnce.Contains(posicion))
+                        {
+                            contadorPreguntas++;
+                            hora = "11-12";
+                        }
+                        else
+                        {
+                            contadorPreguntas++;
+                            hora = "12-13";
+                        }
+                    }
+                }                              
             }
             else
             {
-                hora = "ni modo krnal";
+                contadorPreguntas++;
+                if (posicion <= mitadInferiorNivelDos)
+                {
+                    contadorPreguntas++;
+                    if (posicion <= mitadInferiorSuperiorNivelTres)
+                    {                        
+                        contadorPreguntas++;
+                        if (arregloTrece.Contains(posicion))
+                        {
+                            contadorPreguntas++;
+                            hora = "13-14";
+                        }
+                        else
+                        {
+                            contadorPreguntas++;
+                            hora = "14-15";
+                        }
+                    }
+                    else
+                    {
+                        contadorPreguntas++;
+                        if (arregloQuince.Contains(posicion))
+                        {
+                            contadorPreguntas++;
+                            hora = "15-16";
+                        }
+                        else
+                        {
+                            contadorPreguntas++;
+                            hora = "16-17";
+                        }
+                    }
+                }
+                else
+                {
+                    contadorPreguntas++;
+                    if (posicion <= mitadInferiorInferiorNivelTres)
+                    {
+                        contadorPreguntas++;
+                        if (arregloDiecisiete.Contains(posicion))
+                        {
+                            contadorPreguntas++;
+                            hora = "17-18";
+                        }
+                        else
+                        {
+                            contadorPreguntas++;
+                            hora = "18-19";
+                        }
+                    }
+                    else
+                    {
+                        contadorPreguntas++;
+                        if (arregloDiecinueve.Contains(posicion))
+                        {
+                            contadorPreguntas++;
+                            hora = "19-20";
+                        }
+                        else
+                        {
+                            contadorPreguntas++;
+                            hora = "20-21";
+                        }
+                    }
+                }
+
             }
 
-
+            Console.WriteLine(contadorPreguntas);
+           
             return hora;
         }
 
