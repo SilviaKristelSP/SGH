@@ -94,6 +94,9 @@
     <Compile Include="Vistas\Horario\Consulta\ConsultaHorarios.xaml.cs">
       <DependentUpon>ConsultaHorarios.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\Horario\Consulta\Window1.xaml.cs">
+      <DependentUpon>Window1.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vistas\Horario\GruposSinHorarios.xaml.cs">
       <DependentUpon>GruposSinHorarios.xaml</DependentUpon>
     </Compile>
@@ -109,6 +112,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Vistas\Horario\Consulta\ConsultaHorarios.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\Horario\Consulta\Window1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
