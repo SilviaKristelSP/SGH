@@ -20,6 +20,7 @@ using System.IO;
 using SGH.Vistas.Alertas;
 using System.Drawing;
 using System.Drawing.Imaging;
+using SGH.DAOs;
 
 namespace SGH.Vistas.Profesores
 {
@@ -45,18 +46,10 @@ namespace SGH.Vistas.Profesores
 
         private void cargarMaterias()
         {
-            List<Materia> listaMaterias = new List<Materia>();
-            Materia materia1 = new Materia();
-            materia1.Nombre = "Geografia";
-            materia1.Semestre = 1;
-            Materia materia2 = new Materia();
-            materia2.Nombre = "Matemáticas";
-            materia2.Semestre = 2;
-            listaMaterias.Add(materia1);
-            listaMaterias.Add(materia2);
-            wpMaterias.Children.Clear();
-            
-            for (int i = 1; i < 7; i++)
+            List<Materia> listaMaterias = MateriaDAO.recuperarMaterias();
+            int semestreMax = MateriaDAO.obtenerUltimoSemestre();
+
+            for (int i = 1; i <= semestreMax; i++)
             {
                 Label labelDinamico = new Label();
                 labelDinamico.FontSize = 14;
@@ -70,11 +63,13 @@ namespace SGH.Vistas.Profesores
                         CheckBox checkDinamico = new CheckBox();
 
                         labelDinamico.Margin = new Thickness(5);
+                        //checkDinamico.DataContext = materia;
                         checkDinamico.Content = materia.Nombre;
+                        checkDinamico.Name = materia.NRC;
+                        //checkDinamico.Content = DataContext.ToString();
                         checkDinamico.Margin = new Thickness(0, 0, 15, 0);
                         
                         wpMaterias.Children.Add(checkDinamico);
-                        Console.WriteLine("Opción: " + materia);
                     }
                     
                 }
@@ -118,6 +113,9 @@ namespace SGH.Vistas.Profesores
             {
                 formularioAprobado = false;
             }else if (tbNombreFoto.Text.Equals(""))
+            {
+                formularioAprobado = false;
+            }else if (cbTipoSangre.SelectedIndex < 0)
             {
                 formularioAprobado = false;
             }
@@ -212,24 +210,6 @@ namespace SGH.Vistas.Profesores
             }
         }
 
-        private BitmapImage convertirABitmapImg(Bitmap bmp, byte[] imagen)
-        {
-            using (var memory = new MemoryStream(imagen))
-            {
-                bmp.Save(memory, ImageFormat.Png);
-                memory.Position = 0;
-
-                var bitmapImage = new BitmapImage();
-                bitmapImage.BeginInit();
-                bitmapImage.StreamSource = memory;
-                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                bitmapImage.EndInit();
-                bitmapImage.Freeze();
-
-                return bitmapImage;
-            }
-        } 
-
         private void clickAgregarProfesor(object sender, RoutedEventArgs e)
         {
             if (verificarFormulario())
@@ -240,6 +220,15 @@ namespace SGH.Vistas.Profesores
                         MessageButtons.Ok, "medium");
                     MessageBoxCustom mensaje = new MessageBoxCustom(alerta);
                     mensaje.Show();
+                    llenarObjetoPersona();
+                    if (pruebaEdicion())
+                    {
+                        Console.WriteLine("éxito");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Fallo");
+                    }
                 }
                 else
                 {
@@ -263,8 +252,69 @@ namespace SGH.Vistas.Profesores
                         MessageButtons.Ok, "medium");
                 MessageBoxCustom mensaje = new MessageBoxCustom(alerta);
                 mensaje.Show();
+                pruebaCBaja();
             }
         }
+
+        private bool guardarPersona()
+        {
+            return PersonaDAO.registrarPersona(persona);
+        }
+
+        private bool pruebaEdicion()
+        {
+            return PersonaDAO.editarPersona(persona);
+        }
+
+        private void pruebaEncontrarObj()
+        {
+            Persona prueba = PersonaDAO.recuperarPersonaID("ITWw56AQjGNJwtvrENpnQeBUJmP4C8xsM93rtTUIKpV6TfsJjP");
+            Console.WriteLine(prueba.ID + "\n" + prueba.Nombre + "\n" + prueba.ApellidoMaterno + "\n" + prueba.ApellidoPaterno);
+        }
+
+        private void pruebaBaja()
+        {
+            if (PersonaDAO.darDeBajaPersona("ITWw56AQjGNJwtvrENpnQeBUJmP4C8xsM93rtTUIKpV6TfsJjP"))
+            {
+                Console.WriteLine("Baja exitosa");
+            }
+            else
+            {
+                Console.WriteLine("Error baja");
+            }
+            
+        }
+
+        private void pruebaCBaja()
+        {
+            if (PersonaDAO.cancelarBajaPersona("ITWw56AQjGNJwtvrENpnQeBUJmP4C8xsM93rtTUIKpV6TfsJjP"))
+            {
+                Console.WriteLine("Cancelacion exitosa");
+            }
+            else
+            {
+                Console.WriteLine("la baja SIGUE");
+            }
+        }
+
+
+
+        private void llenarObjetoPersona()
+        {
+            //String idPersona = Util.generarID(50);
+            String idPersona = "ITWw56AQjGNJwtvrENpnQeBUJmP4C8xsM93rtTUIKpV6TfsJjP";
+            persona.Nombre = txbNombre.Text;
+            persona.ApellidoPaterno = txbApellidoP.Text;
+            persona.ApellidoMaterno = txbApellidoM.Text;
+            persona.Curp = txbCURP.Text;
+            persona.Estado = "Activo";
+            persona.ID = idPersona;
+            persona.Clave_Escuela = "escuela-1";
+
+            ComboBoxItem item = (ComboBoxItem)cbTipoSangre.SelectedItem;
+            persona.TipoSangre = "" + item.Content;
+        }
+
         private void clickAbrirArchivoTitulo(object sender, MouseButtonEventArgs e)
         {
             if (!tbNombreTitulo.Text.Equals(""))
@@ -304,10 +354,6 @@ namespace SGH.Vistas.Profesores
                 Util.abrirArchivoPDF(profesor.DocContrato, tbNombreContrato.Text);
             }
         }
-
-
-
-
 
 
         //Funcionalidad MENÚ

@@ -91,6 +91,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DAOs\EstudianteDAO.cs" />
+    <Compile Include="DAOs\MateriaDAO.cs" />
+    <Compile Include="DAOs\PersonaDAO.cs" />
+    <Compile Include="DAOs\ProfesorDAO.cs" />
     <Compile Include="System\Drawing\FontWeights.cs" />
     <Compile Include="Utiles\DatosArchivo.cs" />
     <Compile Include="Utiles\Util.cs" />

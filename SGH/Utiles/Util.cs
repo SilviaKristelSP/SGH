@@ -87,6 +87,19 @@ namespace SGH.Utiles
             }
             return null;
         }
+
+        public static string generarID(int tamanioID)
+        {
+            string id = "";
+            Random random = new Random();
+
+            const string caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            
+            id = new string(Enumerable.Repeat(caracteres, tamanioID)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
+
+            return id;
+        }
     }
 }
 
