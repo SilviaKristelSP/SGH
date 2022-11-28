@@ -4,7 +4,7 @@ using System.Data.Entity.Core;
 using SGH.Vistas.Alertas;
 using SGH.Vistas.MenuPrincipal;
 using SGH.Vistas.Excepciones;
-
+using SGH.DAOs;
 using System;
 using SGH.Modelos;
 
@@ -14,8 +14,8 @@ namespace SGH.Vistas.LogIn
     public partial class LogInSGH : Window
     {
         
-        private SGHContext sghContext = new SGHContext();
-        private static Administrador administrador = new Administrador();        
+        private static Administrador administrador = new Administrador();
+        private AdministradorDAO administradorDAO = new AdministradorDAO();
 
         public LogInSGH()
         {
@@ -27,7 +27,7 @@ namespace SGH.Vistas.LogIn
             try
             {
 
-                Administrador usuarioAdministrador = ExisteUsuario();                                
+                Administrador usuarioAdministrador = administradorDAO.ExisteUsuario(textBoxLogInCorreo.Text);                                
                 bool existeUsuario = usuarioAdministrador == null ? false : true;
 
                 if (!existeUsuario)
@@ -73,18 +73,7 @@ namespace SGH.Vistas.LogIn
                 stackPanelBlack.Visibility = Visibility.Collapsed;
 
             }
-        }
-
-        public Administrador ExisteUsuario()
-        {
-
-            Administrador administrador =
-                sghContext.Administradors.Where(
-                    admin => admin.Correo == textBoxLogInCorreo.Text).FirstOrDefault();
-
-
-            return administrador;
-        }
+        }        
 
         public void SetUsuario(Administrador administradorAutenticado)
         {

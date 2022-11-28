@@ -27,11 +27,12 @@
                 TextWrapping="Wrap" VerticalAlignment="Center"/>
            
             <ComboBox
-                x:Name="OutlinedComboBox" Margin="0 40 0 0" Padding="10 15 10 0"
+                x:Name="gruposComboBox" Margin="0 40 0 0" Padding="10 15 10 0"
                 Style="{StaticResource MaterialDesignOutlinedComboBox}"                
                 materialDesign:HintAssist.Hint="Seleccione un grupo"
                 ItemsSource="{Binding ShortStringList}"
-                Width="788" Height="45" />
+                Width="788" Height="45" materialDesign:TextFieldAssist.UnderlineBrush="#6B4240"
+                materialDesign:HintAssist.Foreground="Black" SelectionChanged="SeleccionGrupo" />
 
             <Grid Name="gridBoard" Height="441" Width="788" Margin="0 25 0 0">
                 <ListBox Name="listBoxConsultaHorario" MouseUp="SeleccionElemento" Margin="0" Padding="0" BorderThickness="1" BorderBrush="#D7D7D7">

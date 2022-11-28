@@ -13,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using static System.Net.Mime.MediaTypeNames;
+using SGH.DAOs;
+using SGH.Modelos;
 
 namespace SGH.Vistas.Horario.Consulta
 {
@@ -28,6 +30,7 @@ namespace SGH.Vistas.Horario.Consulta
         public List<int> arregloDiez = new List<int>(); 
         public List<int> arregloOnce = new List<int>(); 
         public List<int> arregloDoce = new List<int>(); 
+
         public List<int> arregloTrece = new List<int>(); 
         public List<int> arregloCatorce = new List<int>(); 
         public List<int> arregloQuince = new List<int>(); 
@@ -37,20 +40,183 @@ namespace SGH.Vistas.Horario.Consulta
         public List<int> arregloDiecinueve = new List<int>();
         public List<int> arregloVeinte = new List<int>();
 
-
         public List<int> arregloLunes = new List<int>();
         public List<int> arregloMartes = new List<int>();
         public List<int> arregloMiercoles = new List<int>();
         public List<int> arregloJueves = new List<int>();
         public List<int> arregloViernes = new List<int>();
 
+        private HorarioDAO horarioDAO = new HorarioDAO();
+
         public ConsultaHorarios()
         {
             InitializeComponent();
             SetRangos();
-            CargarHorario();            
+            SetTableroHorario();
+            CargarGrupos();            
 
-            //InsertarCampo("HOLIIII", 89, "#FFD6EF");
+        }
+
+        public void SeleccionGrupo(object sender, SelectionChangedEventArgs e)
+        {
+
+            TextBlock comboItem = (TextBlock)gruposComboBox.SelectedItem;
+            if (comboItem != null)
+            {
+                //Console.WriteLine(comboItem.Text);
+                CargarHorario(comboItem.Text);
+            }
+            else
+            {
+                Console.WriteLine("Sin seleccion");
+            }
+        }
+
+        public void CargarHorario(string comboBox)
+        {
+            string[] grupoInformacion = comboBox.Split('-');
+            //Console.WriteLine(grupoInformacion[0]);
+            //Console.WriteLine(grupoInformacion[1]);
+
+            string horaInicio = "11";
+            string horaFin = "8";
+            string diaSemana = "miercoles";
+
+
+            List<int> listaHorario = GetListaHora(Int32.Parse(horaInicio));
+            int indexColumna = GetColumnaDia(diaSemana);
+
+            //foreach (var item in listaHorario)
+            //{
+            //    Console.WriteLine(item);
+            //}
+
+
+            Console.WriteLine("Tu sesion esta en la posicion: "+ listaHorario[indexColumna]);
+        }
+
+        public int GetColumnaDia(string diaSemana)
+        {
+            int indexCoumna;
+
+            if (diaSemana.Equals("lunes"))
+            {
+                indexCoumna = 1;    
+            }
+            else if (diaSemana.Equals("martes"))
+            {
+                indexCoumna = 2;
+            }
+            else if (diaSemana.Equals("miercoles"))
+            {
+                indexCoumna = 3;
+            }
+            else if (diaSemana.Equals("jueves"))
+            {
+                indexCoumna = 4;
+            }
+            else
+            {
+                indexCoumna = 5;
+            }
+
+            return indexCoumna;
+        }
+
+        public List<int> GetListaHora(int horaInicio)
+        {
+
+            List<int> listaHorario;
+
+            if (horaInicio >= 7 &&  horaInicio <= 13)
+            {
+                if (horaInicio >= 7 && horaInicio <= 9)
+                {
+                    if (horaInicio == 7)
+                    {
+                        listaHorario = arregloSiete;
+                    }
+                    else if (horaInicio == 8)
+                    {
+                        listaHorario = arregloOcho;
+                    }
+                    else
+                    {
+                        listaHorario = arregloNueve;
+                    }
+                }
+                else if (horaInicio >= 10 && horaInicio <= 11)
+                {
+                    if (horaInicio == 10)
+                    {
+                        listaHorario = arregloDiez;
+                    }
+                    else
+                    {
+                        listaHorario = arregloOnce;
+                    }
+                }
+                else if (horaInicio == 12)
+                {
+                    listaHorario = arregloDoce;
+                }
+                else
+                {
+                    listaHorario = arregloTrece;
+                }
+            }
+            else 
+            {
+                if (horaInicio >= 14 && horaInicio <= 16)
+                {
+                    if (horaInicio == 14)
+                    {
+                        listaHorario = arregloCatorce;
+                    }
+                    else if (horaInicio == 15)
+                    {
+                        listaHorario = arregloQuince;
+                    }
+                    else
+                    {
+                        listaHorario = arregloDieciseis;
+                    }
+                }
+                else if (horaInicio >= 17 && horaInicio <= 18)
+                {
+                    if (horaInicio == 17)
+                    {
+                        listaHorario = arregloDiecisiete;
+                    }
+                    else
+                    {
+                        listaHorario = arregloDieciocho;
+                    }
+                }
+                else if (horaInicio == 19)
+                {
+                    listaHorario = arregloDiecinueve;
+                }
+                else
+                {
+                    listaHorario = arregloVeinte;
+                }
+            }        
+
+            return listaHorario;
+        }
+
+        public void CargarGrupos()
+        {
+            List<Grupo> grupos = horarioDAO.GetGrupos();            
+
+            foreach (var item in grupos)
+            {
+                TextBlock textBlock = new TextBlock();
+                textBlock.Text = item.Semestre + "-" + item.Letra;
+                textBlock.FontSize = 20;
+                gruposComboBox.Items.Add(textBlock);                
+            }
         }
 
         public void SetRangos()
@@ -107,24 +273,17 @@ namespace SGH.Vistas.Horario.Consulta
 
         public void SetRangosHoras(List<int> arreglo, int limiteInferior, int limiteSuperior)
         {
-
             for (int i = limiteInferior; i <= limiteSuperior; i++)
             {
-
                 arreglo.Add(i);
             }
-
         }
 
         public void SeleccionElemento(object sender, RoutedEventArgs e)
         {         
-
-            Border border = (Border)listBoxConsultaHorario.SelectedItem;
-            TextBlock textBlock = (TextBlock)border.Child;
-
+            
             int posicion = listBoxConsultaHorario.SelectedIndex;
             //Border borderNuevo = CrearElemento("Hola Mundo", border.Background.ToString());
-
             //listBoxConsultaHorario.Items[posicion] = borderNuevo;
 
             string hora = GetHora(posicion);
@@ -137,8 +296,9 @@ namespace SGH.Vistas.Horario.Consulta
             else
             {
                 string informacion = hora + " - " + dia;
-                Console.WriteLine(informacion);
-            }            
+                //Console.WriteLine(informacion);
+            }
+                      
         }
 
         public string GetDia(int posicion)
@@ -165,7 +325,6 @@ namespace SGH.Vistas.Horario.Consulta
             {
                 dia = "viernes";
             }
-
 
             return dia;
         }
@@ -273,7 +432,7 @@ namespace SGH.Vistas.Horario.Consulta
             return hora;
         }
 
-        public void CargarHorario()
+        public void SetTableroHorario()
         {
             int cantidadHoras = 14 + 1;
             int cantidadDias = 5 + 1;
@@ -380,7 +539,6 @@ namespace SGH.Vistas.Horario.Consulta
             SetCampo("Miércoles", 3, "#FFD6EF");
             SetCampo("Jueves", 4, "#FAECAA");
             SetCampo("Viernes", 5, "#FFD6EF");
-        }
-               
+        }        
     }
 }

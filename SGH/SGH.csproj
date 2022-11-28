@@ -90,6 +90,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DAOs\AdministradorDAO.cs" />
+    <Compile Include="DAOs\HorarioDAO.cs" />
     <Compile Include="Vistas\Excepciones\ErrorAlertException.cs" />
     <Compile Include="Vistas\Horario\Consulta\ConsultaHorarios.xaml.cs">
       <DependentUpon>ConsultaHorarios.xaml</DependentUpon>
