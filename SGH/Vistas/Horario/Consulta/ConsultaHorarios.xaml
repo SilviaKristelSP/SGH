@@ -25,7 +25,7 @@
             <TextBlock Margin="0 35 0 0" HorizontalAlignment="Center" FontSize="45"
                 FontFamily="roboto" Text="Consulta Horarios" FontWeight="Medium"      
                 TextWrapping="Wrap" VerticalAlignment="Center"/>
-           
+
             <ComboBox
                 x:Name="gruposComboBox" Margin="0 40 0 0" Padding="10 15 10 0"
                 Style="{StaticResource MaterialDesignOutlinedComboBox}"                
@@ -35,22 +35,18 @@
                 materialDesign:HintAssist.Foreground="Black" SelectionChanged="SeleccionGrupo" />
 
             <Grid Name="gridBoard" Height="441" Width="788" Margin="0 25 0 0">
-                <ListBox Name="listBoxConsultaHorario" MouseUp="SeleccionElemento" Margin="0" Padding="0" BorderThickness="1" BorderBrush="#D7D7D7">
+                
+                <ListBox Name="listBoxConsultaHorario" MouseUp="SeleccionElemento" Margin="0,0,0,-42" Padding="0" BorderThickness="1" >
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <UniformGrid Columns="6" Rows="15"/>
                         </ItemsPanelTemplate>
                     </ListBox.ItemsPanel>
                 </ListBox>
+                
+                
             </Grid>
 
         </StackPanel>
-
-        <!--<Button Style="{StaticResource MaterialDesignFlatLightBgButton}" Margin="210,326,500,326" Content="holi" Foreground="Black" BorderThickness="10" Background="#FFD6EF" BorderBrush="#FFD6EF">
-            
-        </Button>-->
-
-        
-
     </Grid>
 </Window>
