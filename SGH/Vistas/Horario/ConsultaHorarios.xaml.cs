@@ -1,21 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using static System.Net.Mime.MediaTypeNames;
 using SGH.DAOs;
 using SGH.Modelos;
 using SGH.Utiles;
+using SGH.Vistas.MenuPrincipal;
 
 namespace SGH.Vistas.Horario.Consulta
 {
@@ -45,11 +38,8 @@ namespace SGH.Vistas.Horario.Consulta
         public List<int> arregloMartes = new List<int>();
         public List<int> arregloMiercoles = new List<int>();
         public List<int> arregloJueves = new List<int>();
-        public List<int> arregloViernes = new List<int>();
-
-        public List<string> arregloColores = new List<string>();
-        public string colorBase = "#fcf2c2";
-
+        public List<int> arregloViernes = new List<int>();        
+        public string colorBase = "#fcf4ca";
         private HorarioDAO horarioDAO = new HorarioDAO();
 
         public ConsultaHorarios()
@@ -57,32 +47,15 @@ namespace SGH.Vistas.Horario.Consulta
             InitializeComponent();
             SetRangos();
             SetTableroHorario();
-            CargarGrupos();
-            SetListaColores();
-        }
-
-        public void SetListaColores()
-        {
-            arregloColores.Add("#77dd77");
-            arregloColores.Add("#fdcae1");
-            arregloColores.Add("#fdfd96");
-            arregloColores.Add("#d8f8e1");
-            arregloColores.Add("#ffda9e");
-            arregloColores.Add("#c5c6c8");
-            arregloColores.Add("#a6fab6");
-            arregloColores.Add("#eef6b0");
-            arregloColores.Add("#ebf3a0");
-            arregloColores.Add("#FFD6EF");
-           
-        }
+            CargarGrupos();            
+        }       
 
         public void SeleccionGrupo(object sender, SelectionChangedEventArgs e)
         {
 
             TextBlock comboItem = (TextBlock)gruposComboBox.SelectedItem;
             if (comboItem != null)
-            {
-                //SetTableroHorario();
+            {                
                 LimpiarHorario();
                 CargarHorario(comboItem.Text);
             }
@@ -144,35 +117,19 @@ namespace SGH.Vistas.Horario.Consulta
             {
                 //Console.WriteLine(sesion.ID + " " + sesion.DiaSemana + " " + sesion.HoraInicio + " " + sesion.ID_Grupo);
                 Materia materia = horarioDAO.GetMateriaBySesion(sesion.ID);
-                MateriaHorario materiaHorario = SetMateriaHorario(materia);
+                
                 List<int> listaHorario = GetListaHora(Int32.Parse(sesion.HoraInicio));
                 int indexColumna = GetColumnaDia(sesion.DiaSemana);
                 int posicion = listaHorario[indexColumna];
-                string contenido = materiaHorario.NRC + "\n" + materiaHorario.Nombre;
+                string contenido = materia.NRC + "\n" + materia.Nombre;
 
-                SetCampo(contenido, posicion, materiaHorario.Color);
+                SetCampo(contenido, posicion, materia.Color);
 
             }
 
             //Console.WriteLine("Tu sesion esta en la posicion: "+ listaHorario[indexColumna]);
 
-        }
-
-        public MateriaHorario SetMateriaHorario(Materia materia)
-        {            
-            MateriaHorario materiaHorario = new MateriaHorario();
-            materiaHorario.NRC = materia.NRC;
-            materiaHorario.Nombre = materia.Nombre;
-            materiaHorario.NumSesiones = materia.NumSesiones;
-            materiaHorario.Semestre = materia.Semestre;
-
-            Random random = new Random();
-            int indiceColor = random.Next(1, 11);
-            materiaHorario.Color = arregloColores[indiceColor];
-            arregloColores.Remove(arregloColores[indiceColor]);
-
-            return materiaHorario;
-        } 
+        }         
 
         public int GetColumnaDia(string diaSemana)
         {
@@ -287,15 +244,18 @@ namespace SGH.Vistas.Horario.Consulta
 
         public void CargarGrupos()
         {
-            List<Grupo> grupos = horarioDAO.GetGrupos();            
+            List<Grupo> grupos = horarioDAO.GetGruposConHorario();            
 
-            foreach (var item in grupos)
+            if (grupos.Count() > 0)
             {
-                TextBlock textBlock = new TextBlock();
-                textBlock.Text = item.Semestre + "-" + item.Letra;
-                textBlock.FontSize = 20;
-                gruposComboBox.Items.Add(textBlock);                
-            }
+                foreach (var item in grupos)
+                {
+                    TextBlock textBlock = new TextBlock();
+                    textBlock.Text = item.Semestre + "-" + item.Letra;
+                    textBlock.FontSize = 20;
+                    gruposComboBox.Items.Add(textBlock);
+                }
+            }            
         }
 
         public void SetRangos()
@@ -524,7 +484,7 @@ namespace SGH.Vistas.Horario.Consulta
 
             }
 
-            SetCampo("", 0, "#FFF");
+            SetCampo("", 0, "#fafafa");
 
             CargarDias();
             CargarHoras();
@@ -595,6 +555,17 @@ namespace SGH.Vistas.Horario.Consulta
             SetCampo("Miércoles", 3, "#FFD6EF");
             SetCampo("Jueves", 4, "#FFD6EF");
             SetCampo("Viernes", 5, "#FFD6EF");
-        }        
+        }
+
+        private void ClickRegresarMenuPrincipal(object sender, MouseButtonEventArgs e)
+        {            
+            MenuPrincipalSGH menuPrincipalSGH = new MenuPrincipalSGH();
+            Application.Current.MainWindow = menuPrincipalSGH;
+            Application.Current.MainWindow.Show();
+
+            foreach (Window window in Application.Current.Windows.OfType<ConsultaHorarios>())
+                ((ConsultaHorarios)window).Close();
+        }
+
     }
 }

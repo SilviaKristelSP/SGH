@@ -1,4 +1,5 @@
 ﻿using SGH.Vistas.LogIn;
+using SGH.Vistas.Horario;
 using ShowMeTheXAML;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using SGH.Modelos;
+using SGH.Vistas.Horario.Consulta;
 
 namespace SGH.Vistas.MenuPrincipal
 {
@@ -88,6 +90,21 @@ namespace SGH.Vistas.MenuPrincipal
 
 
             }
+        }
+
+        private void ClickConsultaHorarios(object sender, RoutedEventArgs e)
+        {
+
+            ConsultaHorarios consultaHorarios = new ConsultaHorarios();
+            Application.Current.MainWindow = consultaHorarios;
+            Application.Current.MainWindow.Show();
+
+            foreach (Window window in Application.Current.Windows.OfType<MenuPrincipalSGH>())
+            {
+                ((MenuPrincipalSGH)window).Close();
+            }
+
+
         }
     }
 }

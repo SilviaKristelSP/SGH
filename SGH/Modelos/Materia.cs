@@ -26,6 +26,7 @@ namespace SGH.Modelos
         public string Nombre { get; set; }
         public int NumSesiones { get; set; }
         public int Semestre { get; set; }
+        public string Color { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Calificacion> Calificacions { get; set; }

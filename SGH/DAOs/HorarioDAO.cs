@@ -19,6 +19,42 @@ namespace SGH.DAOs
             return grupos;
         }
 
+        public List<Grupo> GetGruposConHorario()
+        {
+            List<Grupo> gruposConHorario = new List<Grupo>();
+            List<Grupo> grupos = sghContext.Grupoes.ToList();
+
+            foreach (Grupo grupo in grupos)
+            {
+                Sesion existeSesion = sghContext.Sesions.Where(sesion => sesion.ID_Grupo == grupo.ID).FirstOrDefault();
+                if (existeSesion != null)
+                {
+                    gruposConHorario.Add(grupo);
+                }
+
+            }
+
+            return gruposConHorario;
+        }
+
+        public List<Grupo> GetGruposSinHorario()
+        {
+            List<Grupo> gruposSinHorario = new List<Grupo>();
+            List<Grupo> grupos = sghContext.Grupoes.ToList();
+
+            foreach (Grupo grupo in grupos)
+            {
+                Sesion existeSesion = sghContext.Sesions.Where(sesion => sesion.ID_Grupo == grupo.ID).FirstOrDefault();
+                if (existeSesion == null)
+                {
+                    gruposSinHorario.Add(grupo);
+                }
+
+            }
+
+            return gruposSinHorario;
+        }
+
         public string GetGrupoId(string letra, int semestre)
         {
 

@@ -91,6 +91,7 @@
           <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="NumSesiones" Type="int" Nullable="false" />
           <Property Name="Semestre" Type="int" Nullable="false" />
+          <Property Name="Color" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Materia_Sesion">
           <Key>
@@ -623,6 +624,7 @@
           <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="NumSesiones" Type="Int32" Nullable="false" />
           <Property Name="Semestre" Type="Int32" Nullable="false" />
+          <Property Name="Color" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Calificacions" Relationship="Self.FK_Calificacion_Materia" FromRole="Materia" ToRole="Calificacion" />
           <NavigationProperty Name="Materia_Sesion" Relationship="Self.FK_Materia_Sesion_Materia" FromRole="Materia" ToRole="Materia_Sesion" />
           <NavigationProperty Name="Profesor_Materia" Relationship="Self.FK_Profesor_Materia_Materia" FromRole="Materia" ToRole="Profesor_Materia" />
@@ -1165,6 +1167,7 @@
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="NumSesiones" ColumnName="NumSesiones" />
                 <ScalarProperty Name="Semestre" ColumnName="Semestre" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

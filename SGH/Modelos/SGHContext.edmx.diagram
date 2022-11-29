@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="4c4a15201c734d3ba566145931225e07" Name="Diagram1">
+      <Diagram DiagramId="e7ef018e1a8a4e6fbc537e0ec364eed8" Name="Diagram1">
         <EntityTypeShape EntityType="SGHModel.Administrador" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
         <EntityTypeShape EntityType="SGHModel.Baja" Width="1.5" PointX="5.25" PointY="10.125" IsExpanded="true" />
         <EntityTypeShape EntityType="SGHModel.Calificacion" Width="1.5" PointX="10.5" PointY="11.375" IsExpanded="true" />
@@ -13,8 +13,8 @@
         <EntityTypeShape EntityType="SGHModel.Estudiante" Width="1.5" PointX="8.25" PointY="11.375" IsExpanded="true" />
         <EntityTypeShape EntityType="SGHModel.Grupo" Width="1.5" PointX="6" PointY="13.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SGHModel.Grupo_Salon" Width="1.5" PointX="10.25" PointY="15.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="SGHModel.Materia" Width="1.5" PointX="8.25" PointY="7.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="SGHModel.Materia_Sesion" Width="1.5" PointX="12.5" PointY="15.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SGHModel.Materia" Width="1.5" PointX="8.25" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SGHModel.Materia_Sesion" Width="1.5" PointX="12.5" PointY="15.125" IsExpanded="true" />
         <EntityTypeShape EntityType="SGHModel.PeriodoEscolar" Width="1.5" PointX="3" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SGHModel.PeriodoEscolar_Semestre" Width="1.5" PointX="5.25" PointY="7.125" IsExpanded="true" />
         <EntityTypeShape EntityType="SGHModel.Persona" Width="1.5" PointX="3" PointY="10.875" IsExpanded="true" />

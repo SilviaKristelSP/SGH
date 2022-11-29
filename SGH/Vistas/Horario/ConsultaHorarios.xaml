@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SGH.Vistas.Horario.Consulta"
         mc:Ignorable="d"
-        Title="Log In" Height="700" Width="1000" WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
+        Title="Consulta Horarios" Height="700" Width="1000" WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
@@ -17,17 +17,17 @@
         Icon="/Recursos/Logo_sgh.png">
     <Grid>
 
-        <materialDesign:PackIcon Kind="ArrowULeftBottomBold" Margin="10,10,0,0" Visibility="Visible" Foreground="Black"
-                                     Cursor="Hand" Width="58" Height="44" />
+        <materialDesign:PackIcon Kind="ArrowULeftBottomBold" Margin="10,20,0,0" Visibility="Visible" Foreground="Black"
+                                     Cursor="Hand" Width="58" Height="44" MouseLeftButtonDown="ClickRegresarMenuPrincipal"/>
 
         <StackPanel>
 
-            <TextBlock Margin="0 35 0 0" HorizontalAlignment="Center" FontSize="45"
+            <TextBlock Margin="0 55 0 0" HorizontalAlignment="Center" FontSize="45"
                 FontFamily="roboto" Text="Consulta Horarios" FontWeight="Medium"      
                 TextWrapping="Wrap" VerticalAlignment="Center"/>
 
             <ComboBox
-                x:Name="gruposComboBox" Margin="0 40 0 0" Padding="10 15 10 0"
+                x:Name="gruposComboBox" Margin="0 20 0 0" Padding="10 15 10 0"
                 Style="{StaticResource MaterialDesignOutlinedComboBox}"                
                 materialDesign:HintAssist.Hint="Seleccione un grupo"
                 ItemsSource="{Binding ShortStringList}"
@@ -36,7 +36,7 @@
 
             <Grid Name="gridBoard" Height="441" Width="788" Margin="0 25 0 0">
                 
-                <ListBox Name="listBoxConsultaHorario" MouseUp="SeleccionElemento" Margin="0,0,0,-42" Padding="0" BorderThickness="1" >
+                <ListBox Name="listBoxConsultaHorario" MouseUp="SeleccionElemento" Margin="0,0,0,-18" Padding="0" BorderThickness="1" >
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <UniformGrid Columns="6" Rows="15"/>
