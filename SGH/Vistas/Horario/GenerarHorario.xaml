@@ -18,12 +18,12 @@
     <Grid>
 
         <materialDesign:PackIcon Kind="ArrowULeftBottomBold" Margin="10,20,0,0" Visibility="Visible" Foreground="Black"
-                                     Cursor="Hand" Width="58" Height="44"/>
+                                     Cursor="Hand" Width="58" Height="44" MouseLeftButtonDown="Salir"/>
         <StackPanel>
 
             <TextBlock Margin="0 80 0 0" HorizontalAlignment="Center" FontSize="45"
                 FontFamily="roboto" Text="Generación de Horarios" FontWeight="Medium"      
-                TextWrapping="Wrap" VerticalAlignment="Center"/>
+                VerticalAlignment="Center" TextAlignment="Center" Width="600"/>
 
             <TextBlock Width="600" Margin="0 60 0 0" FontSize="15" Opacity="0.6">
                 Selecciona un grupo sin horario asignado y presiona Continuar
@@ -36,14 +36,14 @@
                 materialDesign:HintAssist.Hint="Seleccione un grupo"
                 ItemsSource="{Binding ShortStringList}"
                 Width="600" Height="45" materialDesign:TextFieldAssist.UnderlineBrush="#6B4240"
-                materialDesign:HintAssist.Foreground="Black" SelectionChanged="SeleccionGrupoSinHorario"  />
+                materialDesign:HintAssist.Foreground="Black" SelectionChanged="GruposSinHorarioComboBoxSelectionChanged"/>
 
-            <Button HorizontalAlignment="Center" Margin="0 20 0 0" Background="#6B4240"
+            <Button x:Name="botonContinuarGeneracion" HorizontalAlignment="Center" Margin="0 20 0 0" Background="#6B4240"
                     BorderBrush="#6B4240" Height="40" Width="600" Foreground="White"
                     Style="{StaticResource MaterialDesignRaisedButton}"                
                     materialDesign:ButtonAssist.CornerRadius="5"
-                    ToolTip="Iniciar Sesión"
-                    IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                    ToolTip="Continuar" Click="ContinuarGeneracionHorario"
+                    IsEnabled="False"
                     >
                 <TextBlock
                       Text="Continuar" />
@@ -61,21 +61,12 @@
             </Rectangle.RenderTransform>
         </Rectangle>
 
-        <!--<Rectangle Fill="Brown" Stroke="Black" Margin="-46,555,890,-27" RenderTransformOrigin="0.5,0.5">
-            <Rectangle.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-13.603"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Rectangle.RenderTransform>
-        </Rectangle>-->
-
         <Ellipse
                 Fill="#D98582" Margin="-96,291,898,119"/>
 
-
+        <!--<Canvas>
+            <Ellipse Fill="Gainsboro" Canvas.Left="109" Canvas.Top="474" Width="200" Height="200" />
+        </Canvas>-->
 
 
     </Grid>

@@ -17,8 +17,12 @@
         Icon="/Recursos/Logo_sgh.png">
     <Grid>
 
+        <Canvas>
+            <Ellipse Fill="#D98582" Canvas.Left="913" Canvas.Top="-106" Width="200" Height="200" />
+        </Canvas>
+
         <materialDesign:PackIcon Kind="ArrowULeftBottomBold" Margin="10,20,0,0" Visibility="Visible" Foreground="Black"
-                                     Cursor="Hand" Width="58" Height="44" MouseLeftButtonDown="ClickRegresarMenuPrincipal"/>
+                                     Cursor="Hand" Width="58" Height="44" MouseLeftButtonDown="Salir"/>
 
         <StackPanel>
 
@@ -35,7 +39,7 @@
                 materialDesign:HintAssist.Foreground="Black" SelectionChanged="SeleccionGrupo" />
 
             <Grid Name="gridBoard" Height="441" Width="788" Margin="0 25 0 0">
-                
+
                 <ListBox Name="listBoxConsultaHorario" MouseUp="SeleccionElemento" Margin="0,0,0,-18" Padding="0" BorderThickness="1" >
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -43,8 +47,8 @@
                         </ItemsPanelTemplate>
                     </ListBox.ItemsPanel>
                 </ListBox>
-                
-                
+
+
             </Grid>
 
         </StackPanel>

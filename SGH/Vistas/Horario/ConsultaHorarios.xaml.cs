@@ -557,7 +557,7 @@ namespace SGH.Vistas.Horario.Consulta
             SetCampo("Viernes", 5, "#FFD6EF");
         }
 
-        private void ClickRegresarMenuPrincipal(object sender, MouseButtonEventArgs e)
+        private void Salir(object sender, MouseButtonEventArgs e)
         {            
             MenuPrincipalSGH menuPrincipalSGH = new MenuPrincipalSGH();
             Application.Current.MainWindow = menuPrincipalSGH;

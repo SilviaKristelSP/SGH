@@ -35,9 +35,7 @@ namespace SGH.Vistas.MenuPrincipal
             administradorMenu = logInSGH.GetUsuario();
 
             FiltrarMenus(administradorMenu.Rol);
-            SetInformacionAdministrador(administradorMenu);
-
-         
+            SetInformacionAdministrador(administradorMenu);        
         }   
         
         public void SetInformacionAdministrador(Administrador administrador)
@@ -94,7 +92,6 @@ namespace SGH.Vistas.MenuPrincipal
 
         private void ClickConsultaHorarios(object sender, RoutedEventArgs e)
         {
-
             ConsultaHorarios consultaHorarios = new ConsultaHorarios();
             Application.Current.MainWindow = consultaHorarios;
             Application.Current.MainWindow.Show();
@@ -103,8 +100,18 @@ namespace SGH.Vistas.MenuPrincipal
             {
                 ((MenuPrincipalSGH)window).Close();
             }
+        }
 
+        private void ClickGeneracionHorarios(object sender, RoutedEventArgs e)
+        {
+            GenerarHorario generarHorario = new GenerarHorario();
+            Application.Current.MainWindow = generarHorario;
+            Application.Current.MainWindow.Show();
 
+            foreach (Window window in Application.Current.Windows.OfType<MenuPrincipalSGH>())
+            {
+                ((MenuPrincipalSGH)window).Close();
+            }
         }
     }
 }

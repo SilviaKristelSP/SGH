@@ -1,4 +1,9 @@
-﻿using System;
+﻿using SGH.DAOs;
+using SGH.Modelos;
+using SGH.Vistas.Horario.Consulta;
+using SGH.Vistas.LogIn;
+using SGH.Vistas.MenuPrincipal;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,22 +24,86 @@ namespace SGH.Vistas.Horario
     /// </summary>
     public partial class GenerarHorario : Window
     {
+        private static Grupo grupoSinHorario = new Grupo();
+        private HorarioDAO horarioDAO = new HorarioDAO();
+
         public GenerarHorario()
         {
             InitializeComponent();
+            CargarGrupos();
         }
 
-        public void SeleccionGrupoSinHorario(object sender, SelectionChangedEventArgs e)
+        public void CargarGrupos()
+        {
+            List<Grupo> grupos = horarioDAO.GetGruposSinHorario();
+
+            if (grupos.Count() > 0)
+            {
+                foreach (var item in grupos)
+                {
+                    TextBlock textBlock = new TextBlock();
+                    textBlock.Text = item.Semestre + "-" + item.Letra;
+                    textBlock.FontSize = 20;
+                    gruposSinHorarioComboBox.Items.Add(textBlock);
+                }
+            }
+        }        
+
+        private void ContinuarGeneracionHorario(object sender, RoutedEventArgs e)
         {
 
             TextBlock comboItem = (TextBlock)gruposSinHorarioComboBox.SelectedItem;
+                       
             if (comboItem != null)
             {
-                Console.WriteLine("Sin seleccion");
+                string[] grupoInformacion = comboItem.Text.Split('-');
+                int semestre = Int32.Parse(grupoInformacion[0]);
+                string letra = grupoInformacion[1];
+
+                Grupo grupo = horarioDAO.GetGrupo(letra, semestre);
+                SetGrupo(grupo);
+                GenerarHorarioRegistro generarHorarioRegistro= new GenerarHorarioRegistro();
+                Application.Current.MainWindow = generarHorarioRegistro;
+                Application.Current.MainWindow.Show();
+
+                foreach (Window window in Application.Current.Windows.OfType<GenerarHorario>())
+                {
+                    ((GenerarHorario)window).Close();
+                }
             }
             else
             {
                 Console.WriteLine("Sin seleccion");
+            }
+        }
+        public void SetGrupo(Grupo grupo)
+        {
+            grupoSinHorario.ID = grupo.ID;
+            grupoSinHorario.Semestre = grupo.Semestre;
+            grupoSinHorario.Letra = grupo.Letra;            
+        }
+
+        public Grupo GetGrupo()
+        {
+            return grupoSinHorario;
+        }
+
+        private void Salir(object sender, MouseButtonEventArgs e)
+        {
+            MenuPrincipalSGH menuPrincipalSGH = new MenuPrincipalSGH();
+            Application.Current.MainWindow = menuPrincipalSGH;
+            Application.Current.MainWindow.Show();
+
+            foreach (Window window in Application.Current.Windows.OfType<GenerarHorario>())
+                ((GenerarHorario)window).Close();
+        }
+
+        private void GruposSinHorarioComboBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            TextBlock comboItem = (TextBlock)gruposSinHorarioComboBox.SelectedItem;
+            if (comboItem != null)
+            {
+                botonContinuarGeneracion.IsEnabled = true;
             }
         }
     }

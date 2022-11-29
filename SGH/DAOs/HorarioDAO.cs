@@ -15,7 +15,6 @@ namespace SGH.DAOs
         public List<Grupo> GetGrupos()
         {
             List<Grupo> grupos = sghContext.Grupoes.ToList();
-
             return grupos;
         }
 
@@ -59,8 +58,13 @@ namespace SGH.DAOs
         {
 
             Grupo grupo = sghContext.Grupoes.Where(gr => gr.Letra == letra && gr.Semestre == semestre).FirstOrDefault();
-
             return grupo.ID;
+        }
+
+        public Grupo GetGrupo(string letra, int semestre)
+        {
+            Grupo grupo = sghContext.Grupoes.Where(gr => gr.Letra == letra && gr.Semestre == semestre).FirstOrDefault();
+            return grupo;
         }
 
         public List<Sesion> GetSesionesByGrupo(string grupoId)

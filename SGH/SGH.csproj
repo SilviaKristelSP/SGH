@@ -166,6 +166,9 @@
     <Compile Include="Vistas\Horario\GenerarHorario.xaml.cs">
       <DependentUpon>GenerarHorario.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\Horario\GenerarHorarioRegistro.xaml.cs">
+      <DependentUpon>GenerarHorarioRegistro.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vistas\Horario\GruposSinHorarios.xaml.cs">
       <DependentUpon>GruposSinHorarios.xaml</DependentUpon>
     </Compile>
@@ -185,6 +188,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Vistas\Horario\GenerarHorario.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\Horario\GenerarHorarioRegistro.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
