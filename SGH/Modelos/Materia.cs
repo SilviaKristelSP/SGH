@@ -18,7 +18,6 @@ namespace SGH.Modelos
         public Materia()
         {
             this.Calificacions = new HashSet<Calificacion>();
-            this.Materia_Sesion = new HashSet<Materia_Sesion>();
             this.Profesor_Materia = new HashSet<Profesor_Materia>();
         }
     
@@ -30,8 +29,6 @@ namespace SGH.Modelos
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Calificacion> Calificacions { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Materia_Sesion> Materia_Sesion { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Profesor_Materia> Profesor_Materia { get; set; }
     }

@@ -16,6 +16,7 @@ namespace SGH.Vistas.LogIn
         
         private static Administrador administrador = new Administrador();
         private AdministradorDAO administradorDAO = new AdministradorDAO();
+        private Log log = new Log();
 
         public LogInSGH()
         {
@@ -66,7 +67,7 @@ namespace SGH.Vistas.LogIn
             catch (EntityException ex)
             {
                 MessageBox.Show("Error en la Base de Datos");
-                //log.Add(ex.ToString());
+                log.Add(ex.ToString());
             }
             catch (ErrorAlertException)
             {

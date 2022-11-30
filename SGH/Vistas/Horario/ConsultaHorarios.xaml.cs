@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -41,6 +42,7 @@ namespace SGH.Vistas.Horario.Consulta
         public List<int> arregloViernes = new List<int>();        
         public string colorBase = "#fcf4ca";
         private HorarioDAO horarioDAO = new HorarioDAO();
+        private Log log = new Log();
 
         public ConsultaHorarios()
         {
@@ -109,23 +111,34 @@ namespace SGH.Vistas.Horario.Consulta
             int semestre = Int32.Parse(grupoInformacion[0]);
             string letra = grupoInformacion[1];
 
-            string grupoId = horarioDAO.GetGrupoId(letra, semestre);
-            List<Sesion> sesionesGrupo = horarioDAO.GetSesionesByGrupo(grupoId);
-            
-
-            foreach (var sesion in sesionesGrupo)
+            try
             {
-                //Console.WriteLine(sesion.ID + " " + sesion.DiaSemana + " " + sesion.HoraInicio + " " + sesion.ID_Grupo);
-                Materia materia = horarioDAO.GetMateriaBySesion(sesion.ID);
-                
-                List<int> listaHorario = GetListaHora(Int32.Parse(sesion.HoraInicio));
-                int indexColumna = GetColumnaDia(sesion.DiaSemana);
-                int posicion = listaHorario[indexColumna];
-                string contenido = materia.NRC + "\n" + materia.Nombre;
+                string grupoId = horarioDAO.GetGrupoId(letra, semestre);
+                List<Sesion> sesionesGrupo = horarioDAO.GetSesionesByGrupo(grupoId);
 
-                SetCampo(contenido, posicion, materia.Color);
+
+                foreach (var sesion in sesionesGrupo)
+                {
+                    //Console.WriteLine(sesion.ID + " " + sesion.DiaSemana + " " + sesion.HoraInicio + " " + sesion.ID_Grupo);
+
+                    Materia materia = horarioDAO.GetMateriaBySesion(sesion.ID);                    
+
+                    List<int> listaHorario = GetListaHora(Int32.Parse(sesion.HoraInicio));
+                    int indexColumna = GetColumnaDia(sesion.DiaSemana);
+                    int posicion = listaHorario[indexColumna];
+                    string contenido = "NRC: "+materia.NRC + "\n\n" + materia.Nombre;
+
+                    SetCampo(contenido, posicion, materia.Color);
+
+                }
 
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error en la base de datos");
+                log.Add(ex.Message);
+            }
+
 
             //Console.WriteLine("Tu sesion esta en la posicion: "+ listaHorario[indexColumna]);
 

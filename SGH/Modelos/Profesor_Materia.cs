@@ -14,11 +14,19 @@ namespace SGH.Modelos
     
     public partial class Profesor_Materia
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Profesor_Materia()
+        {
+            this.Materia_Sesion = new HashSet<Materia_Sesion>();
+        }
+    
         public string ID_Profesor_Materia { get; set; }
         public string RFC_Profesor { get; set; }
         public string NRC_Materia { get; set; }
     
         public virtual Materia Materia { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Materia_Sesion> Materia_Sesion { get; set; }
         public virtual Profesor Profesor { get; set; }
     }
 }

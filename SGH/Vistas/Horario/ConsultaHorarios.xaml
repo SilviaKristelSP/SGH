@@ -52,5 +52,7 @@
             </Grid>
 
         </StackPanel>
+
+        <StackPanel x:Name="stackPanelBlack" Background="Black" Opacity="0.8" Visibility="Collapsed"/>
     </Grid>
 </Window>

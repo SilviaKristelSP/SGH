@@ -15,10 +15,10 @@ namespace SGH.Modelos
     public partial class Materia_Sesion
     {
         public string ID_Materia_Sesion { get; set; }
-        public string NRC_Materia { get; set; }
+        public string ID_Profesor_Materia { get; set; }
         public string ID_Sesion { get; set; }
     
-        public virtual Materia Materia { get; set; }
+        public virtual Profesor_Materia Profesor_Materia { get; set; }
         public virtual Sesion Sesion { get; set; }
     }
 }

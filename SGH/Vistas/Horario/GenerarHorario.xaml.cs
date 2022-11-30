@@ -76,6 +76,7 @@ namespace SGH.Vistas.Horario
                 Console.WriteLine("Sin seleccion");
             }
         }
+
         public void SetGrupo(Grupo grupo)
         {
             grupoSinHorario.ID = grupo.ID;
