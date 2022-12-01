@@ -121,12 +121,19 @@ namespace SGH.Vistas.Horario.Consulta
                 {
                     //Console.WriteLine(sesion.ID + " " + sesion.DiaSemana + " " + sesion.HoraInicio + " " + sesion.ID_Grupo);
 
-                    Materia materia = horarioDAO.GetMateriaBySesion(sesion.ID);                    
+                    Profesor_Materia profesor_Materia = horarioDAO.GetProfesorMateriaBySesion(sesion.ID);
+                    Profesor profesor = horarioDAO.GetProfesorByRFC(profesor_Materia.RFC_Profesor);                    
+                    Materia materia = horarioDAO.GetMateriaByNRC(profesor_Materia.NRC_Materia);
+
 
                     List<int> listaHorario = GetListaHora(Int32.Parse(sesion.HoraInicio));
                     int indexColumna = GetColumnaDia(sesion.DiaSemana);
                     int posicion = listaHorario[indexColumna];
-                    string contenido = "NRC: "+materia.NRC + "\n\n" + materia.Nombre;
+                    string contenido = "NRC: "+materia.NRC
+                                       + "\n"+
+                                       "RFC: "+ profesor.RFC
+                                       +"\n" +
+                                       materia.Nombre;
 
                     SetCampo(contenido, posicion, materia.Color);
 

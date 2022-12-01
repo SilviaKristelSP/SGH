@@ -85,9 +85,9 @@ namespace SGH.DAOs
             return sesiones;
         }
 
-        public Materia GetMateriaBySesion(string sesionID)
+        public Profesor_Materia GetProfesorMateriaBySesion(string sesionID)
         {
-            Materia materia = null;
+            Profesor_Materia profesor_Materia = null;
                       
             Materia_Sesion materia_Sesion = sghContext.Materia_Sesion.Where(ms => ms.ID_Sesion == sesionID).FirstOrDefault();    
             if (materia_Sesion != null)
@@ -95,12 +95,12 @@ namespace SGH.DAOs
                 Profesor_Materia profesorMateria = sghContext.Profesor_Materia.Where(pm => pm.ID_Profesor_Materia == materia_Sesion.ID_Profesor_Materia).FirstOrDefault();
                 if (profesorMateria != null)
                 {
-                    materia = sghContext.Materias.Where(m => m.NRC == profesorMateria.NRC_Materia).FirstOrDefault();
+                    profesor_Materia = profesorMateria;
                 }                
             }
                       
 
-            return materia;
+            return profesor_Materia;
         }
 
         public List<Materia> GetMateriasBySemestre(int semestre)
@@ -138,8 +138,7 @@ namespace SGH.DAOs
         }
 
         public List<Profesor> GetProfesoresByNRC(string nrc)
-        {
-            //List<Profesor_Materia> profesor_Materias = sghContext.Profesor_Materia.Where(pm => pm.NRC_Materia.Equals(nrc)).ToList();
+        {            
             List<Profesor> profesores = (from pm in (sghContext.Profesor_Materia.Where(pm => pm.NRC_Materia.Equals(nrc)).ToList())
                                         join prof in sghContext.Profesors
                                         on pm.RFC_Profesor equals prof.RFC
@@ -147,6 +146,18 @@ namespace SGH.DAOs
             return profesores;                                        
         }
 
+        public Profesor GetProfesorByRFC(string rfc)
+        {
+            Profesor profesor = sghContext.Profesors.Where(prof => prof.RFC.Equals(rfc)).FirstOrDefault();
+            return profesor;
+        }
+
+        public Materia GetMateriaByNRC(string nrc)
+        {
+            Materia materia = sghContext.Materias.Where(mt => mt.NRC.Equals(nrc)).FirstOrDefault();
+            return materia;
+        }
+        
         public Persona GetPersonaByID(string idPersona)
         {
             Persona persona = sghContext.Personas.Where(pers => pers.ID.Equals(idPersona)).FirstOrDefault();

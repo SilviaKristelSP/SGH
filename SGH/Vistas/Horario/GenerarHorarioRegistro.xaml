@@ -20,7 +20,7 @@
         <materialDesign:PackIcon Kind="ArrowULeftBottomBold" Margin="10,20,0,0" Visibility="Visible" Foreground="Black"
                                      Cursor="Hand" Width="58" Height="44" MouseLeftButtonDown="Salir"/>
 
-        <TextBlock Margin="0,55,0,551" HorizontalAlignment="Center" FontSize="45"
+        <TextBlock Margin="0,20,0,551" HorizontalAlignment="Center" FontSize="45"
                 FontFamily="roboto" Text="Generación de Horarios" FontWeight="Medium"      
                 TextWrapping="Wrap"/>
 
@@ -29,7 +29,7 @@
             <StackPanel Height="550" Width="450" Margin="20 0 0 0">
 
                 <Grid Name="gridBoardMaterias" Height="550" Width="450">
-                    <ListBox Name="listBoxMaterias" Padding="0" BorderThickness="1" >
+                    <ListBox Name="listBoxMaterias" MouseUp="SeleccionMateria" Padding="0" BorderThickness="1" >
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <UniformGrid Columns="2" Rows="15"/>
@@ -40,7 +40,7 @@
             </StackPanel>
             
             <StackPanel Height="550" Width="500" Margin="10 0 0 0">
-                <Grid Name="gridBoard" Height="500" Width="500">
+                <Grid Name="gridBoard" Height="465" Width="500">
                     <ListBox Name="listBoxGenerarHorario" Padding="0" BorderThickness="1" >
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
@@ -49,7 +49,18 @@
                         </ListBox.ItemsPanel>
                     </ListBox>
                 </Grid>
-               
+
+                <Button x:Name="botonConsultarHorario" HorizontalAlignment="Center" Background="#6B4240"
+                    BorderBrush="#6B4240" Height="33" Width="500" Foreground="White"
+                    Style="{StaticResource MaterialDesignRaisedButton}"                
+                    materialDesign:ButtonAssist.CornerRadius="5"
+                    ToolTip="Consultar" 
+                    IsEnabled="True" Margin="0 10 0 0"
+                >
+                    <TextBlock
+                    Text="Consultar Horario" />
+                </Button>
+
                 <Button x:Name="botonContinuarGeneracion" HorizontalAlignment="Center" Background="#6B4240"
                     BorderBrush="#6B4240" Height="33" Width="500" Foreground="White"
                     Style="{StaticResource MaterialDesignRaisedButton}"                

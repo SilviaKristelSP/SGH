@@ -58,11 +58,14 @@ namespace SGH.Vistas.Horario
         public GenerarHorarioRegistro()
         {
             InitializeComponent();
+            //SetListaProfesorMateria();
             SetGrupo();
             SetRangos();
-            SetTableroHorario();                        
+            SetTableroHorario();
             //SetMateriasDisponibles();
-            SetListaProfesorMateria();
+            SetMateriasDisponiblesProvicional();
+
+
         }
 
         #region Tabla Horario
@@ -278,29 +281,79 @@ namespace SGH.Vistas.Horario
             listaProfesorMateria = generarHorarioRegistroProfesores.GetListaProfesorMateriaFinal();            
         }
 
-
         public void SetMateriasDisponibles()
+        {
+            //listaProfesorMateria
+            //Materia : Mate_2-Matemáticas II
+            //Profesor : profesor1-Angel
+
+            int indexMateria = 0;
+            foreach (ProfesorMateria profesorMateria in listaProfesorMateria)
+            {                
+
+                string[] materiaInformacion = profesorMateria.Materia.Split('-');
+                string nrc = materiaInformacion[0];
+                string nombre = materiaInformacion[1];                
+
+                string[] profesorInformacion = profesorMateria.Profesor.Split('-');
+                string rfc = profesorInformacion[0];
+
+                Materia materia = horarioDAO.GetMateriaByNRC(nrc);                
+                materiasSesiones.Add(nombre, materia.NumSesiones);
+                string contenido = "N° Sesiones: " + materia.NumSesiones+
+                                    "\n" +
+                                    "NRC: " + nrc +
+                                    "\n" +
+                                    "RFC: " + rfc
+                                    + "\n" +
+                                    nombre;
+                
+                Border border = CrearElemento(contenido, materia.Color, true);                
+                InsertarCampo(border, indexMateria, listBoxMaterias);
+                indexMateria++;
+            }                    
+        }
+
+        public void SetMateriasDisponiblesProvicional()
         {
 
             List<Materia> listaMaterias = horarioDAO.GetMateriasBySemestre(2);
-            int indexMateria = 0;            
+            int indexMateria = 0;
 
             foreach (Materia materia in listaMaterias)
-            {                
+            {
 
                 materiasSesiones.Add(materia.Nombre, materia.NumSesiones);
 
-                string contenido = "N° Sesiones: " + materia.NumSesiones + "\n" + materia.Nombre;
-               
-                StackPanel stackPanel = CrearElementoMateria(materia);
+                string contenido = "Sesiones: " + materia.NumSesiones + "\n" + materia.Nombre;
 
-                InsertarMateria(stackPanel, indexMateria, listBoxMaterias);
+                Border border = CrearElemento(contenido, materia.Color, true);
+                InsertarCampo(border, indexMateria, listBoxMaterias);
                 indexMateria++;
 
                 //stackPanel.Children.Clear();
-            }            
+            }
         }
 
+        public void SeleccionMateria(object sender, RoutedEventArgs e)
+        {
 
+            var border = (Border)listBoxMaterias.SelectedItem;
+            TextBlock textBlock = (TextBlock)border.Child;
+
+            string contenido = textBlock.Text;
+            Console.WriteLine(contenido);
+
+            string[] materiaInformacion = contenido.Split('\n');
+            string sesionesInformacion = materiaInformacion[0];
+
+            string[] numSesionesInformacion = sesionesInformacion.Split(' ');
+            int numSesiones = Int32.Parse(numSesionesInformacion[1]);
+
+            //int numSesionesActualizadas = numSesiones--;
+
+            Console.WriteLine(numSesiones);
+
+        }
     }
 }
