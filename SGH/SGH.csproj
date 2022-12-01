@@ -277,6 +277,7 @@
     <Resource Include="Recursos\FondoLogIn.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Recursos\retroceder.png" />
     <Resource Include="Recursos\simbolo_mas.png" />
     <Resource Include="Recursos\imagen_persona.png" />
     <Resource Include="Recursos\img_PDF.png" />

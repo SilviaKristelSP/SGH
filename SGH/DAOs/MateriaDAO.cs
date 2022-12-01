@@ -60,19 +60,20 @@ namespace SGH.DAOs
             return ejecucionExitosa;
         }
 
-        public static bool asignarMateriasProfesor(string idProf, List<Materia> impartidas)
+        public static bool asignarMateriasProfesor(List<Profesor_Materia> impartidas)
         {
             bool ejecucionExitosa = true;
             try
             {
                 using (SGHContext bd = new SGHContext())
                 {
-                    for(int i = 0; i < impartidas.Count; i++)
+                    foreach (Profesor_Materia pf in impartidas)
                     {
                         var materia = new Profesor_Materia();
-                        materia.RFC_Profesor = idProf;
-                        materia.NRC_Materia = impartidas[i].NRC;
+                        materia.NRC_Materia = pf.NRC_Materia;
+                        materia.RFC_Profesor = pf.RFC_Profesor;
                         materia.ID_Profesor_Materia = Util.generarID(50);
+                        bd.Profesor_Materia.Add(materia);
                     }
                     bd.SaveChanges();
                 }

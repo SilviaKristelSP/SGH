@@ -32,7 +32,7 @@ namespace SGH.Vistas.Profesores
         private static Administrador administradorMenu = new Administrador();
         private Persona persona = new Persona();
         private Profesor profesor = new Profesor();
-
+        private List<Profesor_Materia> materiasAsignadas = new List<Profesor_Materia>();
         public AgregarProfesor()
         {
             InitializeComponent();
@@ -44,39 +44,36 @@ namespace SGH.Vistas.Profesores
             cargarMaterias();
         }
 
-        private void cargarMaterias()
+        private void clickAgregarProfesor(object sender, RoutedEventArgs e)
         {
-            List<Materia> listaMaterias = MateriaDAO.recuperarMaterias();
-            int semestreMax = MateriaDAO.obtenerUltimoSemestre();
-
-            for (int i = 1; i <= semestreMax; i++)
+            String id = "";
+            if (verificarFormulario())
             {
-                Label labelDinamico = new Label();
-                labelDinamico.FontSize = 14;
-                labelDinamico.FontWeight = System.Windows.FontWeights.Bold;
-                labelDinamico.Content = "Semestre " + i;
-                wpMaterias.Children.Add(labelDinamico);
-                foreach (Materia materia in listaMaterias)
+                id = Util.generarID(50);
+                if (verificarMateriasSeleccionadas())
                 {
-                    if(materia.Semestre == i)
+                    if (registrarEnBD(id, true))
+                        mostrarVentanaExito();
+                    else
+                        mostrarVentanaError();
+                }
+                else
+                {
+                    if (mostrarVentanaConfirmacion())
                     {
-                        CheckBox checkDinamico = new CheckBox();
-
-                        labelDinamico.Margin = new Thickness(5);
-                        //checkDinamico.DataContext = materia;
-                        checkDinamico.Content = materia.Nombre;
-                        checkDinamico.Name = materia.NRC;
-                        //checkDinamico.Content = DataContext.ToString();
-                        checkDinamico.Margin = new Thickness(0, 0, 15, 0);
-                        
-                        wpMaterias.Children.Add(checkDinamico);
+                        if (registrarEnBD(id, false))
+                            mostrarVentanaExito();
+                        else
+                            mostrarVentanaError();
                     }
-                    
                 }
             }
-
-            
+            else
+            {
+                mostrarVentanaFormularioVacio();
+            }
         }
+
 
         private bool verificarFormulario()
         {
@@ -85,37 +82,52 @@ namespace SGH.Vistas.Profesores
             if (txbNombre.Text.Equals(""))
             {
                 formularioAprobado = false;
-            }else if (txbApellidoP.Text.Equals(""))
+            }
+            else if (txbApellidoP.Text.Equals(""))
             {
                 formularioAprobado = false;
-            }else if (txbApellidoM.Text.Equals(""))
+            }
+            else if (txbApellidoM.Text.Equals(""))
             {
                 formularioAprobado = false;
-            }else if (txbCarrera.Text.Equals(""))
+            }
+            else if (txbCarrera.Text.Equals(""))
             {
                 formularioAprobado = false;
-            }else if (txbCURP.Text.Equals(""))
+            }
+            else if (txbCURP.Text.Equals(""))
             {
                 formularioAprobado = false;
-            }else if (tbNombreActa.Text.Equals(""))
+            }
+            else if (tbNombreActa.Text.Equals(""))
             {
                 formularioAprobado = false;
-            }else if (tbNombreContrato.Text.Equals(""))
+            }
+            else if (tbNombreContrato.Text.Equals(""))
             {
                 formularioAprobado = false;
-            }else if (tbNombreCURP.Text.Equals(""))
+            }
+            else if (tbNombreCURP.Text.Equals(""))
             {
                 formularioAprobado = false;
-            }else if (tbNombreINE.Text.Equals(""))
+            }
+            else if (tbNombreINE.Text.Equals(""))
             {
                 formularioAprobado = false;
-            }else if (tbNombreTitulo.Text.Equals(""))
+            }
+            else if (tbNombreTitulo.Text.Equals(""))
             {
                 formularioAprobado = false;
-            }else if (tbNombreFoto.Text.Equals(""))
+            }
+            else if (tbNombreFoto.Text.Equals(""))
             {
                 formularioAprobado = false;
-            }else if (cbTipoSangre.SelectedIndex < 0)
+            }
+            else if (cbTipoSangre.SelectedIndex < 0)
+            {
+                formularioAprobado = false;
+            }
+            else if (txbRFC.Text.Equals(""))
             {
                 formularioAprobado = false;
             }
@@ -126,12 +138,12 @@ namespace SGH.Vistas.Profesores
         private bool verificarMateriasSeleccionadas()
         {
             bool materiasSeleccionadas = true;
-            
+
             int cantidadSeleccionada = 0;
-            
+
             UIElementCollection elementosWp = wpMaterias.Children;
             List<CheckBox> listaCheckDinamicos = elementosWp.OfType<CheckBox>().ToList();
-            
+
             foreach (CheckBox check in listaCheckDinamicos)
             {
                 if (check.IsChecked == true)
@@ -143,10 +155,184 @@ namespace SGH.Vistas.Profesores
             {
                 materiasSeleccionadas = false;
             }
-            
+
             return materiasSeleccionadas;
         }
 
+        private void generarProfesor_Materia()
+        {
+            List<string> materias = obtenerMateriasSeleccionadas();
+            foreach(string materia in materias)
+            {
+                Profesor_Materia profesor_Materia = new Profesor_Materia();
+                profesor_Materia.RFC_Profesor = profesor.RFC;
+                profesor_Materia.NRC_Materia = materia;
+                materiasAsignadas.Add(profesor_Materia);
+            }
+        }
+
+        private List<string> obtenerMateriasSeleccionadas()
+        {
+            List<string> listaMaterias = new List<string>();
+
+            UIElementCollection elementosWp = wpMaterias.Children;
+            List<CheckBox> listaCheckDinamicos = elementosWp.OfType<CheckBox>().ToList();
+
+            foreach (CheckBox check in listaCheckDinamicos)
+            {
+                if (check.IsChecked == true)
+                {
+                    listaMaterias.Add(check.Name);
+                }
+            }
+
+            return listaMaterias;
+        }
+
+        private void llenarObjetoPersona(string idPersona)
+        {
+            persona.Nombre = txbNombre.Text;
+            persona.ApellidoPaterno = txbApellidoP.Text;
+            persona.ApellidoMaterno = txbApellidoM.Text;
+            persona.Curp = txbCURP.Text;
+            persona.Estado = "Activo";
+            persona.ID = idPersona;
+            persona.Clave_Escuela = "escuela-1";
+
+            ComboBoxItem item = (ComboBoxItem)cbTipoSangre.SelectedItem;
+            persona.TipoSangre = "" + item.Content;
+        }
+
+        private void llenarObjetoProfesor(string idPersona)
+        {
+            profesor.RFC = txbRFC.Text;
+            profesor.Carrera = txbCarrera.Text;
+            profesor.ID_Persona = idPersona;
+        }
+
+        private bool registrarEnBD(string idPersona, bool materias)
+        {
+            bool exito = false;
+            llenarObjetoPersona(idPersona);
+            if (PersonaDAO.registrarPersona(persona))
+            {
+                llenarObjetoProfesor(idPersona);
+                if (ProfesorDAO.registrarProfesor(profesor))
+                {
+                    if (materias)
+                    {
+                        generarProfesor_Materia();
+                        if (MateriaDAO.asignarMateriasProfesor(materiasAsignadas))
+                            exito = true;
+                    }
+                    else
+                    {
+                        exito = true;
+                    }
+
+                }
+            }
+
+            return exito;
+        }
+
+        //Dialogos
+        private bool mostrarVentanaConfirmacion()
+        {
+            Alerta alerta = new Alerta("El profesor no tiene materias asignadas, ¿está seguro de querer continuar?",
+                        Alertas.MessageType.Warning,
+                        MessageButtons.AcceptCancel, "medium");
+            bool seleccion = false;
+
+            MessageBoxCustom confirmation = new MessageBoxCustom(alerta);
+            confirmation.ShowDialog();
+            if (confirmation.GetDialog())
+            {
+                seleccion = true;
+            }
+            else
+            {
+                confirmation.Close();
+            }
+            return seleccion;
+        }
+
+        private bool mostrarVentanaConfirmacion2()
+        {
+            Alerta alerta = new Alerta("Cualquier registro en proceso será perdido, ¿está seguro de querer continuar?",
+                        Alertas.MessageType.Warning,
+                        MessageButtons.AcceptCancel, "medium");
+            bool seleccion = false;
+
+            MessageBoxCustom confirmation = new MessageBoxCustom(alerta);
+            confirmation.ShowDialog();
+            if (confirmation.GetDialog())
+            {
+                seleccion = true;
+            }
+            else
+            {
+                confirmation.Close();
+            }
+            return seleccion;
+        }
+
+        private void mostrarVentanaExito()
+        {
+            Alerta alerta = new Alerta("Profesor resgitrado exitosamente", Alertas.MessageType.Success,
+                        MessageButtons.Ok, "medium");
+            MessageBoxCustom mensaje = new MessageBoxCustom(alerta);
+            mensaje.ShowDialog();
+            if (mensaje.GetDialog())
+            {
+                mensaje.Close();
+            }
+            cambiarAVentanaProfesores();
+        }
+
+        private void mostrarVentanaError()
+        {
+            Alerta alerta = new Alerta("Error con la base de datos, intente más tarde", Alertas.MessageType.Error,
+                        MessageButtons.Ok, "medium");
+            MessageBoxCustom mensaje = new MessageBoxCustom(alerta);
+            mensaje.ShowDialog();
+            if (mensaje.GetDialog())
+            {
+                mensaje.Close();
+            }
+            cambiarAVentanaProfesores();
+        }
+
+        private void mostrarVentanaFormularioVacio()
+        {
+            Alerta alerta = new Alerta("Debe llenar el formulario para continuar", Alertas.MessageType.Warning,
+                        MessageButtons.Ok, "medium");
+            MessageBoxCustom mensaje = new MessageBoxCustom(alerta);
+            mensaje.ShowDialog();
+            if (mensaje.GetDialog())
+            {
+                mensaje.Close();
+            }
+        }
+
+        private void cambiarAVentanaProfesores()
+        {
+            Profesores profesores = new Profesores();
+            profesores.Show();
+            this.Close();
+        }
+
+        private void ClickRetroceder(object sender, RoutedEventArgs e)
+        {
+            if (mostrarVentanaConfirmacion2())
+            {
+                Profesores profesores = new Profesores();
+                profesores.Show();
+                this.Close();
+            }
+        }
+
+        //Funcionalidades Manejo Archivos e Imagen
         private void clickAgregarTitulo(object sender, RoutedEventArgs e)
         {
             DatosArchivo archivo = Util.convertirPDFABites();
@@ -164,7 +350,7 @@ namespace SGH.Vistas.Profesores
             {
                 tbNombreActa.Text = archivo.NombreArchivo;
                 persona.ActaNacimiento = archivo.PDFEnByte;
-            } 
+            }
         }
 
         private void clickAgregarINE(object sender, RoutedEventArgs e)
@@ -175,7 +361,7 @@ namespace SGH.Vistas.Profesores
                 tbNombreINE.Text = archivo.NombreArchivo;
                 profesor.INE = archivo.PDFEnByte;
             }
-                
+
         }
 
         private void clickAgregarContrato(object sender, RoutedEventArgs e)
@@ -185,7 +371,7 @@ namespace SGH.Vistas.Profesores
             {
                 tbNombreContrato.Text = archivo.NombreArchivo;
                 profesor.DocContrato = archivo.PDFEnByte;
-            }                
+            }
         }
 
         private void clickAgregarCURPDoc(object sender, RoutedEventArgs e)
@@ -195,124 +381,19 @@ namespace SGH.Vistas.Profesores
             {
                 tbNombreCURP.Text = archivo.NombreArchivo;
                 persona.DocCurp = archivo.PDFEnByte;
-            }                
+            }
         }
 
         private void clickAgregarFoto(object sender, RoutedEventArgs e)
         {
             DatosArchivo archivoImg = Util.convertirImgABitesYBitMap();
-            if(archivoImg != null)
-            {                
+            if (archivoImg != null)
+            {
                 Console.WriteLine(archivoImg.ImagenBitMap.ToString());
                 imgFoto.Source = archivoImg.ImagenBitMap;
                 tbNombreFoto.Text = archivoImg.NombreArchivo;
                 persona.Foto = archivoImg.ImgEnByte;
             }
-        }
-
-        private void clickAgregarProfesor(object sender, RoutedEventArgs e)
-        {
-            if (verificarFormulario())
-            {
-                if (verificarMateriasSeleccionadas())
-                {
-                    Alerta alerta = new Alerta("Profesor resgitrado exitosamente", Alertas.MessageType.Success, 
-                        MessageButtons.Ok, "medium");
-                    MessageBoxCustom mensaje = new MessageBoxCustom(alerta);
-                    mensaje.Show();
-                    llenarObjetoPersona();
-                    if (pruebaEdicion())
-                    {
-                        Console.WriteLine("éxito");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Fallo");
-                    }
-                }
-                else
-                {
-                    Alerta alerta = new Alerta("El profesor no tiene materias asignadas, ¿está seguro de querer continuar?", 
-                        Alertas.MessageType.Warning,
-                        MessageButtons.AcceptCancel, "medium");
-                    MessageBoxCustom mensaje = new MessageBoxCustom(alerta);
-                    mensaje.Show();
-                    if (mensaje.GetDialog())
-                    {
-                        Alerta alerta2 = new Alerta("Profesor resgitrado exitosamente", Alertas.MessageType.Success,
-                        MessageButtons.Ok, "medium");
-                        MessageBoxCustom mensaje2 = new MessageBoxCustom(alerta2);
-                        mensaje2.Show();
-                    }
-                }
-            }
-            else
-            {
-                Alerta alerta = new Alerta("Debe llenar el formulario para continuar", Alertas.MessageType.Warning,
-                        MessageButtons.Ok, "medium");
-                MessageBoxCustom mensaje = new MessageBoxCustom(alerta);
-                mensaje.Show();
-                pruebaCBaja();
-            }
-        }
-
-        private bool guardarPersona()
-        {
-            return PersonaDAO.registrarPersona(persona);
-        }
-
-        private bool pruebaEdicion()
-        {
-            return PersonaDAO.editarPersona(persona);
-        }
-
-        private void pruebaEncontrarObj()
-        {
-            Persona prueba = PersonaDAO.recuperarPersonaID("ITWw56AQjGNJwtvrENpnQeBUJmP4C8xsM93rtTUIKpV6TfsJjP");
-            Console.WriteLine(prueba.ID + "\n" + prueba.Nombre + "\n" + prueba.ApellidoMaterno + "\n" + prueba.ApellidoPaterno);
-        }
-
-        private void pruebaBaja()
-        {
-            if (PersonaDAO.darDeBajaPersona("ITWw56AQjGNJwtvrENpnQeBUJmP4C8xsM93rtTUIKpV6TfsJjP"))
-            {
-                Console.WriteLine("Baja exitosa");
-            }
-            else
-            {
-                Console.WriteLine("Error baja");
-            }
-            
-        }
-
-        private void pruebaCBaja()
-        {
-            if (PersonaDAO.cancelarBajaPersona("ITWw56AQjGNJwtvrENpnQeBUJmP4C8xsM93rtTUIKpV6TfsJjP"))
-            {
-                Console.WriteLine("Cancelacion exitosa");
-            }
-            else
-            {
-                Console.WriteLine("la baja SIGUE");
-            }
-        }
-
-
-
-        private void llenarObjetoPersona()
-        {
-            //String idPersona = Util.generarID(50);
-            String idPersona = "ITWw56AQjGNJwtvrENpnQeBUJmP4C8xsM93rtTUIKpV6TfsJjP";
-            persona.Nombre = txbNombre.Text;
-            persona.ApellidoPaterno = txbApellidoP.Text;
-            persona.ApellidoMaterno = txbApellidoM.Text;
-            persona.Curp = txbCURP.Text;
-            persona.Estado = "Activo";
-            persona.ID = idPersona;
-            persona.Clave_Escuela = "escuela-1";
-
-            ComboBoxItem item = (ComboBoxItem)cbTipoSangre.SelectedItem;
-            persona.TipoSangre = "" + item.Content;
         }
 
         private void clickAbrirArchivoTitulo(object sender, MouseButtonEventArgs e)
@@ -354,7 +435,36 @@ namespace SGH.Vistas.Profesores
                 Util.abrirArchivoPDF(profesor.DocContrato, tbNombreContrato.Text);
             }
         }
+       
+        //Configuración Ventana
+        private void cargarMaterias()
+        {
+            List<Materia> listaMaterias = MateriaDAO.recuperarMaterias();
+            int semestreMax = MateriaDAO.obtenerUltimoSemestre();
 
+            for (int i = 1; i <= semestreMax; i++)
+            {
+                Label labelDinamico = new Label();
+                labelDinamico.FontSize = 14;
+                labelDinamico.FontWeight = System.Windows.FontWeights.Bold;
+                labelDinamico.Content = "Semestre " + i;
+                wpMaterias.Children.Add(labelDinamico);
+                foreach (Materia materia in listaMaterias)
+                {
+                    if (materia.Semestre == i)
+                    {
+                        CheckBox checkDinamico = new CheckBox();
+
+                        labelDinamico.Margin = new Thickness(5);
+                        checkDinamico.Content = materia.Nombre;
+                        checkDinamico.Name = materia.NRC;
+                        checkDinamico.Margin = new Thickness(0, 0, 15, 0);
+
+                        wpMaterias.Children.Add(checkDinamico);
+                    }
+                }
+            }
+        }
 
         //Funcionalidad MENÚ
         public void SetInformacionAdministrador(Administrador administrador)
@@ -409,6 +519,6 @@ namespace SGH.Vistas.Profesores
             }
         }
 
-        
+
     }
 }

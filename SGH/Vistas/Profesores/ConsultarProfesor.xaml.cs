@@ -27,10 +27,13 @@ namespace SGH.Vistas.Profesores
         private static Administrador administradorMenu = new Administrador();
         private Persona persona = new Persona();
         private Profesor profesor = new Profesor();
+        private String id = "";
 
-        public ConsultarProfesor()
+        public ConsultarProfesor(String idPersona)
         {
             InitializeComponent();
+            this.id = idPersona;
+
             administradorMenu.Rol = "secretaria";
             administradorMenu.NombreCompleto = "usuario prueba";
 
@@ -144,9 +147,14 @@ namespace SGH.Vistas.Profesores
 
         private void clickEditar(object sender, RoutedEventArgs e)
         {
-
+            //TO DO 
         }
 
-
+        private void ClickRetroceder(object sender, RoutedEventArgs e)
+        {
+            Profesores profesores = new Profesores();
+            profesores.Show();
+            this.Close();
+        }
     }
 }

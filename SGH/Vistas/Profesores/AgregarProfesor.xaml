@@ -331,8 +331,8 @@
         <Label Content="Apellido&#xA;Materno" HorizontalAlignment="Left" Margin="749,71,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txbApellidoM" HorizontalAlignment="Left" Margin="811,78,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="152"/>
 
-        <Label Content="Tipo de&#xA;Sangre" HorizontalAlignment="Left" Margin="299,133,0,0" VerticalAlignment="Top"/>
-        <ComboBox x:Name="cbTipoSangre" HorizontalAlignment="Left" Margin="363,141,0,0" VerticalAlignment="Top" Width="74">
+        <Label Content="Tipo de&#xA;Sangre" HorizontalAlignment="Left" Margin="299,117,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="cbTipoSangre" HorizontalAlignment="Left" Margin="363,125,0,0" VerticalAlignment="Top" Width="81">
             <ComboBoxItem Content="A+"/>
             <ComboBoxItem Content="A-"/>
             <ComboBoxItem Content="B+"/>
@@ -343,63 +343,68 @@
             <ComboBoxItem Content="O-"/>
         </ComboBox>
 
-        <Label Content="Carrera" HorizontalAlignment="Left" Margin="485,141,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txbCarrera" HorizontalAlignment="Left" Margin="539,140,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="152"/>
+        <Label Content="Carrera" HorizontalAlignment="Center" Margin="0,126,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txbCarrera" HorizontalAlignment="Left" Margin="530,125,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186"/>
 
-        <Label Content="CURP" HorizontalAlignment="Left" Margin="723,142,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txbCURP" HorizontalAlignment="Left" Margin="777,141,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186"/>
+        <Label Content="CURP" HorizontalAlignment="Left" Margin="723,126,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txbCURP" HorizontalAlignment="Left" Margin="777,125,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186"/>
 
-        <Label Content="Titulo" HorizontalAlignment="Left" Margin="368,212,0,0" VerticalAlignment="Top"/>
-        <TextBlock x:Name="tbNombreTitulo" HorizontalAlignment="Left" Margin="485,205,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="73" Height="32" FontSize="10" TextDecorations="Underline" Foreground="Chocolate" MouseLeftButtonDown="clickAbrirArchivoTitulo"/>
-        <Image Source="/Recursos/img_PDF.png" HorizontalAlignment="Left" Height="35" Margin="427,200,0,0" VerticalAlignment="Top" Width="35"/>
-        <Button Background="#6B4240" BorderBrush="#6B4240" HorizontalAlignment="Left" Margin="574,206,0,0" VerticalAlignment="Top" Width="30" Height="30" Padding="1" Click="clickAgregarTitulo">
+        <Label Content="RFC" HorizontalAlignment="Left" Margin="482,167,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txbRFC" HorizontalAlignment="Left" Margin="522,166,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="198"/>
+
+        <Label Content="Titulo" HorizontalAlignment="Left" Margin="368,222,0,0" VerticalAlignment="Top"/>
+        <TextBlock x:Name="tbNombreTitulo" HorizontalAlignment="Left" Margin="485,215,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="73" Height="32" FontSize="10" TextDecorations="Underline" Foreground="Chocolate" MouseLeftButtonDown="clickAbrirArchivoTitulo"/>
+        <Image Source="/Recursos/img_PDF.png" HorizontalAlignment="Left" Height="35" Margin="427,210,0,0" VerticalAlignment="Top" Width="35"/>
+        <Button Background="#6B4240" BorderBrush="#6B4240" HorizontalAlignment="Left" Margin="574,216,0,0" VerticalAlignment="Top" Width="30" Height="30" Padding="1" Click="clickAgregarTitulo">
             <Image Source="/Recursos/simbolo_mas.png" Width="18" Height="18"></Image>
         </Button>
 
-        <Label Content="Contrato" HorizontalAlignment="Left" Margin="655,206,0,0" VerticalAlignment="Top"/>
-        <TextBlock x:Name="tbNombreContrato" HorizontalAlignment="Left" Margin="767,199,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="73" Height="32" FontSize="10" TextDecorations="Underline" Foreground="Chocolate" MouseLeftButtonDown="clickAbrirArchivoContrato"/>
-        <Image Source="/Recursos/img_PDF.png" HorizontalAlignment="Left" Height="35" Margin="718,200,0,0" VerticalAlignment="Top" Width="35"/>
-        <Button Background="#6B4240" BorderBrush="#6B4240"  HorizontalAlignment="Left" Margin="851,200,0,0" VerticalAlignment="Top" Width="30" Height="30" Padding="1" Click="clickAgregarContrato">
+        <Label Content="Contrato" HorizontalAlignment="Left" Margin="655,216,0,0" VerticalAlignment="Top"/>
+        <TextBlock x:Name="tbNombreContrato" HorizontalAlignment="Left" Margin="767,209,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="73" Height="32" FontSize="10" TextDecorations="Underline" Foreground="Chocolate" MouseLeftButtonDown="clickAbrirArchivoContrato"/>
+        <Image Source="/Recursos/img_PDF.png" HorizontalAlignment="Left" Height="35" Margin="718,210,0,0" VerticalAlignment="Top" Width="35"/>
+        <Button Background="#6B4240" BorderBrush="#6B4240"  HorizontalAlignment="Left" Margin="851,210,0,0" VerticalAlignment="Top" Width="30" Height="30" Padding="1" Click="clickAgregarContrato">
             <Image Source="/Recursos/simbolo_mas.png" Width="18" Height="18"></Image>
         </Button>
 
-        <Label Content="Acta de Na-&#xA;cimiento" HorizontalAlignment="Left" Margin="364,262,0,0" VerticalAlignment="Top"/>
-        <TextBlock x:Name="tbNombreActa" HorizontalAlignment="Left" Margin="481,260,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="73" Height="32" FontSize="10" TextDecorations="Underline" Foreground="Chocolate" MouseLeftButtonDown="clickAbrirArchivoActaNacimiento"/>
-        <Image Source="/Recursos/img_PDF.png" HorizontalAlignment="Left" Height="35" Margin="431,264,0,0" VerticalAlignment="Top" Width="36"/>
-        <Button Background="#6B4240"  BorderBrush="#6B4240" HorizontalAlignment="Left" Margin="575,264,0,0" VerticalAlignment="Top" Width="30" Height="30" Padding="1" Click="clickAgregarActaNacimiento">
+        <Label Content="Acta de Na-&#xA;cimiento" HorizontalAlignment="Left" Margin="364,272,0,0" VerticalAlignment="Top"/>
+        <TextBlock x:Name="tbNombreActa" HorizontalAlignment="Left" Margin="481,270,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="73" Height="32" FontSize="10" TextDecorations="Underline" Foreground="Chocolate" MouseLeftButtonDown="clickAbrirArchivoActaNacimiento"/>
+        <Image Source="/Recursos/img_PDF.png" HorizontalAlignment="Left" Height="35" Margin="431,274,0,0" VerticalAlignment="Top" Width="36"/>
+        <Button Background="#6B4240"  BorderBrush="#6B4240" HorizontalAlignment="Left" Margin="575,274,0,0" VerticalAlignment="Top" Width="30" Height="30" Padding="1" Click="clickAgregarActaNacimiento">
             <Image Source="/Recursos/simbolo_mas.png" Width="18" Height="18"></Image>
         </Button>
 
-        <Label Content="INE" HorizontalAlignment="Left" Margin="370,333,0,0" VerticalAlignment="Top"/>
-        <TextBlock x:Name="tbNombreINE" HorizontalAlignment="Left" Margin="481,325,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="73" Height="32" FontSize="10" TextDecorations="Underline" Foreground="Chocolate" MouseLeftButtonDown="clickAbrirArchivoINE"/>
-        <Image Source="/Recursos/img_PDF.png" HorizontalAlignment="Left" Height="35" Margin="433,328,0,0" VerticalAlignment="Top" Width="35"/>
-        <Button Background="#6B4240" BorderBrush="#6B4240" HorizontalAlignment="Left" Margin="576,326,0,0" VerticalAlignment="Top" Width="30" Height="30" Padding="1" Click="clickAgregarINE">
+        <Label Content="INE" HorizontalAlignment="Left" Margin="370,343,0,0" VerticalAlignment="Top"/>
+        <TextBlock x:Name="tbNombreINE" HorizontalAlignment="Left" Margin="481,334,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="73" Height="32" FontSize="10" TextDecorations="Underline" Foreground="Chocolate" MouseLeftButtonDown="clickAbrirArchivoINE"/>
+        <Image Source="/Recursos/img_PDF.png" HorizontalAlignment="Left" Height="35" Margin="433,338,0,0" VerticalAlignment="Top" Width="35"/>
+        <Button Background="#6B4240" BorderBrush="#6B4240" HorizontalAlignment="Left" Margin="576,335,0,0" VerticalAlignment="Top" Width="30" Height="30" Padding="1" Click="clickAgregarINE">
             <Image Source="/Recursos/simbolo_mas.png" Width="18" Height="18"/>
         </Button>
 
-        <Label Content="CURP Doc-&#xA;umento" HorizontalAlignment="Left" Margin="369,391,0,0" VerticalAlignment="Top"/>
-        <TextBlock x:Name="tbNombreCURP" HorizontalAlignment="Left" Margin="485,390,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="73" Height="32" FontSize="10" TextDecorations="Underline" Foreground="Chocolate" MouseLeftButtonDown="clickAbrirArchivoCURPDoc"/>
-        <Image Source="/Recursos/img_PDF.png" HorizontalAlignment="Left" Height="35" Margin="431,391,0,0" VerticalAlignment="Top" Width="35"/>
-        <Button Background="#6B4240" BorderBrush="#6B4240"  HorizontalAlignment="Left" Margin="574,390,0,0" VerticalAlignment="Top" Width="30" Height="30" Padding="1" Click="clickAgregarCURPDoc">
+        <Label Content="CURP Doc-&#xA;umento" HorizontalAlignment="Left" Margin="369,401,0,0" VerticalAlignment="Top"/>
+        <TextBlock x:Name="tbNombreCURP" HorizontalAlignment="Left" Margin="485,400,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="73" Height="32" FontSize="10" TextDecorations="Underline" Foreground="Chocolate" MouseLeftButtonDown="clickAbrirArchivoCURPDoc"/>
+        <Image Source="/Recursos/img_PDF.png" HorizontalAlignment="Left" Height="35" Margin="431,401,0,0" VerticalAlignment="Top" Width="35"/>
+        <Button Background="#6B4240" BorderBrush="#6B4240"  HorizontalAlignment="Left" Margin="574,400,0,0" VerticalAlignment="Top" Width="30" Height="30" Padding="1" Click="clickAgregarCURPDoc">
             <Image Source="/Recursos/simbolo_mas.png" Width="18" Height="18"/>
         </Button>
 
-        <Label Content="Foto" HorizontalAlignment="Left" Margin="655,270,0,0" VerticalAlignment="Top"/>
-        <Image x:Name="imgFoto" Source="/Recursos/imagen_persona.png" HorizontalAlignment="Left" Height="145" Margin="697,264,0,0" VerticalAlignment="Top" Width="145" Stretch="UniformToFill"/>
-        <Button Background="#6B4240" BorderBrush="#6B4240" HorizontalAlignment="Left" Margin="851,382,0,0" VerticalAlignment="Top" Width="30" Height="30" Padding="1" Click="clickAgregarFoto" Cursor="Hand">
+        <Label Content="Foto" HorizontalAlignment="Left" Margin="655,280,0,0" VerticalAlignment="Top"/>
+        <Image x:Name="imgFoto" Source="/Recursos/imagen_persona.png" HorizontalAlignment="Left" Height="145" Margin="697,274,0,0" VerticalAlignment="Top" Width="145" Stretch="UniformToFill"/>
+        <Button Background="#6B4240" BorderBrush="#6B4240" HorizontalAlignment="Left" Margin="851,392,0,0" VerticalAlignment="Top" Width="30" Height="30" Padding="1" Click="clickAgregarFoto" Cursor="Hand">
             <Image Source="/Recursos/simbolo_mas.png" Width="18" Height="18"/>
         </Button>
-        <TextBlock x:Name="tbNombreFoto" HorizontalAlignment="Left" Margin="706,419,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="134" Height="14" FontSize="10" Foreground="#fafbfb"/>
+        <TextBlock x:Name="tbNombreFoto" HorizontalAlignment="Left" Margin="706,429,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="134" Height="14" FontSize="10" Foreground="#fafbfb"/>
 
 
-        <Label Content="Materias a&#xA;Impartir" HorizontalAlignment="Left" Margin="456,498,0,0" VerticalAlignment="Top"/>
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="575,441,130,92" BorderBrush="Black">
-            <WrapPanel x:Name="wpMaterias" Height="2000"  Width="200" Margin="10" Orientation="Vertical"/>
+        <Label Content="Materias a&#xA;Impartir" HorizontalAlignment="Left" Margin="456,508,0,0" VerticalAlignment="Top"/>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="575,451,130,82" BorderBrush="Black">
+            <WrapPanel x:Name="wpMaterias" Height="2000"  Width="225" Margin="10" Orientation="Vertical"/>
         </ScrollViewer>
         <Button Content="Agregar" HorizontalAlignment="Left" Margin="308,614,0,0" VerticalAlignment="Top" Width="640" Background="#6D1814" BorderBrush="#6D1814" Click="clickAgregarProfesor"/>
 
 
-
+        <Button Background="#fafbfb" BorderBrush="#fafbfb" HorizontalAlignment="Left" Margin="304,12,0,0" VerticalAlignment="Top" Width="50" Height="50" Padding="1" Click="ClickRetroceder" >
+            <Image Source="/Recursos/retroceder.png" Width="48" Height="48"></Image>
+        </Button>
 
 
 

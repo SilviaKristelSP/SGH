@@ -61,6 +61,11 @@ namespace SGH.Utiles
             return xPersona.Nombre + xPersona.ApellidoPaterno + xPersona.ApellidoMaterno;
         }
 
+        public static string obtenerNombreConEspacios(Persona xPersona)
+        {
+            return xPersona.Nombre + " " + xPersona.ApellidoPaterno + " " + xPersona.ApellidoMaterno;
+        }
+
         public static DatosArchivo convertirImgABitesYBitMap()
         {
             OpenFileDialog abrir = new OpenFileDialog();
@@ -86,6 +91,38 @@ namespace SGH.Utiles
                 return datos;
             }
             return null;
+        }
+
+        public static String generarRutaParaImagen(byte[] imgByte, String nombreArchivo)
+        {
+            //List<String> ret = new List<String>();
+
+            string path = AppDomain.CurrentDomain.BaseDirectory;
+            Console.WriteLine(path);
+            string folder = path + "temp\\";
+            string complete = path + "temp";
+            string fullFilePath = folder + "Foto" + nombreArchivo + ".jpg";
+            if (!Directory.Exists(folder))
+                Directory.CreateDirectory(folder);
+            if (File.Exists(fullFilePath))
+            {
+                Console.WriteLine(fullFilePath);
+                try
+                {
+                    File.Delete(fullFilePath);
+                }
+                catch (System.IO.IOException)
+                {
+                    Console.WriteLine("pinche programa feo");
+                }
+                
+            }
+
+
+
+            File.WriteAllBytes(fullFilePath, imgByte);
+
+            return fullFilePath;
         }
 
         public static string generarID(int tamanioID)

@@ -53,6 +53,10 @@ namespace SGH.DAOs
                 using (SGHContext bd = new SGHContext())
                 {
                     bd.Personas.Find(id).Estado = "Activo";
+
+                    Baja baja = bd.Bajas.Where(b => b.ID_Persona == id).First();
+                    bd.Bajas.Remove(baja);
+
                     bd.SaveChanges();
                 }
             }
@@ -81,14 +85,24 @@ namespace SGH.DAOs
             return ejecucionExitosa;
         }
 
-        public static IEnumerable<Persona> recuperarPersonas(string tipo)
+        public static List<Persona> recuperarPersonas(List<String> ids, string estado)
         {
-            IEnumerable<Persona> lista = null;
+            List<Persona> lista = null;
+            Persona personaAux = new Persona();
             try
             {
                 using (SGHContext bd = new SGHContext())
                 {
-                    lista = bd.Personas;
+                    lista = new List<Persona>();
+                    foreach (String id in ids)
+                    {
+                        List<Persona> listaAux = new List<Persona>();
+
+                        listaAux = (from mp in bd.Personas where (mp.ID == id && mp.Estado == estado) select mp).ToList();
+                        
+                        lista.Add(listaAux.First());
+                    }
+                    
                 }
             }
             catch (Exception ex)

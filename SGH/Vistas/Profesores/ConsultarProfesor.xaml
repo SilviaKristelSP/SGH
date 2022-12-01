@@ -362,5 +362,9 @@
         </ScrollViewer>
         <Button Content="Editar" HorizontalAlignment="Left" Margin="308,614,0,0" VerticalAlignment="Top" Width="640" Background="#6D1814" BorderBrush="#6D1814" Click="clickEditar" />
 
+        <Button Background="#fafbfb" BorderBrush="#fafbfb" HorizontalAlignment="Left" Margin="304,12,0,0" VerticalAlignment="Top" Width="50" Height="50" Padding="1" Click="ClickRetroceder" >
+            <Image Source="/Recursos/retroceder.png" Width="48" Height="48"></Image>
+        </Button>
+        
     </Grid>
 </Window>

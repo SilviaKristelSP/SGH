@@ -315,46 +315,41 @@
             </StackPanel>
         </ScrollViewer>
 
-        <Label  Content="Profesores" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" FontSize="24" Margin="567,10,0,0"/>
-        <Label  Content="Estado" HorizontalAlignment="Left" Margin="410,96,0,0" VerticalAlignment="Top" FontSize="15"/>
-        <Label  Content="Materia" HorizontalAlignment="Left" Margin="791,95,0,0" VerticalAlignment="Top" FontSize="15" RenderTransformOrigin="7.555,2.827"/>
-        <Label Content="Grupo" HorizontalAlignment="Left" Margin="288,94,0,0" VerticalAlignment="Top" FontSize="15" RenderTransformOrigin="0.649,2.117"/>
-        <Label Content="Carrera" HorizontalAlignment="Left" Margin="583,94,0,0" VerticalAlignment="Top" FontSize="15"/>
-        <ComboBox HorizontalAlignment="Left" Margin="474,90,0,0" VerticalAlignment="Top" Width="90">
+        <Label  Content="Profesores" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" FontSize="24" Margin="559,10,0,0"/>
+        <Label  Content="Estado" HorizontalAlignment="Left" Margin="316,97,0,0" VerticalAlignment="Top" FontSize="15"/>
+        <Label  Content="Materia" HorizontalAlignment="Left" Margin="783,95,0,0" VerticalAlignment="Top" FontSize="15" RenderTransformOrigin="7.555,2.827"/>
+        <Label Content="Carrera" HorizontalAlignment="Left" Margin="456,95,0,0" VerticalAlignment="Top" FontSize="15"/>
+        <ComboBox x:Name="cbEstado" HorizontalAlignment="Left" Margin="374,94,0,0" VerticalAlignment="Top" Width="73">
             <ComboBoxItem Content="Activo"/>
             <ComboBoxItem Content="Baja"/>
         </ComboBox>
-        <ComboBox  HorizontalAlignment="Left" Margin="861,89,0,0"  VerticalAlignment="Top" Width="123"/>
-        <ComboBox  HorizontalAlignment="Left" Margin="645,93,0,0"  VerticalAlignment="Top" Width="132"/>
-        <ComboBox  HorizontalAlignment="Left" Margin="348,90,0,0"  VerticalAlignment="Top" Width="46"/>
-        <TextBox HorizontalAlignment="Left" Margin="325,170,0,0" TextWrapping="Wrap" Text="Buscar por nombre" VerticalAlignment="Top" Width="535"/>
-        <DataGrid Margin="321,222,33,79" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single">
+        <ComboBox x:Name="cbMateria" HorizontalAlignment="Left" Margin="842,94,0,0"  VerticalAlignment="Top" Width="133" ItemsSource="{Binding Path=materiasFiltradas}" DisplayMemberPath="Nombre"/>
+        <ComboBox  x:Name="cbCarrera" HorizontalAlignment="Left" Margin="515,94,0,0"  VerticalAlignment="Top" Width="142"/>
+        <TextBox x:Name="txbBuscador" HorizontalAlignment="Left" Margin="317,170,0,0" TextWrapping="Wrap" Text="Buscar por nombre" VerticalAlignment="Top" Width="535"/>
+        <DataGrid x:Name="dgProfesores" Margin="313,222,41,79" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" ItemsSource="{Binding DatosTabla}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Nombre" Width="*"></DataGridTextColumn>
-                <DataGridTemplateColumn Header="Image" Width="100" IsReadOnly="True">
+                <DataGridTextColumn Header="Nombre Completo" Width="*" Binding="{Binding NombreCompleto}"></DataGridTextColumn>
+                <DataGridTemplateColumn Header="Foto" Width="100" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Image Source="/gui/imagen_persona.png"/>
+                            <Image Source="{Binding Imagen}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Button  Content="Agregar" HorizontalAlignment="Left" Margin="867,624,0,0" VerticalAlignment="Top" Width="100" Background="#6D1814" BorderBrush="#6D1814"/>
-        <Button Content="Dar de baja" HorizontalAlignment="Left" Margin="325,624,0,0" VerticalAlignment="Top" Background="#6C2A27" BorderBrush="#6C2A27"/>
-        <Button Content="Editar" HorizontalAlignment="Left" Margin="496,624,0,0" VerticalAlignment="Top" Width="106" RenderTransformOrigin="0.5,0.5" Background="#6B4240" BorderBrush="#6B4240">
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform AngleX="3.805"/>
-                    <RotateTransform/>
-                    <TranslateTransform X="1.064"/>
-                </TransformGroup>
-            </Button.RenderTransform>
-        </Button>
-        <Button  Content="Buscar" HorizontalAlignment="Left" Margin="882,170,0,0" VerticalAlignment="Top" Width="85" Background="#6B4240" BorderBrush="#6B4240"/>
-        <Label Content="Filtros" HorizontalAlignment="Left" Margin="601,52,0,0" VerticalAlignment="Top" FontSize="18" RenderTransformOrigin="0.649,2.117" FontWeight="Bold"/>
-        <Label Content="Buscador" HorizontalAlignment="Left" Margin="588,140,0,0" VerticalAlignment="Top" FontSize="18" RenderTransformOrigin="0.649,2.117" FontWeight="Bold"/>
+        <Button x:Name="btnAgregar" Content="Agregar" HorizontalAlignment="Left" Margin="861,624,0,0" VerticalAlignment="Top" Width="100" Background="#6D1814" BorderBrush="#6D1814" Click="ClickAgregar" />
+        <Button x:Name="btnDarDeBaja" Content="Dar de baja" HorizontalAlignment="Left" Margin="319,624,0,0" VerticalAlignment="Top" Background="#6C2A27" BorderBrush="#6C2A27" Click="ClickDarDeBaja"/>
+        <Button x:Name="btnEditar" Content="Editar" HorizontalAlignment="Left" Margin="490,624,0,0" VerticalAlignment="Top" Width="106" RenderTransformOrigin="0.5,0.5" Background="#6B4240" BorderBrush="#6B4240" Click="ClickEditar"/>
+        <Button  Content="Buscar" HorizontalAlignment="Left" Margin="874,170,0,0" VerticalAlignment="Top" Width="85" Background="#6B4240" BorderBrush="#6B4240" Click="ClickBuscar"/>
+        <Label Content="Filtros" HorizontalAlignment="Left" Margin="593,52,0,0" VerticalAlignment="Top" FontSize="18" RenderTransformOrigin="0.649,2.117" FontWeight="Bold"/>
+        <Label Content="Buscador" HorizontalAlignment="Left" Margin="580,140,0,0" VerticalAlignment="Top" FontSize="18" RenderTransformOrigin="0.649,2.117" FontWeight="Bold"/>
+        <Button x:Name="btnCancelarBaja" Content="Cancelar Baja" HorizontalAlignment="Left" Margin="565,624,0,0" VerticalAlignment="Top" Background="#6C2A27" BorderBrush="#6C2A27" Click="ClickCancelarBaja"/>
+        <Button  Content="Aplicar Filtros" HorizontalAlignment="Left" Margin="702,50,0,0" VerticalAlignment="Top" Width="128" Background="#6B4240" BorderBrush="#6B4240" Click="ClickAplicarFiltros"/>
+        <Label  Content="Semestre" HorizontalAlignment="Left" Margin="666,95,0,0" VerticalAlignment="Top" FontSize="15" RenderTransformOrigin="7.555,2.827"/>
+        <ComboBox x:Name="cbSemestre" HorizontalAlignment="Left" Margin="738,94,0,0"  VerticalAlignment="Top" Width="40" SelectionChanged="Semestre_SelectionChanged"/>
+        <Button  Content="Limpiar Filtros" HorizontalAlignment="Left" Margin="844,50,0,0" VerticalAlignment="Top" Width="128" Background="#6B4240" BorderBrush="#6B4240" Click="ClickLimpiarFiltros" />
+        <Button x:Name="btnConsultar" Content="Consultar" HorizontalAlignment="Left" Margin="702,624,0,0" VerticalAlignment="Top" Width="106" RenderTransformOrigin="0.5,0.5" Background="#6C2A27" BorderBrush="#6C2A27" Click="ClickConsultar"/>
 
 
     </Grid>
