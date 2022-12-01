@@ -113,7 +113,7 @@ namespace SGH.Utiles
                 }
                 catch (System.IO.IOException)
                 {
-                    Console.WriteLine("pinche programa feo");
+                    
                 }
                 
             }

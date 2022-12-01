@@ -16,7 +16,7 @@ namespace SGH.DAOs
             {
                 using (SGHContext bd = new SGHContext())
                 {
-                    lista = bd.Profesors.Find(idPersona);
+                    lista = bd.Profesors.Where(r => r.ID_Persona == idPersona).First();
                 }
             }
             catch (Exception ex)
@@ -100,6 +100,25 @@ namespace SGH.DAOs
                 ejecucionExitosa = false;
             }
             return ejecucionExitosa;
+        }
+
+        public static string obtenerRFC(string idPersona)
+        {
+            string rfc = "";
+            Profesor prof = null;
+            try
+            {
+                using (SGHContext bd = new SGHContext())
+                {
+                    prof = bd.Profesors.Find(idPersona);
+                    rfc = prof.RFC;
+                }
+            }
+            catch (Exception ex)
+            {
+                rfc = "";
+            }
+            return rfc;
         }
 
     }

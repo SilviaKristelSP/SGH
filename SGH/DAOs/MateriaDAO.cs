@@ -102,5 +102,45 @@ namespace SGH.DAOs
             return sem;
         }
 
+        public static List<String> obtenerIDsMateriasAsignadas(string rfcProfesor)
+        {
+            List<String> nrcRecuperados = null;
+            List<Profesor_Materia> impartidas = null;
+            IEnumerable<Profesor_Materia> lista = null;
+
+            using (SGHContext bd = new SGHContext())
+            {
+                lista = bd.Profesor_Materia.Where(r => r.RFC_Profesor == rfcProfesor);
+                impartidas = lista.ToList();
+            }
+            nrcRecuperados = new List<String>();
+            foreach (Profesor_Materia prof_mat in impartidas)
+            {
+                nrcRecuperados.Add(prof_mat.NRC_Materia);
+            }
+
+            return nrcRecuperados;
+        }
+
+        public static List<Materia> recuperarMateriasAsignadas(List<String> nrcs)
+        {
+            List<Materia> materias = null;
+
+            using (SGHContext bd = new SGHContext())
+            {
+                materias = new List<Materia>();
+
+                foreach (String n in nrcs)
+                {
+                    Materia m = new Materia();
+                    m = bd.Materias.Find(n);
+                    materias.Add(m);
+                }
+            }
+            
+
+            return materias;
+        }
+
     }
 }

@@ -16,6 +16,7 @@ using SGH.Vistas.LogIn;
 using SGH.Utiles;
 using SGH.Modelos;
 using SGH.Utiles;
+using SGH.DAOs;
 
 namespace SGH.Vistas.Profesores
 {
@@ -34,13 +35,80 @@ namespace SGH.Vistas.Profesores
             InitializeComponent();
             this.id = idPersona;
 
+            recuperarPersonaYProfesor();
+            cargarDatosProfesor();
+
+
             administradorMenu.Rol = "secretaria";
             administradorMenu.NombreCompleto = "usuario prueba";
 
             FiltrarMenus(administradorMenu.Rol);
             SetInformacionAdministrador(administradorMenu);
-            inicializarNombreArchivos();
         }
+
+        private void recuperarPersonaYProfesor()
+        {
+            persona = PersonaDAO.recuperarPersonaID(id);
+            profesor = ProfesorDAO.recuperarProfesorID(id);
+        }
+
+        private void cargarDatosProfesor()
+        {
+            lbNombre.Content = persona.Nombre;
+            lbApellidoM.Content = persona.ApellidoMaterno;
+            lbApellidoP.Content = persona.ApellidoPaterno;
+            lbCarrera.Content = profesor.Carrera;
+            lbCURP.Content = persona.Curp;
+            lbTipoSangre.Content = persona.TipoSangre;
+            inicializarNombreArchivos();
+            Uri uri = new Uri(Util.generarRutaParaImagen(persona.Foto, tbNombreFoto.Text));
+            imgFoto.Source = new BitmapImage(uri);
+          cargarMaterias();
+        }
+
+        private void cargarMaterias()
+        {
+            
+            List<Materia> listaMaterias = MateriaDAO.recuperarMateriasAsignadas(MateriaDAO.obtenerIDsMateriasAsignadas(profesor.RFC));
+            int semestreMax = MateriaDAO.obtenerUltimoSemestre();
+            Console.WriteLine("" + listaMaterias.Count);
+            if (listaMaterias.Count <= 0)
+            {
+                Label labelDinamico = new Label();
+                labelDinamico.FontSize = 14;
+                labelDinamico.FontWeight = System.Windows.FontWeights.Bold;
+                labelDinamico.Content = "No tiene materias asiganadas";
+                wpMaterias.Children.Add(labelDinamico);
+            }
+            else
+            {
+                for (int i = 1; i <= semestreMax; i++)
+                {
+                    Label labelDinamico = new Label();
+                    labelDinamico.FontSize = 14;
+                    labelDinamico.FontWeight = System.Windows.FontWeights.Bold;
+                    labelDinamico.Content = "Semestre " + i;
+                    wpMaterias.Children.Add(labelDinamico);
+                    foreach (Materia materia in listaMaterias)
+                    {
+                        if (materia.Semestre == i)
+                        {
+                            CheckBox checkDinamico = new CheckBox();
+
+                            labelDinamico.Margin = new Thickness(5);
+                            checkDinamico.Content = materia.Nombre;
+                            checkDinamico.Name = materia.NRC;
+                            checkDinamico.IsChecked = true;
+                            checkDinamico.Margin = new Thickness(0, 0, 15, 0);
+
+                            wpMaterias.Children.Add(checkDinamico);
+                        }
+                    }
+                }
+            }
+
+        }
+
 
         private void inicializarNombreArchivos()
         {
@@ -50,8 +118,11 @@ namespace SGH.Vistas.Profesores
             tbNombreINE.Text = "INE_" + nombreCompleto + ".pdf";
             tbNombreCURP.Text = "CURP_" + nombreCompleto + ".pdf";
             tbNombreContrato.Text = "Contrato_" + nombreCompleto + ".pdf";
+            tbNombreFoto.Text = "Foto_" + nombreCompleto;
         }
 
+
+        //Funcionalidades Archivos
         private void clickAbrirArchivoTitulo(object sender, MouseButtonEventArgs e)
         {
             if (!tbNombreTitulo.Text.Equals(""))
@@ -91,6 +162,20 @@ namespace SGH.Vistas.Profesores
                 Util.abrirArchivoPDF(profesor.DocContrato, tbNombreContrato.Text);
             }
         }
+
+        //Funcionalidad botones
+        private void clickEditar(object sender, RoutedEventArgs e)
+        {
+            //TODO
+        }
+
+        private void ClickRetroceder(object sender, RoutedEventArgs e)
+        {
+            Profesores profesores = new Profesores();
+            profesores.Show();
+            this.Close();
+        }
+
 
         //Funcionalidad MENÚ
         public void SetInformacionAdministrador(Administrador administrador)
@@ -145,16 +230,5 @@ namespace SGH.Vistas.Profesores
             }
         }
 
-        private void clickEditar(object sender, RoutedEventArgs e)
-        {
-            //TO DO 
-        }
-
-        private void ClickRetroceder(object sender, RoutedEventArgs e)
-        {
-            Profesores profesores = new Profesores();
-            profesores.Show();
-            this.Close();
-        }
     }
 }

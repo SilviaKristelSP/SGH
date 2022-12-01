@@ -356,10 +356,14 @@
 
         <Label Content="Foto:" HorizontalAlignment="Left" Margin="655,270,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
         <Image x:Name="imgFoto" Source="/Recursos/imagen_persona.png" HorizontalAlignment="Left" Height="145" Margin="697,0,0,0" VerticalAlignment="Center" Width="145" Stretch="UniformToFill"/>
+        <TextBlock x:Name="tbNombreFoto" HorizontalAlignment="Left" Margin="706,429,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="134" Height="14" FontSize="10" Foreground="#fafbfb"/>
 
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="291,441,34,92">
-            <WrapPanel x:Name="wpMaterias" Height="120" Width="650" Margin="10"/>
+
+        <Label Content="Materias a&#xA;Impartir" HorizontalAlignment="Left" Margin="456,508,0,0" VerticalAlignment="Top"/>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="575,451,130,82" BorderBrush="Black">
+            <WrapPanel x:Name="wpMaterias" Height="2000"  Width="225" Margin="10" Orientation="Vertical"/>
         </ScrollViewer>
+        
         <Button Content="Editar" HorizontalAlignment="Left" Margin="308,614,0,0" VerticalAlignment="Top" Width="640" Background="#6D1814" BorderBrush="#6D1814" Click="clickEditar" />
 
         <Button Background="#fafbfb" BorderBrush="#fafbfb" HorizontalAlignment="Left" Margin="304,12,0,0" VerticalAlignment="Top" Width="50" Height="50" Padding="1" Click="ClickRetroceder" >
