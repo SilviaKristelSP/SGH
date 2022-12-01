@@ -262,8 +262,6 @@ namespace SGH.Vistas.Horario
             return stackPanel;
         }
 
-
-
         #endregion
 
         public void SetGrupo()
@@ -284,9 +282,7 @@ namespace SGH.Vistas.Horario
                 materiasSesiones.Add(materia.Nombre, materia.NumSesiones);
 
                 string contenido = "N° Sesiones: " + materia.NumSesiones + "\n" + materia.Nombre;
-                //Border border = CrearElemento(materia.Nombre, materia.Color, true);                
-                //InsertarCampo(border, indexMateria, listBoxMaterias);
-
+               
                 StackPanel stackPanel = CrearElementoMateria(materia);
 
                 InsertarMateria(stackPanel, indexMateria, listBoxMaterias);

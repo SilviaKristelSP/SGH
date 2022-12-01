@@ -88,19 +88,17 @@ namespace SGH.DAOs
         public Materia GetMateriaBySesion(string sesionID)
         {
             Materia materia = null;
-            try
+                      
+            Materia_Sesion materia_Sesion = sghContext.Materia_Sesion.Where(ms => ms.ID_Sesion == sesionID).FirstOrDefault();    
+            if (materia_Sesion != null)
             {
-            
-                Materia_Sesion materia_Sesion = sghContext.Materia_Sesion.Where(ms => ms.ID_Sesion == sesionID).FirstOrDefault();               
-                Profesor_Materia profesorMateria = sghContext.Profesor_Materia.Where(pm => pm.ID_Profesor_Materia == materia_Sesion.ID_Profesor_Materia).FirstOrDefault();                
-                materia = sghContext.Materias.Where(m => m.NRC == profesorMateria.NRC_Materia).FirstOrDefault();
+                Profesor_Materia profesorMateria = sghContext.Profesor_Materia.Where(pm => pm.ID_Profesor_Materia == materia_Sesion.ID_Profesor_Materia).FirstOrDefault();
+                if (profesorMateria != null)
+                {
+                    materia = sghContext.Materias.Where(m => m.NRC == profesorMateria.NRC_Materia).FirstOrDefault();
+                }                
             }
-            catch (EntityException ex)
-            {
-                MessageBox.Show("Error en la base de datos");
-                log.Add(ex.Message);
-            }
-
+                      
 
             return materia;
         }
@@ -110,5 +108,35 @@ namespace SGH.DAOs
             List<Materia> materias = sghContext.Materias.Where(materia => materia.Semestre == semestre).ToList();
             return materias;
         }
+    
+        public List<Profesor> GetProfesoresByMateria(string nrc)
+        {
+            List<Profesor> listaProfesores = new List<Profesor>();
+            List<Profesor_Materia> listaProfesorMateria = sghContext.Profesor_Materia.Where(pm => pm.NRC_Materia.Equals(nrc)).ToList();
+
+            if (listaProfesorMateria.Count > 0)
+            {
+                foreach (Profesor_Materia profesor_Materia in listaProfesorMateria)
+                {
+                    Profesor profesor = sghContext.Profesors.Where(p => p.RFC.Equals(profesor_Materia.RFC_Profesor)).FirstOrDefault();
+                    listaProfesores.Add(profesor);
+                }               
+            }
+
+            return listaProfesores;
+        }
+
+        public List<Materia> GetMateriasConProfesorAsignado()
+        {
+            List<Materia> materias = new List<Materia>();
+            List<Materia> lista = (from mat in sghContext.Materias
+                                 join prof_mat in sghContext.Profesor_Materia
+                                 on mat.NRC equals prof_mat.NRC_Materia
+                                 select mat).ToList();
+
+            return lista;
+        }
+    
+    
     }
 }
