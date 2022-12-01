@@ -62,8 +62,8 @@ namespace SGH.Vistas.Horario
 
                 Grupo grupo = horarioDAO.GetGrupo(letra, semestre);
                 SetGrupo(grupo);
-                GenerarHorarioRegistro generarHorarioRegistro= new GenerarHorarioRegistro();
-                Application.Current.MainWindow = generarHorarioRegistro;
+                GenerarHorarioRegistroProfesores gui = new GenerarHorarioRegistroProfesores();
+                Application.Current.MainWindow = gui;
                 Application.Current.MainWindow.Show();
 
                 foreach (Window window in Application.Current.Windows.OfType<GenerarHorario>())

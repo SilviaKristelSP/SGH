@@ -14,6 +14,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using SGH.Modelos;
+using System.Text.RegularExpressions;
+using System.Windows.Media.Media3D;
 
 namespace SGH.Vistas.Horario
 {
@@ -24,12 +26,18 @@ namespace SGH.Vistas.Horario
     {
         HorarioDAO horarioDAO = new HorarioDAO();
         List<Profesor> listaProfesoresComboBox = new List<Profesor>();
+        private static Grupo grupo = new Grupo();        
 
         public GenerarHorarioRegistroProfesores()
         {
             InitializeComponent();
-            //CargarMateriasProfes();
+            SetGrupo();
             CargarMaterias();
+        }
+        public void SetGrupo()
+        {
+            GenerarHorario generarHorario = new GenerarHorario();
+            grupo = generarHorario.GetGrupo();
         }
 
         private void Salir(object sender, MouseButtonEventArgs e)
@@ -63,24 +71,84 @@ namespace SGH.Vistas.Horario
         public void CargarMaterias()
         {            
             List<Materia> listaMateriasConProfesorAsignado = horarioDAO.GetMateriasConProfesorAsignado();
-            List<Materia> listaMateriasBySemestre = (from mat in listaMateriasConProfesorAsignado
-                                                    where mat.Semestre == 2
-                                                    select mat).ToList();
-
-            if (listaMateriasBySemestre.Count > 0)
+            if (listaMateriasConProfesorAsignado.Count > 0)
             {
-                foreach (Materia materia in listaMateriasBySemestre)
+                List<Materia> listaMateriasBySemestre = (from mat in listaMateriasConProfesorAsignado
+                                                         where mat.Semestre == grupo.Semestre
+                                                         select mat).Distinct().ToList();
+                if (listaMateriasBySemestre.Count > 0)
                 {
-                    TextBlock textBlock = new TextBlock();
-                    textBlock.Text = materia.Nombre + "-" + materia.Semestre;
-                    textBlock.FontSize = 20;
-                    materiasComboBox.Items.Add(textBlock);
+                    foreach (Materia materia in listaMateriasBySemestre)
+                    {
+                        TextBlock textBlock = new TextBlock();
+                        textBlock.Text = materia.NRC + "-" + materia.Nombre;
+                        textBlock.FontSize = 15;
+                        materiasComboBox.Items.Add(textBlock);
+                    }
                 }
-                
-            }
+            }                        
+        }
 
-            
+        private void MateriasComboBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            profesoresComboBox.Items.Clear();
+            VerificarSeleccionComboBox();
+
+            TextBlock comboMateriasItem = (TextBlock)materiasComboBox.SelectedItem;            
+            string[] materiaInformacion = comboMateriasItem.Text.Split('-');
+            string nrc = materiaInformacion[0];
+            string nombre = materiaInformacion[1];
+            List<Profesor> profesoresDisponibles = horarioDAO.GetProfesoresByMateria(nrc);
+
+            if (profesoresDisponibles.Count > 0)
+            {
+                foreach (Profesor profesor in profesoresDisponibles)
+                {
+                    Persona persona = horarioDAO.GetPersonaByID(profesor.ID_Persona);
+                    if (persona != null)
+                    {
+                        
+                        TextBlock textBlock = new TextBlock();
+                        textBlock.Text = profesor.RFC + "-" + persona.Nombre;
+                        textBlock.FontSize = 15;
+                        profesoresComboBox.Items.Add(textBlock);
+                    }                    
+                }
+            }            
+        }
+
+        private void ProfesoresComboBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+            VerificarSeleccionComboBox();
 
         }
+
+        public void VerificarSeleccionComboBox()
+        {
+            TextBlock comboItemMateria = (TextBlock)materiasComboBox.SelectedItem;
+            TextBlock comboItemProfesor = (TextBlock)profesoresComboBox.SelectedItem;            
+
+            if (comboItemMateria != null && comboItemProfesor != null)
+            {                
+                botonAsignacionProfesor.IsEnabled = true;
+            }
+            else
+            {
+                botonAsignacionProfesor.IsEnabled = false;
+            }
+        }
+
+        private void AsinarProfesor(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        public class ProfesorMateria
+        {
+            public string Materia { get; set; }
+            public string Profesor { get; set; }            
+        }
+
     }
 }

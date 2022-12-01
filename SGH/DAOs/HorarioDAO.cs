@@ -129,12 +129,28 @@ namespace SGH.DAOs
         public List<Materia> GetMateriasConProfesorAsignado()
         {
             List<Materia> materias = new List<Materia>();
-            List<Materia> lista = (from mat in sghContext.Materias
+            List<Materia> materiasConProfesorAsignado = (from mat in sghContext.Materias
                                  join prof_mat in sghContext.Profesor_Materia
                                  on mat.NRC equals prof_mat.NRC_Materia
                                  select mat).ToList();
 
-            return lista;
+            return materiasConProfesorAsignado;
+        }
+
+        public List<Profesor> GetProfesoresByNRC(string nrc)
+        {
+            //List<Profesor_Materia> profesor_Materias = sghContext.Profesor_Materia.Where(pm => pm.NRC_Materia.Equals(nrc)).ToList();
+            List<Profesor> profesores = (from pm in (sghContext.Profesor_Materia.Where(pm => pm.NRC_Materia.Equals(nrc)).ToList())
+                                        join prof in sghContext.Profesors
+                                        on pm.RFC_Profesor equals prof.RFC
+                                        select prof).ToList();
+            return profesores;                                        
+        }
+
+        public Persona GetPersonaByID(string idPersona)
+        {
+            Persona persona = sghContext.Personas.Where(pers => pers.ID.Equals(idPersona)).FirstOrDefault();
+            return persona;
         }
     
     
