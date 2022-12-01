@@ -16,6 +16,8 @@ using System.Windows.Shapes;
 using SGH.Modelos;
 using System.Text.RegularExpressions;
 using System.Windows.Media.Media3D;
+using SGH.Vistas.Alertas;
+using static SGH.Vistas.Horario.GenerarHorarioRegistroProfesores;
 
 namespace SGH.Vistas.Horario
 {
@@ -24,8 +26,11 @@ namespace SGH.Vistas.Horario
     /// </summary>
     public partial class GenerarHorarioRegistroProfesores : Window
     {
-        HorarioDAO horarioDAO = new HorarioDAO();
-        List<Profesor> listaProfesoresComboBox = new List<Profesor>();
+        private HorarioDAO horarioDAO = new HorarioDAO();
+        private List<Profesor> listaProfesoresComboBox = new List<Profesor>();
+        private List<ProfesorMateria> listaProfesorMateria = new List<ProfesorMateria>();
+        public static List<ProfesorMateria> listaProfesorMateriaFinal = new List<ProfesorMateria>();
+        private List<Materia> listaMateriasBySemestre = new List<Materia>();
         private static Grupo grupo = new Grupo();        
 
         public GenerarHorarioRegistroProfesores()
@@ -34,6 +39,17 @@ namespace SGH.Vistas.Horario
             SetGrupo();
             CargarMaterias();
         }
+
+        public void SetListaProfesorMateriaFinal(List<ProfesorMateria> listaProfesorMateria)
+        {
+            listaProfesorMateriaFinal = listaProfesorMateria;
+        }
+
+        public List<ProfesorMateria> GetListaProfesorMateriaFinal()
+        {
+            return listaProfesorMateriaFinal;
+        }
+
         public void SetGrupo()
         {
             GenerarHorario generarHorario = new GenerarHorario();
@@ -48,32 +64,14 @@ namespace SGH.Vistas.Horario
 
             foreach (Window window in Application.Current.Windows.OfType<GenerarHorarioRegistroProfesores>())
                 ((GenerarHorarioRegistroProfesores)window).Close();
-        }
-
-        public void CargarMateriasProfes()
-        {            
-            List<Materia> listaMateriasBySemestre = horarioDAO.GetMateriasBySemestre(2);
-
-            foreach (Materia materia in listaMateriasBySemestre)
-            {
-                Console.WriteLine("\n");
-                Console.WriteLine(materia.Nombre);
-                List<Profesor> listaProfesores = horarioDAO.GetProfesoresByMateria(materia.NRC);
-                foreach (Profesor profesor in listaProfesores)
-                {
-                    Console.WriteLine(profesor.RFC);
-                }
-
-            }
-
-        }
+        }   
 
         public void CargarMaterias()
         {            
             List<Materia> listaMateriasConProfesorAsignado = horarioDAO.GetMateriasConProfesorAsignado();
             if (listaMateriasConProfesorAsignado.Count > 0)
             {
-                List<Materia> listaMateriasBySemestre = (from mat in listaMateriasConProfesorAsignado
+                listaMateriasBySemestre = (from mat in listaMateriasConProfesorAsignado
                                                          where mat.Semestre == grupo.Semestre
                                                          select mat).Distinct().ToList();
                 if (listaMateriasBySemestre.Count > 0)
@@ -141,14 +139,90 @@ namespace SGH.Vistas.Horario
 
         private void AsinarProfesor(object sender, RoutedEventArgs e)
         {
+                        
+            TextBlock comboItemMateria = (TextBlock)materiasComboBox.SelectedItem;
+            TextBlock comboItemProfesor = (TextBlock)profesoresComboBox.SelectedItem;
 
+            ProfesorMateria profesorMateria = new ProfesorMateria
+            {
+                Materia = comboItemMateria.Text,
+                Profesor = comboItemProfesor.Text
+            };
+
+            ProfesorMateria existe = (from pm in listaProfesorMateria
+                           where pm.Materia.Equals(profesorMateria.Materia)
+                           select pm).FirstOrDefault();    
+
+            if (existe == null)
+            {
+                listaProfesorMateria.Add(profesorMateria);
+                listBoxProfesorMateria.Items.Add(profesorMateria);                
+            }
+            else
+            {                
+                MostrarAlertaShortOk("Ya se encuentra asignada esa materia");
+            }
         }
 
-        public class ProfesorMateria
+        private void ClickBotonBorrarAsignacion(object sender, RoutedEventArgs e)
         {
-            public string Materia { get; set; }
-            public string Profesor { get; set; }            
+
+            if (listBoxProfesorMateria.SelectedItem != null)
+            {
+                ProfesorMateria profesorMateria = (ProfesorMateria)listBoxProfesorMateria.SelectedItem;
+                listaProfesorMateria.Remove(profesorMateria);
+                listBoxProfesorMateria.Items.Remove(profesorMateria);                
+            }
+            else
+            {
+                MostrarAlertaShortOk("Ningún elemento seleccionado");                
+            }
         }
 
+        public void MostrarAlertaShortOk(string mensaje)
+        {
+            stackPanelBlack.Visibility = Visibility.Visible;
+            Alerta alerta = new Alerta(mensaje,
+                                    MessageType.Warning, MessageButtons.Ok, "short");
+            new MessageBoxCustom(alerta).ShowDialog();
+            stackPanelBlack.Visibility = Visibility.Collapsed;
+        }
+       
+        private void ClickBotonContinuarHorario(object sender, RoutedEventArgs e)
+        {
+
+            bool materiasAsignadas = true;
+
+            foreach (Materia materia in listaMateriasBySemestre)
+            {
+                string materiaInformacion = materia.NRC + "-" + materia.Nombre;                
+                ProfesorMateria materiaAsignada = listaProfesorMateria.Where(pm => pm.Materia.Equals(materiaInformacion)).FirstOrDefault();
+
+                if (materiaAsignada == null)
+                {                    
+                    materiasAsignadas = false;
+                    break;
+                }                
+            }
+
+            if (materiasAsignadas)
+            {
+                
+                SetListaProfesorMateriaFinal(listaProfesorMateria);
+
+                GenerarHorarioRegistro gui = new GenerarHorarioRegistro();
+                Application.Current.MainWindow = gui;
+                Application.Current.MainWindow.Show();
+
+                foreach (Window window in Application.Current.Windows.OfType<GenerarHorarioRegistroProfesores>())
+                {
+                    ((GenerarHorarioRegistroProfesores)window).Close();
+                }
+            }
+            else
+            {                
+                MostrarAlertaShortOk("Aun faltan materias por asignar");
+            }
+        }
     }
 }

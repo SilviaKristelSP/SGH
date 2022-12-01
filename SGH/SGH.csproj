@@ -175,6 +175,7 @@
     <Compile Include="Vistas\Horario\GruposSinHorarios.xaml.cs">
       <DependentUpon>GruposSinHorarios.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\Horario\ProfesorMateria.cs" />
     <Compile Include="Vistas\Horario\Test.xaml.cs">
       <DependentUpon>Test.xaml</DependentUpon>
     </Compile>

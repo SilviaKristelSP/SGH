@@ -206,7 +206,7 @@
                 VerticalAlignment="Center" TextAlignment="Center" Width="600"/>
 
             <TextBlock Width="600" Margin="0 40 0 0" FontSize="15" Opacity="0.6">
-                Selecciona los profesores que impartirán las materias
+                Selecciona los profesores que impartirán las materias correspondientes
             </TextBlock>
 
             <StackPanel Margin="0 30 0 0" Width="600">
@@ -256,7 +256,7 @@
             </Label>
             <Button BorderBrush="{x:Null}" Background="{x:Null}" ToolTip="Copy" Height="35" Width="35"
                         Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
-                        Margin="550,-36,0,0" Name="buttonDeleteFrienship">
+                        Margin="550,-36,0,0" Name="botonBorrarAsignacion" Click="ClickBotonBorrarAsignacion">
                 <materialDesign:PackIcon Kind="DeleteCircle" Foreground="#FF0000" Height="25" Width="25"  VerticalAlignment="Center" 
                                              HorizontalAlignment="Center">
                     <materialDesign:PackIcon.Effect>
@@ -265,13 +265,13 @@
                 </materialDesign:PackIcon>
             </Button>
             <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Height="200" Width="600" Margin="0 0 0 0" >
-                <ListBox Background="#f7e1df" ItemsSource="{Binding}" Visibility="Visible" HorizontalAlignment="Center" Name="listBoxLeaderBoard" Height="200" VerticalAlignment="Top" Width="600">
+                <ListBox Name="listBoxProfesorMateria" Background="#f7e1df" ItemsSource="{Binding}" Visibility="Visible" HorizontalAlignment="Left" Height="200" VerticalAlignment="Center" Width="686">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid>
-                                <Label Name="labelMateria" Content="{Binding Materia}" Foreground="Black" FontSize="10" Margin="-370,5,0,0" Width="200"/>
+                                <Label Name="labelMateria" Content="{Binding Materia}" Foreground="Black" FontSize="10" Margin="-350,5,0,0" Width="200"/>
                                 <Label Name="labelProfesor" Content="{Binding Profesor}" Foreground="Black" FontSize="10" Margin="250 5 0 0" Width="200"/>
-                                <Border  Background="#382322" Height="30" Opacity="0.2" HorizontalAlignment="Left" CornerRadius="10" Width="582"/>
+                                <Border  Background="#382322" Height="30" Opacity="0.2" HorizontalAlignment="Left" CornerRadius="10" Width="560"/>
                             </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
@@ -282,26 +282,15 @@
                     BorderBrush="#6B4240" Height="30" Width="600" Foreground="White"
                     Style="{StaticResource MaterialDesignRaisedButton}"                
                     materialDesign:ButtonAssist.CornerRadius="5"
-                    ToolTip="Asignar"
-                    IsEnabled="False"
+                    ToolTip="Continuar"
+                    IsEnabled="True" Click="ClickBotonContinuarHorario"
                     >
                 <TextBlock
                       Text="Continuar" />
             </Button>
 
         </StackPanel>
-        <!--<Rectangle Fill="Brown" Stroke="Black" Margin="-96,597,940,-69" RenderTransformOrigin="0.5,0.5">
-            <Rectangle.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-13.603"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Rectangle.RenderTransform>
-        </Rectangle>-->
+        <StackPanel x:Name="stackPanelBlack" Background="Black" Opacity="0.8" Visibility="Collapsed"/>
 
-        <!--<Ellipse
-                Fill="#D98582" Margin="887,613,-85,-203"/>-->
     </Grid>
 </Window>

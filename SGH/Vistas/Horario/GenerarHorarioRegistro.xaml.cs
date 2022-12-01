@@ -51,8 +51,9 @@ namespace SGH.Vistas.Horario
         public string colorBase = "#fcf4ca";
         #endregion
         private HorarioDAO horarioDAO = new HorarioDAO();
-        private static Grupo grupo = new Grupo();
+        private static Grupo grupo = new Grupo();        
         private Dictionary<string, int> materiasSesiones = new Dictionary<string, int>();
+        private List<ProfesorMateria> listaProfesorMateria = new List<ProfesorMateria>();
 
         public GenerarHorarioRegistro()
         {
@@ -60,7 +61,8 @@ namespace SGH.Vistas.Horario
             SetGrupo();
             SetRangos();
             SetTableroHorario();                        
-            SetMateriasDisponibles();
+            //SetMateriasDisponibles();
+            SetListaProfesorMateria();
         }
 
         #region Tabla Horario
@@ -269,7 +271,14 @@ namespace SGH.Vistas.Horario
             GenerarHorario generarHorario = new GenerarHorario();
             grupo = generarHorario.GetGrupo();
         }
-        
+
+        public void SetListaProfesorMateria()
+        {
+            GenerarHorarioRegistroProfesores generarHorarioRegistroProfesores = new GenerarHorarioRegistroProfesores();
+            listaProfesorMateria = generarHorarioRegistroProfesores.GetListaProfesorMateriaFinal();            
+        }
+
+
         public void SetMateriasDisponibles()
         {
 
