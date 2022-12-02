@@ -30,7 +30,7 @@ namespace SGH.DAOs
             return materias;
         }
 
-        public static bool borrarMateriasProfesor(String idprofesor)
+        public static bool borrarMateriasProfesor(String rfcprofesor)
         {
             bool ejecucionExitosa = true;
             try
@@ -38,7 +38,7 @@ namespace SGH.DAOs
                 using (SGHContext bd = new SGHContext())
                 {
                     List<Profesor_Materia> impartidas = (from mp in bd.Profesor_Materia
-                                                 where mp.ID_Profesor_Materia == idprofesor
+                                                 where mp.RFC_Profesor == rfcprofesor
                                                  select mp).ToList();
                     int c = 0;
                     for (int i = 0; i < impartidas.Count; i++)

@@ -20,21 +20,22 @@ using SGH.DAOs;
 namespace SGH.Vistas.Profesores
 {
     /// <summary>
-    /// Lógica de interacción para ConsultarProfesor.xaml
+    /// Lógica de interacción para ConsultarProfesorBaja.xaml
     /// </summary>
-    public partial class ConsultarProfesor : Window
+    public partial class ConsultarProfesorBaja : Window
     {
         private static Administrador administradorMenu = new Administrador();
         private Persona persona = new Persona();
         private Profesor profesor = new Profesor();
+        private Baja baja = new Baja();
         private String id = "";
 
-        public ConsultarProfesor(String idPersona)
+        public ConsultarProfesorBaja(String idPersona)
         {
             InitializeComponent();
             this.id = idPersona;
 
-            recuperarPersonaYProfesor();
+            recuperarPersonaProfesorYBaja();
             cargarDatosProfesor();
 
 
@@ -45,10 +46,11 @@ namespace SGH.Vistas.Profesores
             SetInformacionAdministrador(administradorMenu);
         }
 
-        private void recuperarPersonaYProfesor()
+        private void recuperarPersonaProfesorYBaja()
         {
             persona = PersonaDAO.recuperarPersonaID(id);
             profesor = ProfesorDAO.recuperarProfesorID(id);
+            baja = BajaDAO.recuperarBaja(id);
         }
 
         private void cargarDatosProfesor()
@@ -59,54 +61,13 @@ namespace SGH.Vistas.Profesores
             lbCarrera.Content = profesor.Carrera;
             lbCURP.Content = persona.Curp;
             lbTipoSangre.Content = persona.TipoSangre;
+            tbDescripcion.Text = baja.Descripcion;
+            lbMotivo.Content = baja.Motivo;
             inicializarNombreArchivos();
             Uri uri = new Uri(Util.generarRutaParaImagen(persona.Foto, tbNombreFoto.Text));
             imgFoto.Source = new BitmapImage(uri);
-          cargarMaterias();
         }
 
-        private void cargarMaterias()
-        {
-            
-            List<Materia> listaMaterias = MateriaDAO.recuperarMateriasAsignadas(MateriaDAO.obtenerIDsMateriasAsignadas(profesor.RFC));
-            int semestreMax = MateriaDAO.obtenerUltimoSemestre();
-            Console.WriteLine("" + listaMaterias.Count);
-            if (listaMaterias.Count <= 0)
-            {
-                Label labelDinamico = new Label();
-                labelDinamico.FontSize = 14;
-                labelDinamico.FontWeight = System.Windows.FontWeights.Bold;
-                labelDinamico.Content = "No tiene materias asiganadas";
-                wpMaterias.Children.Add(labelDinamico);
-            }
-            else
-            {
-                for (int i = 1; i <= semestreMax; i++)
-                {
-                    Label labelDinamico = new Label();
-                    labelDinamico.FontSize = 14;
-                    labelDinamico.FontWeight = System.Windows.FontWeights.Bold;
-                    labelDinamico.Content = "Semestre " + i;
-                    wpMaterias.Children.Add(labelDinamico);
-                    foreach (Materia materia in listaMaterias)
-                    {
-                        if (materia.Semestre == i)
-                        {
-                            CheckBox checkDinamico = new CheckBox();
-
-                            labelDinamico.Margin = new Thickness(5);
-                            checkDinamico.Content = materia.Nombre;
-                            checkDinamico.Name = materia.NRC;
-                            checkDinamico.IsChecked = true;
-                            checkDinamico.Margin = new Thickness(0, 0, 15, 0);
-
-                            wpMaterias.Children.Add(checkDinamico);
-                        }
-                    }
-                }
-            }
-
-        }
 
 
         private void inicializarNombreArchivos()
@@ -118,6 +79,8 @@ namespace SGH.Vistas.Profesores
             tbNombreCURP.Text = "CURP_" + nombreCompleto + ".pdf";
             tbNombreContrato.Text = "Contrato_" + nombreCompleto + ".pdf";
             tbNombreFoto.Text = "Foto_" + nombreCompleto;
+            if (Util.comprobarArchivoByteVacio(baja.DocumentoProbatorio))
+                txbDocProbatorio.Text = "DocProbatorio_" + nombreCompleto + ".pdf";
         }
 
 
@@ -162,10 +125,18 @@ namespace SGH.Vistas.Profesores
             }
         }
 
-        //Funcionalidad botones
-        private void clickEditar(object sender, RoutedEventArgs e)
+        private void clickAbrirArchivoDocProb(object sender, MouseButtonEventArgs e)
         {
-            //TODO
+            if (!txbDocProbatorio.Text.Equals(""))
+            {
+                Util.abrirArchivoPDF(profesor.DocContrato, tbNombreContrato.Text);
+            }
+        }
+
+        //Funcionalidad botones
+        private void ClickCancelarBaja(object sender, RoutedEventArgs e)
+        {
+            
         }
 
         private void ClickRetroceder(object sender, RoutedEventArgs e)
@@ -228,6 +199,7 @@ namespace SGH.Vistas.Profesores
 
             }
         }
+
 
     }
 }

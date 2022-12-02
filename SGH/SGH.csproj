@@ -91,6 +91,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DAOs\BajaDAO.cs" />
     <Compile Include="DAOs\EstudianteDAO.cs" />
     <Compile Include="DAOs\MateriaDAO.cs" />
     <Compile Include="DAOs\PersonaDAO.cs" />
@@ -105,8 +106,14 @@
     <Compile Include="Vistas\MenuPrincipal\MenuPrincipalSGH.xaml.cs">
       <DependentUpon>MenuPrincipalSGH.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\Profesores\BajaProfesor.xaml.cs">
+      <DependentUpon>BajaProfesor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vistas\Profesores\ConsultarProfesor.xaml.cs">
       <DependentUpon>ConsultarProfesor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Profesores\ConsultarProfesorBaja.xaml.cs">
+      <DependentUpon>ConsultarProfesorBaja.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vistas\Profesores\Profesores.xaml.cs">
       <DependentUpon>Profesores.xaml</DependentUpon>
@@ -220,7 +227,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Vistas\Profesores\BajaProfesor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Vistas\Profesores\ConsultarProfesor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\Profesores\ConsultarProfesorBaja.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

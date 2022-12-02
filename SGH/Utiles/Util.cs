@@ -37,6 +37,18 @@ namespace SGH.Utiles
             return null;
         }
 
+        public static bool comprobarArchivoByteVacio(byte[] documento)
+        {
+            bool equivalente = false;
+
+            string s = Encoding.Default.GetString(documento);
+
+            if (s.Equals("Sin Doc"))
+                equivalente = true;
+
+            return equivalente;
+        }
+
         public static void abrirArchivoPDF(byte[] archivoByte, string nombreArchivo)
         {
             string path = AppDomain.CurrentDomain.BaseDirectory;
@@ -111,14 +123,12 @@ namespace SGH.Utiles
                 {
                     File.Delete(fullFilePath);
                 }
-                catch (System.IO.IOException)
+                catch (System.IO.IOException ex)
                 {
                     
                 }
                 
             }
-
-
 
             File.WriteAllBytes(fullFilePath, imgByte);
 

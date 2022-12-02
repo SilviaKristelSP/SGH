@@ -28,7 +28,7 @@ namespace SGH.DAOs
             return ejecucionExitosa;
         }
 
-        public static bool darDeBajaPersona(string id)
+        public static bool darDeBajaPersona(string id, Baja baja)
         {
             bool ejecucionExitosa = true;
             try
@@ -36,6 +36,9 @@ namespace SGH.DAOs
                 using(SGHContext bd =new SGHContext())
                 {
                     bd.Personas.Find(id).Estado = "Baja";
+
+                    bd.Bajas.Add(baja);
+
                     bd.SaveChanges();
                 }
             }catch (Exception ex)
@@ -87,20 +90,20 @@ namespace SGH.DAOs
 
         public static List<Persona> recuperarPersonas(List<String> ids, string estado)
         {
-            List<Persona> lista = null;
+            List<Persona> lista = new List<Persona>();
+            //IEnumerable<Persona> e;
             Persona personaAux = new Persona();
             try
             {
                 using (SGHContext bd = new SGHContext())
                 {
-                    lista = new List<Persona>();
                     foreach (String id in ids)
                     {
-                        List<Persona> listaAux = new List<Persona>();
-
-                        listaAux = (from mp in bd.Personas where (mp.ID == id && mp.Estado == estado) select mp).ToList();
-                        
-                        lista.Add(listaAux.First());
+                        personaAux = bd.Personas.Where(e => e.Estado == estado).Where(i => i.ID == id).FirstOrDefault();
+                        if(personaAux != null)
+                        {
+                            lista.Add(personaAux);
+                        }
                     }
                     
                 }

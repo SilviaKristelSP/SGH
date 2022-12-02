@@ -47,6 +47,7 @@ namespace SGH.Vistas.Profesores
         {
             cbEstado.SelectedIndex = 0;
             btnCancelarBaja.Visibility = System.Windows.Visibility.Collapsed;
+            btnConsultarBaja.Visibility = System.Windows.Visibility.Collapsed;
             LlenarTabla();
             ConfigurarComboBoxes();
         }
@@ -144,6 +145,7 @@ namespace SGH.Vistas.Profesores
                 btnDarDeBaja.Visibility = System.Windows.Visibility.Collapsed;
                 btnEditar.Visibility = System.Windows.Visibility.Collapsed;
                 btnCancelarBaja.Visibility = System.Windows.Visibility.Visible;
+                btnConsultarBaja.Visibility = System.Windows.Visibility.Visible;
                 LlenarTablaFiltros();
             }
             else if(cbEstado.SelectedIndex == 0)
@@ -153,8 +155,19 @@ namespace SGH.Vistas.Profesores
                 btnDarDeBaja.Visibility = System.Windows.Visibility.Visible;
                 btnEditar.Visibility = System.Windows.Visibility.Visible;
                 btnCancelarBaja.Visibility = System.Windows.Visibility.Collapsed;
+                btnConsultarBaja.Visibility = System.Windows.Visibility.Collapsed;
                 LlenarTabla();
             }
+        }
+
+        private void reconfigurarBotones()
+        {
+            btnAgregar.Visibility = System.Windows.Visibility.Visible;
+            btnConsultar.Visibility = System.Windows.Visibility.Visible;
+            btnDarDeBaja.Visibility = System.Windows.Visibility.Visible;
+            btnEditar.Visibility = System.Windows.Visibility.Visible;
+            btnCancelarBaja.Visibility = System.Windows.Visibility.Collapsed;
+            btnConsultarBaja.Visibility = System.Windows.Visibility.Collapsed;
         }
 
         private void ClickBuscar(object sender, RoutedEventArgs e)
@@ -186,7 +199,20 @@ namespace SGH.Vistas.Profesores
             DatosTabla seleccionado = (DatosTabla)dgProfesores.SelectedItem;
             if (seleccionado != null)
             {
-                //TO DO
+                if (mostrarVentanaConfirmacionCancelarBaja())
+                {
+                    if (PersonaDAO.cancelarBajaPersona(seleccionado.Id))
+                    {
+                        mostrarVentanaExito();
+                        LlenarTabla();
+                        ConfigurarComboBoxes();
+                        reconfigurarBotones();
+                    }
+                    else
+                    {
+                        mostrarVentanaError();
+                    }
+                }
             }
             else
             {
@@ -199,13 +225,9 @@ namespace SGH.Vistas.Profesores
             DatosTabla seleccionado = (DatosTabla)dgProfesores.SelectedItem;
             if (seleccionado != null)
             {
-                if (mostrarVentanaConfirmacionCancelarBaja())
-                {
-                    if (PersonaDAO.cancelarBajaPersona(seleccionado.Id))
-                        mostrarVentanaExito();
-                    else
-                        mostrarVentanaError();
-                }
+                BajaProfesor bajaProfesor = new BajaProfesor(seleccionado.Id);
+                bajaProfesor.Show();
+                this.Close();
             }
             else
             {
@@ -233,6 +255,21 @@ namespace SGH.Vistas.Profesores
             {
                 ConsultarProfesor consultarProfesor = new ConsultarProfesor(seleccionado.Id);
                 consultarProfesor.Show();
+                this.Close();
+            }
+            else
+            {
+                mostrarVentanaSeleccionar();
+            }
+        }
+
+        private void ClickConsultarBaja(object sender, RoutedEventArgs e)
+        {
+            DatosTabla seleccionado = (DatosTabla)dgProfesores.SelectedItem;
+            if (seleccionado != null)
+            {
+                ConsultarProfesorBaja consultarProfesorBaja = new ConsultarProfesorBaja(seleccionado.Id);
+                consultarProfesorBaja.Show();
                 this.Close();
             }
             else
@@ -350,7 +387,6 @@ namespace SGH.Vistas.Profesores
 
             }
         }
-
 
     }
 
