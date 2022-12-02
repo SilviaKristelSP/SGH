@@ -16,6 +16,7 @@ using SGH.Vistas.LogIn;
 using SGH.Utiles;
 using SGH.Modelos;
 using SGH.DAOs;
+using SGH.Vistas.Alertas;
 
 namespace SGH.Vistas.Profesores
 {
@@ -136,9 +137,14 @@ namespace SGH.Vistas.Profesores
         //Funcionalidad botones
         private void ClickCancelarBaja(object sender, RoutedEventArgs e)
         {
-            
+            if (mostrarVentanaConfirmacionCancelarBaja())
+            {
+                if (PersonaDAO.cancelarBajaPersona(persona.ID))
+                    mostrarVentanaExito();
+                else
+                    mostrarVentanaError();
+            }
         }
-
         private void ClickRetroceder(object sender, RoutedEventArgs e)
         {
             Profesores profesores = new Profesores();
@@ -146,6 +152,61 @@ namespace SGH.Vistas.Profesores
             this.Close();
         }
 
+        //Dialogos
+        private bool mostrarVentanaConfirmacionCancelarBaja()
+        {
+            Alerta alerta = new Alerta("¿Está seguro de querer Cancelar la Baja del profesor?",
+                        Alertas.MessageType.Warning,
+                        MessageButtons.AcceptCancel, "medium");
+            bool seleccion = false;
+
+            MessageBoxCustom confirmation = new MessageBoxCustom(alerta);
+            confirmation.ShowDialog();
+            if (confirmation.GetDialog())
+            {
+                seleccion = true;
+            }
+            else
+            {
+                confirmation.Close();
+            }
+            return seleccion;
+        }
+
+        private void mostrarVentanaExito()
+        {
+            Alerta alerta = new Alerta("La Baja fue cancelada exitosamente", Alertas.MessageType.Success,
+                        MessageButtons.Ok, "medium");
+            MessageBoxCustom mensaje = new MessageBoxCustom(alerta);
+            mensaje.ShowDialog();
+            if (mensaje.GetDialog())
+            {
+                mensaje.Close();
+            }
+            cambiarAVentanaProfesores();
+        }
+
+        private void mostrarVentanaError()
+        {
+            Alerta alerta = new Alerta("Error con la base de datos, intente más tarde", Alertas.MessageType.Error,
+                        MessageButtons.Ok, "medium");
+            MessageBoxCustom mensaje = new MessageBoxCustom(alerta);
+            mensaje.ShowDialog();
+            if (mensaje.GetDialog())
+            {
+                mensaje.Close();
+            }
+            cambiarAVentanaProfesores();
+        }
+
+
+
+        private void cambiarAVentanaProfesores()
+        {
+            Profesores profesores = new Profesores();
+            profesores.Show();
+            this.Close();
+        }
 
         //Funcionalidad MENÚ
         public void SetInformacionAdministrador(Administrador administrador)
