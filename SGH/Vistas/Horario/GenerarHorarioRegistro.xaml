@@ -32,7 +32,7 @@
                     <ListBox Name="listBoxMaterias" MouseUp="SeleccionMateria" Padding="0" BorderThickness="1" >
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <UniformGrid Columns="2" Rows="15"/>
+                                <UniformGrid Columns="2" Rows="20"/>
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
                     </ListBox>
@@ -41,7 +41,7 @@
             
             <StackPanel Height="550" Width="500" Margin="10 0 0 0">
                 <Grid Name="gridBoard" Height="465" Width="500">
-                    <ListBox Name="listBoxGenerarHorario" Padding="0" BorderThickness="1" >
+                    <ListBox Name="listBoxGenerarHorario" MouseUp="SeleccionHorario" Padding="0" BorderThickness="1" >
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <UniformGrid Columns="6" Rows="15"/>

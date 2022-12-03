@@ -54,6 +54,8 @@ namespace SGH.Vistas.Horario
         private static Grupo grupo = new Grupo();        
         private Dictionary<string, int> materiasSesiones = new Dictionary<string, int>();
         private List<ProfesorMateria> listaProfesorMateria = new List<ProfesorMateria>();
+        private string contenidoSeleccionado = "";
+        private string colorSeleccionado = "";
 
         public GenerarHorarioRegistro()
         {
@@ -62,6 +64,7 @@ namespace SGH.Vistas.Horario
             SetGrupo();
             SetRangos();
             SetTableroHorario();
+            SetTableroMaterias();
             //SetMateriasDisponibles();
             SetMateriasDisponiblesProvicional();
 
@@ -157,6 +160,20 @@ namespace SGH.Vistas.Horario
 
             CargarDias();
             CargarHoras();
+        }
+
+        public void SetTableroMaterias()
+        {
+            int cantidadFilas = 20;
+            int cantidadColumnas = 2;
+            int tamañoTablero = cantidadFilas * cantidadColumnas;
+
+            for (int i = 0; i < tamañoTablero; i++)
+            {
+                Border border = CrearElemento("-", "#fff", true);
+                InsertarCampo(border, i, listBoxMaterias);
+
+            }            
         }
 
         public void InsertarCampo(Border border, int posicion, ListBox lista)
@@ -335,25 +352,124 @@ namespace SGH.Vistas.Horario
             }
         }
 
+        public void EliminarCampo(int posicion, string color, ListBox listBox)
+        {
+            Border border = CrearElemento("-", color, true);
+            if (border != null) {
+                SetCampo(border, posicion, listBox);
+            }
+            
+        }
+
         public void SeleccionMateria(object sender, RoutedEventArgs e)
         {
 
+            int indexMateriaSeleccionada = listBoxMaterias.SelectedIndex;            
             var border = (Border)listBoxMaterias.SelectedItem;
-            TextBlock textBlock = (TextBlock)border.Child;
 
-            string contenido = textBlock.Text;
-            Console.WriteLine(contenido);
+            if (border != null)
+            {
+                TextBlock textBlock = (TextBlock)border.Child;
 
-            string[] materiaInformacion = contenido.Split('\n');
-            string sesionesInformacion = materiaInformacion[0];
+                string contenido = textBlock.Text.ToString();
+                
+                if (!(contenido.Equals("-")))
+                {
+                    
+                    string[] materiaInformacion = contenido.Split('\n');
+                    string sesionesInformacion = materiaInformacion[0];
+                    string materia = materiaInformacion[1];
 
+
+                    int numSesiones = GetNumSesiones(sesionesInformacion);
+                    int numSesionesActualizadas = numSesiones - 1;                    
+                    materiasSesiones[materia] = numSesionesActualizadas;                    
+
+                    string contenidoNuevo = "Sesiones: " + materiasSesiones[materia] + "\n" + materia;
+                    contenidoSeleccionado = contenido;
+                    colorSeleccionado = border.Background.ToString();
+                    //"NRC: " + nrc +
+                    //"\n" +
+                    //"RFC: " + rfc
+                    //+ "\n" +
+                    //nombre;
+
+
+                    Border borderNuevo = CrearElemento(contenidoNuevo, border.Background.ToString(), true);
+                    SetCampo(borderNuevo, indexMateriaSeleccionada, listBoxMaterias);
+
+                    
+                }
+            }            
+        }
+        
+        public void SeleccionHorario(object sender, RoutedEventArgs e)
+        {
+            int indexHorarioSeleccionada = listBoxGenerarHorario.SelectedIndex;
+            var border = (Border)listBoxGenerarHorario.SelectedItem;
+
+            if (border != null)
+            {
+                TextBlock textBlock = (TextBlock)border.Child;
+                string contenido = textBlock.Text.ToString();
+                
+                Console.WriteLine(contenido);                
+                Console.WriteLine(contenidoSeleccionado.Length > 0);
+
+                bool campoVacio = contenido.Equals("-");
+
+                if (!campoVacio || contenidoSeleccionado.Length > 0)
+                {                  
+
+                    Console.WriteLine("Entre");
+                    Console.WriteLine(contenidoSeleccionado);
+                    string[] materiaInformacion = contenidoSeleccionado.Split('\n');
+                    string materia = materiaInformacion[1];
+
+                    string contenidoNuevo = "Sesiones: " + materiasSesiones[materia] + "\n" + materia;
+                    //"NRC: " + nrc +
+                    //"\n" +
+                    //"RFC: " + rfc
+                    //+ "\n" +
+                    //nombre;
+
+                    Border borderNuevo = CrearElemento(contenidoNuevo, colorSeleccionado, false);
+                    SetCampo(borderNuevo, indexHorarioSeleccionada, listBoxGenerarHorario);
+
+                    //contenidoSeleccionado = contenido;
+                    //colorSeleccionado = border.Background.ToString();
+                }
+
+
+               
+
+                //string[] materiaInformacion = contenidoSeleccionado.Split('\n');
+                //string materia = materiaInformacion[1];
+
+                //string contenidoNuevo = "Sesiones: " + materiasSesiones[materia] + "\n" + materia;
+                ////"NRC: " + nrc +
+                ////"\n" +
+                ////"RFC: " + rfc
+                ////+ "\n" +
+                ////nombre;
+
+                //Border borderNuevo = CrearElemento(contenidoNuevo, colorSeleccionado, false);
+                //SetCampo(borderNuevo, indexHorarioSeleccionada, listBoxGenerarHorario);
+
+                //contenidoSeleccionado = "";
+                
+
+            }
+            
+
+        }
+
+        public int GetNumSesiones(string sesionesInformacion)
+        {
             string[] numSesionesInformacion = sesionesInformacion.Split(' ');
             int numSesiones = Int32.Parse(numSesionesInformacion[1]);
 
-            //int numSesionesActualizadas = numSesiones--;
-
-            Console.WriteLine(numSesiones);
-
+            return numSesiones;
         }
     }
 }
