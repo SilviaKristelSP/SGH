@@ -63,13 +63,14 @@ namespace SGH.Vistas.Horario
         public GenerarHorarioRegistro()
         {
             InitializeComponent();
-            //SetListaProfesorMateria();
+            SetListaProfesorMateria();
+
             SetGrupo();
             SetRangos();
             SetTableroHorario();
             SetTableroMaterias();
-            //SetMateriasDisponibles();
-            SetMateriasDisponiblesProvicional();
+            SetMateriasDisponibles();
+            //SetMateriasDisponiblesProvicional();
 
 
         }
@@ -349,7 +350,7 @@ namespace SGH.Vistas.Horario
 
                 Materia materia = horarioDAO.GetMateriaByNRC(nrc);                
                 materiasSesiones.Add(nombre, materia.NumSesiones);
-                string contenido = "N° Sesiones: " + materia.NumSesiones+
+                string contenido = "Sesiones: " + materia.NumSesiones+
                                     "\n" +
                                     "NRC: " + nrc +
                                     "\n" +
@@ -409,22 +410,26 @@ namespace SGH.Vistas.Horario
                     
                     string[] materiaInformacion = contenido.Split('\n');
                     string sesionesInformacion = materiaInformacion[0];
-                    string materia = materiaInformacion[1];
-
                     int numSesiones = GetNumSesiones(sesionesInformacion);
+                    string nrc = GetNRC(materiaInformacion[1]);
+                    string rfc = GetNRC(materiaInformacion[2]);
+                    string materia = materiaInformacion[3];
 
                     if (numSesiones > 0)
                     {
-                        string contenidoNuevo = "Sesiones: " + materiasSesiones[materia] + "\n" + materia;
+                        //string contenidoNuevo = "Sesiones: " + materiasSesiones[materia] + "\n" + materia;
+                        string contenidoNuevo = "Sesiones: " + materiasSesiones[materia] +
+                                    "\n" +
+                                    "NRC: " + nrc +
+                                    "\n" +
+                                    "RFC: " + rfc
+                                    + "\n" +
+                                    materia;
+
+
                         contenidoSeleccionadoMateria = contenido;
                         colorSeleccionado = border.Background.ToString();
                         indexMateriaSeleccionadaGlobal = indexMateriaSeleccionada;
-                        //"NRC: " + nrc +
-                        //"\n" +
-                        //"RFC: " + rfc
-                        //+ "\n" +
-                        //nombre;
-
 
                         Border borderNuevo = CrearElemento(contenidoNuevo, border.Background.ToString(), true);
                         SetCampo(borderNuevo, indexMateriaSeleccionada, listBoxMaterias);
@@ -466,17 +471,38 @@ namespace SGH.Vistas.Horario
                         {
                             
                             string[] materiaInformacion = contenidoSeleccionadoMateria.Split('\n');
-                            string materia = materiaInformacion[1];
+                            string materia = materiaInformacion[3];
 
                             int numSesiones = materiasSesiones[materia];
                             int numSesionesActualizadas = numSesiones - 1;
                             materiasSesiones[materia] = numSesionesActualizadas;
 
-                            string contenidoNuevoMateria = "Sesiones: " + materiasSesiones[materia] + "\n" + materia;
+                            string nrc = GetNRC(materiaInformacion[1]);
+                            string rfc = GetNRC(materiaInformacion[2]);                            
+
+                            //string contenidoNuevoMateria = "Sesiones: " + materiasSesiones[materia] + "\n" + materia;
+                            string contenidoNuevoMateria = "Sesiones: " + materiasSesiones[materia] +
+                                   "\n" +
+                                   "NRC: " + nrc +
+                                   "\n" +
+                                   "RFC: " + rfc
+                                   + "\n" +
+                                   materia;
+
+
                             Border borderNuevoMateria = CrearElemento(contenidoNuevoMateria, colorSeleccionado, true);
                             SetCampo(borderNuevoMateria, indexMateriaSeleccionadaGlobal, listBoxMaterias);
 
-                            string contenidoNuevo = materia;
+                            //string contenidoNuevo = materia;                           
+                            string contenidoNuevo =
+                                   "NRC: " + nrc +
+                                   "\n" +
+                                   "RFC: " + rfc
+                                   + "\n" +
+                                   materia;
+
+
+
                             Border borderNuevo = CrearElementoHorario(contenidoNuevo, colorSeleccionado);
                             SetCampo(borderNuevo, indexHorarioSeleccionada, listBoxGenerarHorario);
                             contenidoSeleccionadoMateria = "";
@@ -486,20 +512,27 @@ namespace SGH.Vistas.Horario
                         else if (contenidoSeleccionadoHorario.Length > 0)
                         {
                             string[] materiaInformacion = contenidoSeleccionadoHorario.Split('\n');
-                            string materia = materiaInformacion[0];
-                            string contenidoNuevo = materia;                        
+                            //string contenidoNuevo = materia;
+                            string nrc = GetNRC(materiaInformacion[0]);
+                            string rfc = GetNRC(materiaInformacion[1]);
+                            string materia = materiaInformacion[2];
+
+
+                            string contenidoNuevo =
+                                   "NRC: " + nrc +
+                                   "\n" +
+                                   "RFC: " + rfc
+                                   + "\n" +
+                                   materia;
+
+
+
                             Border borderNuevo = CrearElementoHorario(contenidoNuevo, colorSeleccionado);
                             SetCampo(borderNuevo, indexHorarioSeleccionada, listBoxGenerarHorario);
                             contenidoSeleccionadoHorario = "";
                             colorSeleccionado = "";
                         }
-                    }
-
-                    //"NRC: " + nrc +
-                    //"\n" +
-                    //"RFC: " + rfc
-                    //+ "\n" +
-                    //nombre;
+                    }                  
                 }
             }           
         }
@@ -510,6 +543,18 @@ namespace SGH.Vistas.Horario
             int numSesiones = Int32.Parse(numSesionesInformacion[1]);
 
             return numSesiones;
+        }
+
+        public string GetNRC(string nrcInformacion)
+        {
+            string[] nrcArregloInformacion = nrcInformacion.Split(' ');
+            return nrcArregloInformacion[1];
+        }
+
+        public string GetRFC(string rfcInformacion)
+        {
+            string[] rfcArregloInformacion = rfcInformacion.Split(' ');
+            return rfcArregloInformacion[1];
         }
 
         public string GetHora(int posicion)

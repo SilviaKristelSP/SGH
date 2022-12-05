@@ -536,14 +536,16 @@ namespace SGH.Vistas.Horario.Consulta
             textBlock.TextAlignment = TextAlignment.Center;
             textBlock.HorizontalAlignment = HorizontalAlignment.Center;
             textBlock.VerticalAlignment = VerticalAlignment.Center;
-
+            textBlock.Width = 80;
+            textBlock.TextWrapping = TextWrapping.Wrap;
+            textBlock.FontSize = 10;
 
             Border border = new Border();
-            border.Padding = new Thickness(0, 10, 0, 10);
+            border.Padding = new Thickness(0, 15, 0, 15);
             border.Margin = new Thickness(0);
             border.Background = (Brush)bc.ConvertFrom(background);
             border.CornerRadius = new CornerRadius(10);
-            border.Width = 100;
+            border.Width = 110;
             border.Child = textBlock;
 
             return border;
