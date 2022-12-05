@@ -17,6 +17,7 @@ using SGH.DAOs;
 using SGH.Modelos;
 using System.Reflection;
 using System.Windows.Media.Media3D;
+using System.Security.Cryptography;
 
 namespace SGH.Vistas.Horario
 {
@@ -54,7 +55,9 @@ namespace SGH.Vistas.Horario
         private static Grupo grupo = new Grupo();        
         private Dictionary<string, int> materiasSesiones = new Dictionary<string, int>();
         private List<ProfesorMateria> listaProfesorMateria = new List<ProfesorMateria>();
-        private string contenidoSeleccionado = "";
+        private string contenidoSeleccionadoMateria = "";
+        private int indexMateriaSeleccionadaGlobal;
+        private string contenidoSeleccionadoHorario = "";        
         private string colorSeleccionado = "";
 
         public GenerarHorarioRegistro()
@@ -234,7 +237,7 @@ namespace SGH.Vistas.Horario
             textBlock.Text = contenido;
             textBlock.TextAlignment = TextAlignment.Center;
             textBlock.HorizontalAlignment = HorizontalAlignment.Center;
-            textBlock.VerticalAlignment = VerticalAlignment.Center;
+            textBlock.VerticalAlignment = VerticalAlignment.Center;            
 
             Border border = new Border();
             if (!esMateria)
@@ -244,12 +247,15 @@ namespace SGH.Vistas.Horario
                 border.Margin = new Thickness(0);
                 border.Background = (Brush)bc.ConvertFrom(background);
                 border.CornerRadius = new CornerRadius(10);
-                border.Width = 60;
+                border.Width = 95;
                 border.Child = textBlock;
             }
             else
-            {                
-                border.Padding = new Thickness(0, 20, 0, 20);
+            {                                                
+                textBlock.Width = 150;
+                textBlock.TextWrapping = TextWrapping.Wrap;
+
+                border.Padding = new Thickness(0, 15, 0, 15);
                 border.Margin = new Thickness(0);
                 border.Background = (Brush)bc.ConvertFrom(background);
                 border.CornerRadius = new CornerRadius(10);
@@ -258,6 +264,32 @@ namespace SGH.Vistas.Horario
             }
           
             return border;
+        }
+
+        public Border CrearElementoHorario(string contenido, string background)
+        {
+            TextBlock textBlock = new TextBlock();
+            var bc = new BrushConverter();
+            textBlock.Foreground = Brushes.Black;
+            textBlock.Text = contenido;
+            textBlock.TextAlignment = TextAlignment.Center;
+            textBlock.HorizontalAlignment = HorizontalAlignment.Center;
+            textBlock.VerticalAlignment = VerticalAlignment.Center;
+            textBlock.FontSize = 8;
+            textBlock.Width = 65;
+            textBlock.TextWrapping = TextWrapping.Wrap;
+
+            Border border = new Border();            
+            border.Padding = new Thickness(0, 10, 0, 10);
+            border.Margin = new Thickness(0);
+            border.Background = (Brush)bc.ConvertFrom(background);
+            border.CornerRadius = new CornerRadius(10);
+            border.Width = 95;
+            border.Child = textBlock;
+                      
+
+            return border;
+
         }
         
         public StackPanel CrearElementoMateria(Materia materia)
@@ -354,7 +386,7 @@ namespace SGH.Vistas.Horario
 
         public void EliminarCampo(int posicion, string color, ListBox listBox)
         {
-            Border border = CrearElemento("-", color, true);
+            Border border = CrearElemento("-", color, false);
             if (border != null) {
                 SetCampo(border, posicion, listBox);
             }
@@ -367,38 +399,36 @@ namespace SGH.Vistas.Horario
             int indexMateriaSeleccionada = listBoxMaterias.SelectedIndex;            
             var border = (Border)listBoxMaterias.SelectedItem;
 
-            if (border != null)
+            if (border != null && contenidoSeleccionadoHorario.Length == 0)
             {
                 TextBlock textBlock = (TextBlock)border.Child;
-
                 string contenido = textBlock.Text.ToString();
                 
-                if (!(contenido.Equals("-")))
+                if (!contenido.Equals("-"))
                 {
                     
                     string[] materiaInformacion = contenido.Split('\n');
                     string sesionesInformacion = materiaInformacion[0];
                     string materia = materiaInformacion[1];
 
-
                     int numSesiones = GetNumSesiones(sesionesInformacion);
-                    int numSesionesActualizadas = numSesiones - 1;                    
-                    materiasSesiones[materia] = numSesionesActualizadas;                    
 
-                    string contenidoNuevo = "Sesiones: " + materiasSesiones[materia] + "\n" + materia;
-                    contenidoSeleccionado = contenido;
-                    colorSeleccionado = border.Background.ToString();
-                    //"NRC: " + nrc +
-                    //"\n" +
-                    //"RFC: " + rfc
-                    //+ "\n" +
-                    //nombre;
+                    if (numSesiones > 0)
+                    {
+                        string contenidoNuevo = "Sesiones: " + materiasSesiones[materia] + "\n" + materia;
+                        contenidoSeleccionadoMateria = contenido;
+                        colorSeleccionado = border.Background.ToString();
+                        indexMateriaSeleccionadaGlobal = indexMateriaSeleccionada;
+                        //"NRC: " + nrc +
+                        //"\n" +
+                        //"RFC: " + rfc
+                        //+ "\n" +
+                        //nombre;
 
 
-                    Border borderNuevo = CrearElemento(contenidoNuevo, border.Background.ToString(), true);
-                    SetCampo(borderNuevo, indexMateriaSeleccionada, listBoxMaterias);
-
-                    
+                        Border borderNuevo = CrearElemento(contenidoNuevo, border.Background.ToString(), true);
+                        SetCampo(borderNuevo, indexMateriaSeleccionada, listBoxMaterias);
+                    }                                                         
                 }
             }            
         }
@@ -406,62 +436,72 @@ namespace SGH.Vistas.Horario
         public void SeleccionHorario(object sender, RoutedEventArgs e)
         {
             int indexHorarioSeleccionada = listBoxGenerarHorario.SelectedIndex;
+            string hora = GetHora(indexHorarioSeleccionada);
+            string dia = GetDia(indexHorarioSeleccionada);            
             var border = (Border)listBoxGenerarHorario.SelectedItem;
 
             if (border != null)
             {
-                TextBlock textBlock = (TextBlock)border.Child;
-                string contenido = textBlock.Text.ToString();
+                if (!hora.Equals("") && !dia.Equals(""))
+                {
                 
-                Console.WriteLine(contenido);                
-                Console.WriteLine(contenidoSeleccionado.Length > 0);
+                    TextBlock textBlock = (TextBlock)border.Child;
+                    string contenido = textBlock.Text.ToString();                             
+                    bool campoVacio = contenido.Equals("-");
+                
+                    if (!campoVacio)
+                    {
 
-                bool campoVacio = contenido.Equals("-");
+                        if (contenidoSeleccionadoMateria.Length == 0 && contenidoSeleccionadoHorario.Length == 0)
+                        {
 
-                if (!campoVacio || contenidoSeleccionado.Length > 0)
-                {                  
+                            contenidoSeleccionadoHorario = contenido;
+                            colorSeleccionado = border.Background.ToString();
+                            EliminarCampo(indexHorarioSeleccionada, colorBase, listBoxGenerarHorario);
+                        }
+                    }
+                    else
+                    {
+                        if (contenidoSeleccionadoMateria.Length > 0 && contenidoSeleccionadoHorario.Length == 0)
+                        {
+                            
+                            string[] materiaInformacion = contenidoSeleccionadoMateria.Split('\n');
+                            string materia = materiaInformacion[1];
 
-                    Console.WriteLine("Entre");
-                    Console.WriteLine(contenidoSeleccionado);
-                    string[] materiaInformacion = contenidoSeleccionado.Split('\n');
-                    string materia = materiaInformacion[1];
+                            int numSesiones = materiasSesiones[materia];
+                            int numSesionesActualizadas = numSesiones - 1;
+                            materiasSesiones[materia] = numSesionesActualizadas;
 
-                    string contenidoNuevo = "Sesiones: " + materiasSesiones[materia] + "\n" + materia;
+                            string contenidoNuevoMateria = "Sesiones: " + materiasSesiones[materia] + "\n" + materia;
+                            Border borderNuevoMateria = CrearElemento(contenidoNuevoMateria, colorSeleccionado, true);
+                            SetCampo(borderNuevoMateria, indexMateriaSeleccionadaGlobal, listBoxMaterias);
+
+                            string contenidoNuevo = materia;
+                            Border borderNuevo = CrearElementoHorario(contenidoNuevo, colorSeleccionado);
+                            SetCampo(borderNuevo, indexHorarioSeleccionada, listBoxGenerarHorario);
+                            contenidoSeleccionadoMateria = "";
+                            colorSeleccionado = "";
+                                                        
+                        }
+                        else if (contenidoSeleccionadoHorario.Length > 0)
+                        {
+                            string[] materiaInformacion = contenidoSeleccionadoHorario.Split('\n');
+                            string materia = materiaInformacion[0];
+                            string contenidoNuevo = materia;                        
+                            Border borderNuevo = CrearElementoHorario(contenidoNuevo, colorSeleccionado);
+                            SetCampo(borderNuevo, indexHorarioSeleccionada, listBoxGenerarHorario);
+                            contenidoSeleccionadoHorario = "";
+                            colorSeleccionado = "";
+                        }
+                    }
+
                     //"NRC: " + nrc +
                     //"\n" +
                     //"RFC: " + rfc
                     //+ "\n" +
                     //nombre;
-
-                    Border borderNuevo = CrearElemento(contenidoNuevo, colorSeleccionado, false);
-                    SetCampo(borderNuevo, indexHorarioSeleccionada, listBoxGenerarHorario);
-
-                    //contenidoSeleccionado = contenido;
-                    //colorSeleccionado = border.Background.ToString();
                 }
-
-
-               
-
-                //string[] materiaInformacion = contenidoSeleccionado.Split('\n');
-                //string materia = materiaInformacion[1];
-
-                //string contenidoNuevo = "Sesiones: " + materiasSesiones[materia] + "\n" + materia;
-                ////"NRC: " + nrc +
-                ////"\n" +
-                ////"RFC: " + rfc
-                ////+ "\n" +
-                ////nombre;
-
-                //Border borderNuevo = CrearElemento(contenidoNuevo, colorSeleccionado, false);
-                //SetCampo(borderNuevo, indexHorarioSeleccionada, listBoxGenerarHorario);
-
-                //contenidoSeleccionado = "";
-                
-
-            }
-            
-
+            }           
         }
 
         public int GetNumSesiones(string sesionesInformacion)
@@ -471,5 +511,139 @@ namespace SGH.Vistas.Horario
 
             return numSesiones;
         }
+
+        public string GetHora(int posicion)
+        {
+
+            string hora = "";
+            int mitadNivelUno = 41;
+            int mitadSuperiorNivelDos = 17;
+            int mitadSuperiorInferiorNivelTres = 29;
+            int mitadInferiorNivelDos = 65;
+            int mitadInferiorSuperiorNivelTres = 53;
+            int mitadInferiorInferiorNivelTres = 77;
+
+
+            if (posicion <= mitadNivelUno)
+            {
+                if (posicion <= mitadSuperiorNivelDos)
+                {
+                    if (arregloSiete.Contains(posicion))
+                    {
+                        hora = "7-8";
+                    }
+                    else if (arregloOcho.Contains(posicion))
+                    {
+                        hora = "8-9";
+                    }
+                }
+                else
+                {
+                    if (posicion <= mitadSuperiorInferiorNivelTres)
+                    {
+                        if (arregloNueve.Contains(posicion))
+                        {
+                            hora = "9-10";
+                        }
+                        else
+                        {
+                            hora = "10-11";
+                        }
+                    }
+                    else if (arregloOnce.Contains(posicion))
+                    {
+                        hora = "11-12";
+                    }
+                    else
+                    {
+                        hora = "12-13";
+                    }
+
+                }
+            }
+            else
+            {
+                if (posicion <= mitadInferiorNivelDos)
+                {
+                    if (posicion <= mitadInferiorSuperiorNivelTres)
+                    {
+                        if (arregloTrece.Contains(posicion))
+                        {
+                            hora = "13-14";
+                        }
+                        else
+                        {
+                            hora = "14-15";
+                        }
+                    }
+                    else if (arregloQuince.Contains(posicion))
+                    {
+                        hora = "15-16";
+                    }
+                    else
+                    {
+                        hora = "16-17";
+                    }
+
+                }
+                else
+                {
+                    if (posicion <= mitadInferiorInferiorNivelTres)
+                    {
+                        if (arregloDiecisiete.Contains(posicion))
+                        {
+                            hora = "17-18";
+                        }
+                        else
+                        {
+                            hora = "18-19";
+                        }
+                    }
+                    else if (arregloDiecinueve.Contains(posicion))
+                    {
+                        hora = "19-20";
+                    }
+                    else
+                    {
+                        hora = "20-21";
+                    }
+
+                }
+
+            }
+
+            return hora;
+        }
+
+        public string GetDia(int posicion)
+        {
+            string dia = "";
+
+            if (arregloLunes.Contains(posicion))
+            {
+                dia = "lunes";
+            }
+            else if (arregloMartes.Contains(posicion))
+            {
+                dia = "martes";
+            }
+            else if (arregloMiercoles.Contains(posicion))
+            {
+                dia = "miercoles";
+            }
+            else if (arregloJueves.Contains(posicion))
+            {
+                dia = "jueves";
+            }
+            else if (arregloViernes.Contains(posicion))
+            {
+                dia = "viernes";
+            }
+
+            return dia;
+        }
+
+        //public void Set
+
     }
 }

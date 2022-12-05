@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SGH.Vistas.Horario"
         mc:Ignorable="d"
-        Title="Generación de Horarios" Height="720" Width="1020" WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
+        Title="Generación de Horarios" Height="720" Width="1200" WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
@@ -39,8 +39,8 @@
                 </Grid>                                                       
             </StackPanel>
             
-            <StackPanel Height="550" Width="500" Margin="10 0 0 0">
-                <Grid Name="gridBoard" Height="465" Width="500">
+            <StackPanel Height="550" Width="680" Margin="10 0 0 0">
+                <Grid Name="gridBoard" Height="465" Width="680">
                     <ListBox Name="listBoxGenerarHorario" MouseUp="SeleccionHorario" Padding="0" BorderThickness="1" >
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
@@ -51,7 +51,7 @@
                 </Grid>
 
                 <Button x:Name="botonConsultarHorario" HorizontalAlignment="Center" Background="#6B4240"
-                    BorderBrush="#6B4240" Height="33" Width="500" Foreground="White"
+                    BorderBrush="#6B4240" Height="33" Width="680" Foreground="White"
                     Style="{StaticResource MaterialDesignRaisedButton}"                
                     materialDesign:ButtonAssist.CornerRadius="5"
                     ToolTip="Consultar" 
@@ -62,7 +62,7 @@
                 </Button>
 
                 <Button x:Name="botonContinuarGeneracion" HorizontalAlignment="Center" Background="#6B4240"
-                    BorderBrush="#6B4240" Height="33" Width="500" Foreground="White"
+                    BorderBrush="#6B4240" Height="33" Width="680" Foreground="White"
                     Style="{StaticResource MaterialDesignRaisedButton}"                
                     materialDesign:ButtonAssist.CornerRadius="5"
                     ToolTip="Continuar" 
