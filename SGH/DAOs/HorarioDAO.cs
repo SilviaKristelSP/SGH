@@ -164,6 +164,31 @@ namespace SGH.DAOs
             return persona;
         }
     
+        public void GuardarHorario()
+        {
+
+        }
     
+        public Profesor_Materia GetProfesorMateria(string rfc, string nrc)
+        {
+            Profesor_Materia profesor_Materia = sghContext.Profesor_Materia.Where(pm => pm.RFC_Profesor.Equals(rfc) && pm.NRC_Materia.Equals(nrc)).FirstOrDefault();
+            return profesor_Materia;
+        }
+    
+        public Sesion ValidarSesion(Sesion sesion, string idProfesorMateria)
+        {
+            Sesion sesionEncontrada = (from se in sghContext.Sesions
+                                       join ms in sghContext.Materia_Sesion
+                                       on se.ID equals ms.ID_Sesion
+                                       where 
+                                       se.DiaSemana.Equals(sesion.DiaSemana) &&
+                                       se.HoraFinal.Equals(sesion.HoraFinal) &&
+                                       se.HoraInicio.Equals(sesion.HoraInicio) &&
+                                       ms.ID_Profesor_Materia.Equals(idProfesorMateria)
+                                       select se).FirstOrDefault();
+
+            return sesionEncontrada;
+
+        }
     }
 }

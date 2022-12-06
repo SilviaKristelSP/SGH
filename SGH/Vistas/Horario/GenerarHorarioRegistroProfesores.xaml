@@ -254,7 +254,7 @@
                     <DropShadowEffect/>
                 </Label.Effect>
             </Label>
-            <Button BorderBrush="{x:Null}" Background="{x:Null}" ToolTip="Copy" Height="35" Width="35"
+            <Button BorderBrush="{x:Null}" Background="{x:Null}" ToolTip="Borrar" Height="35" Width="35"
                         Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
                         Margin="550,-36,0,0" Name="botonBorrarAsignacion" Click="ClickBotonBorrarAsignacion">
                 <materialDesign:PackIcon Kind="DeleteCircle" Foreground="#FF0000" Height="25" Width="25"  VerticalAlignment="Center" 

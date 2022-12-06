@@ -71,8 +71,6 @@ namespace SGH.Vistas.Horario
             SetTableroMaterias();
             SetMateriasDisponibles();
             //SetMateriasDisponiblesProvicional();
-
-
         }
 
         #region Tabla Horario
@@ -332,10 +330,7 @@ namespace SGH.Vistas.Horario
         }
 
         public void SetMateriasDisponibles()
-        {
-            //listaProfesorMateria
-            //Materia : Mate_2-Matemáticas II
-            //Profesor : profesor1-Angel
+        {            
 
             int indexMateria = 0;
             foreach (ProfesorMateria profesorMateria in listaProfesorMateria)
@@ -379,9 +374,7 @@ namespace SGH.Vistas.Horario
 
                 Border border = CrearElemento(contenido, materia.Color, true);
                 InsertarCampo(border, indexMateria, listBoxMaterias);
-                indexMateria++;
-
-                //stackPanel.Children.Clear();
+                indexMateria++;                
             }
         }
 
@@ -410,14 +403,15 @@ namespace SGH.Vistas.Horario
                     
                     string[] materiaInformacion = contenido.Split('\n');
                     string sesionesInformacion = materiaInformacion[0];
-                    int numSesiones = GetNumSesiones(sesionesInformacion);
-                    string nrc = GetNRC(materiaInformacion[1]);
-                    string rfc = GetNRC(materiaInformacion[2]);
+                    int numSesiones = GetNumSesiones(sesionesInformacion);                    
+                    string nrc = GetField(materiaInformacion[1]);
+                    string rfc = GetField(materiaInformacion[2]);
+
+
                     string materia = materiaInformacion[3];
 
                     if (numSesiones > 0)
-                    {
-                        //string contenidoNuevo = "Sesiones: " + materiasSesiones[materia] + "\n" + materia;
+                    {                        
                         string contenidoNuevo = "Sesiones: " + materiasSesiones[materia] +
                                     "\n" +
                                     "NRC: " + nrc +
@@ -448,18 +442,15 @@ namespace SGH.Vistas.Horario
             if (border != null)
             {
                 if (!hora.Equals("") && !dia.Equals(""))
-                {
-                
+                {                
                     TextBlock textBlock = (TextBlock)border.Child;
                     string contenido = textBlock.Text.ToString();                             
                     bool campoVacio = contenido.Equals("-");
                 
                     if (!campoVacio)
                     {
-
                         if (contenidoSeleccionadoMateria.Length == 0 && contenidoSeleccionadoHorario.Length == 0)
                         {
-
                             contenidoSeleccionadoHorario = contenido;
                             colorSeleccionado = border.Background.ToString();
                             EliminarCampo(indexHorarioSeleccionada, colorBase, listBoxGenerarHorario);
@@ -475,12 +466,10 @@ namespace SGH.Vistas.Horario
 
                             int numSesiones = materiasSesiones[materia];
                             int numSesionesActualizadas = numSesiones - 1;
-                            materiasSesiones[materia] = numSesionesActualizadas;
+                            materiasSesiones[materia] = numSesionesActualizadas;                           
+                            string nrc = GetField(materiaInformacion[1]);
+                            string rfc = GetField(materiaInformacion[2]);
 
-                            string nrc = GetNRC(materiaInformacion[1]);
-                            string rfc = GetNRC(materiaInformacion[2]);                            
-
-                            //string contenidoNuevoMateria = "Sesiones: " + materiasSesiones[materia] + "\n" + materia;
                             string contenidoNuevoMateria = "Sesiones: " + materiasSesiones[materia] +
                                    "\n" +
                                    "NRC: " + nrc +
@@ -489,19 +478,14 @@ namespace SGH.Vistas.Horario
                                    + "\n" +
                                    materia;
 
-
                             Border borderNuevoMateria = CrearElemento(contenidoNuevoMateria, colorSeleccionado, true);
-                            SetCampo(borderNuevoMateria, indexMateriaSeleccionadaGlobal, listBoxMaterias);
-
-                            //string contenidoNuevo = materia;                           
+                            SetCampo(borderNuevoMateria, indexMateriaSeleccionadaGlobal, listBoxMaterias);                                           
                             string contenidoNuevo =
                                    "NRC: " + nrc +
                                    "\n" +
                                    "RFC: " + rfc
                                    + "\n" +
                                    materia;
-
-
 
                             Border borderNuevo = CrearElementoHorario(contenidoNuevo, colorSeleccionado);
                             SetCampo(borderNuevo, indexHorarioSeleccionada, listBoxGenerarHorario);
@@ -511,10 +495,9 @@ namespace SGH.Vistas.Horario
                         }
                         else if (contenidoSeleccionadoHorario.Length > 0)
                         {
-                            string[] materiaInformacion = contenidoSeleccionadoHorario.Split('\n');
-                            //string contenidoNuevo = materia;
-                            string nrc = GetNRC(materiaInformacion[0]);
-                            string rfc = GetNRC(materiaInformacion[1]);
+                            string[] materiaInformacion = contenidoSeleccionadoHorario.Split('\n');                                                        
+                            string nrc = GetField(materiaInformacion[0]);
+                            string rfc = GetField(materiaInformacion[1]);
                             string materia = materiaInformacion[2];
 
 
@@ -543,18 +526,12 @@ namespace SGH.Vistas.Horario
             int numSesiones = Int32.Parse(numSesionesInformacion[1]);
 
             return numSesiones;
-        }
+        }        
 
-        public string GetNRC(string nrcInformacion)
+        public string GetField(string information)
         {
-            string[] nrcArregloInformacion = nrcInformacion.Split(' ');
-            return nrcArregloInformacion[1];
-        }
-
-        public string GetRFC(string rfcInformacion)
-        {
-            string[] rfcArregloInformacion = rfcInformacion.Split(' ');
-            return rfcArregloInformacion[1];
+            string[] arrayInformation = information.Split(' ');
+            return arrayInformation[1];
         }
 
         public string GetHora(int posicion)
@@ -688,7 +665,58 @@ namespace SGH.Vistas.Horario
             return dia;
         }
 
-        //public void Set
+        private void GuardarHorario(object sender, RoutedEventArgs e)
+        {
+            bool traslape = false;
+
+            ValidarSesionesPorDia(arregloLunes);          
+        }
+
+        public bool ValidarSesionesPorDia(List<int> arregloDia)
+        {
+            bool traslape = false;
+
+            foreach (int indexDia in arregloDia)
+            {
+                var border = (Border)listBoxGenerarHorario.Items[indexDia];
+
+                if (border != null)
+                {
+                    TextBlock textBlock = (TextBlock)border.Child;
+                    string contenido = textBlock.Text.ToString();
+                    bool campoVacio = contenido.Equals("-");
+
+                    if (!campoVacio)
+                    {
+
+                        string[] materiaInformacion = contenido.Split('\n');
+                        string nrc = GetField(materiaInformacion[0]);
+                        string rfc = GetField(materiaInformacion[1]);
+                        string materia = materiaInformacion[2];
+
+                        Profesor_Materia profesor_Materia = horarioDAO.GetProfesorMateria(rfc, nrc);
+
+                        string dia = GetDia(indexDia);
+                        string hora = GetHora(indexDia);
+                        string[] horaInformacion = hora.Split('-');
+                        string horaInicio = horaInformacion[0];
+                        string horaFin = horaInformacion[1];
+
+                        Sesion sesion = new Sesion();
+                        sesion.DiaSemana = dia;
+                        sesion.HoraFinal = horaFin;
+                        sesion.HoraInicio = horaInicio;                      
+
+                        Sesion sesionEncontrada = horarioDAO.ValidarSesion(sesion, profesor_Materia.ID_Profesor_Materia);
+                        if (sesionEncontrada != null)
+                        {                            
+                            traslape = true;
+                        }                        
+                    }
+                }
+            }
+            return traslape;
+        }
 
     }
 }

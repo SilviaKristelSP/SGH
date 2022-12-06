@@ -138,7 +138,6 @@ namespace SGH.Vistas.Horario.Consulta
                     SetCampo(contenido, posicion, materia.Color);
 
                 }
-
             }
             catch (Exception ex)
             {
@@ -499,9 +498,7 @@ namespace SGH.Vistas.Horario.Consulta
 
             for (int i = 0; i < tamañoHorario; i++)
             {
-
                 InsertarCampo("-", i, colorBase);
-
             }
 
             SetCampo("", 0, "#fafafa");
@@ -514,7 +511,6 @@ namespace SGH.Vistas.Horario.Consulta
         public void InsertarCampo(string contenido, int posicion, string background)
         {            
             Border border = CrearElemento(contenido, background);
-
             listBoxConsultaHorario.Items.Insert(posicion, border);
         }
 

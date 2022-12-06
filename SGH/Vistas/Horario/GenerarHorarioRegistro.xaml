@@ -61,15 +61,15 @@
                     Text="Consultar Horario" />
                 </Button>
 
-                <Button x:Name="botonContinuarGeneracion" HorizontalAlignment="Center" Background="#6B4240"
+                <Button x:Name="botonGuardarHorario" HorizontalAlignment="Center" Background="#6B4240"
                     BorderBrush="#6B4240" Height="33" Width="680" Foreground="White"
                     Style="{StaticResource MaterialDesignRaisedButton}"                
                     materialDesign:ButtonAssist.CornerRadius="5"
                     ToolTip="Continuar" 
-                    IsEnabled="True" Margin="0 10 0 0"
+                    IsEnabled="True" Margin="0 10 0 0" Click="GuardarHorario"
                 >
                     <TextBlock
-                    Text="Continuar" />
+                    Text="Guardar" />
                 </Button>
             </StackPanel>
             
