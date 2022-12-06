@@ -18,6 +18,8 @@ using SGH.Modelos;
 using System.Reflection;
 using System.Windows.Media.Media3D;
 using System.Security.Cryptography;
+using SGH.Vistas.Alertas;
+using SGH.Vistas.LogIn;
 
 namespace SGH.Vistas.Horario
 {
@@ -667,14 +669,22 @@ namespace SGH.Vistas.Horario
 
         private void GuardarHorario(object sender, RoutedEventArgs e)
         {
-            bool traslape = false;
+            bool solapamiento;
 
-            ValidarSesionesPorDia(arregloLunes);          
+            solapamiento = ValidarSesionesPorDia(arregloLunes);
+            solapamiento = ValidarSesionesPorDia(arregloMartes);
+            solapamiento = ValidarSesionesPorDia(arregloMiercoles);
+            solapamiento = ValidarSesionesPorDia(arregloJueves);
+            solapamiento = ValidarSesionesPorDia(arregloViernes);
+
+            
+
+
         }
 
         public bool ValidarSesionesPorDia(List<int> arregloDia)
         {
-            bool traslape = false;
+            bool solapamiento = false;
 
             foreach (int indexDia in arregloDia)
             {
@@ -707,16 +717,31 @@ namespace SGH.Vistas.Horario
                         sesion.HoraFinal = horaFin;
                         sesion.HoraInicio = horaInicio;                      
 
-                        Sesion sesionEncontrada = horarioDAO.ValidarSesion(sesion, profesor_Materia.ID_Profesor_Materia);
+                        Sesion sesionEncontrada = horarioDAO.ValidarSesion(sesion, profesor_Materia.ID_Profesor_Materia, grupo.Semestre);
                         if (sesionEncontrada != null)
-                        {                            
-                            traslape = true;
+                        {
+                            solapamiento = true;
+                            Grupo grupoSolapamiento = horarioDAO.GetGrupoByID(sesionEncontrada.ID_Grupo);
+                            Console.WriteLine("Solapamiento con grupo: " + grupoSolapamiento.Semestre + "-" + grupoSolapamiento.Letra);
+                            stackPanelBlack.Visibility = Visibility.Visible;
+                            string mensajeAlerta = "Translape con grupo: " + grupo.Semestre;
+                            Alerta alerta = new Alerta(mensajeAlerta,
+                                                 MessageType.Error, MessageButtons.Ok, "short");
+                            stackPanelBlack.Visibility = Visibility.Collapsed;
+                            //break;
                         }                        
                     }
                 }
             }
-            return traslape;
+            return solapamiento;
         }
 
+        private void ConsultaRapidaHorario(object sender, RoutedEventArgs e)
+        {            
+            ConsultaRapidaHorario window = new ConsultaRapidaHorario();
+            window.Owner = this;
+            window.Show();
+
+        }
     }
 }

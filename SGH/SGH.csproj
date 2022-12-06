@@ -163,6 +163,9 @@
     <Compile Include="Vistas\Horario\ConsultaHorarios.xaml.cs">
       <DependentUpon>ConsultaHorarios.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\Horario\ConsultaRapidaHorario.xaml.cs">
+      <DependentUpon>ConsultaRapidaHorario.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vistas\Horario\GenerarHorario.xaml.cs">
       <DependentUpon>GenerarHorario.xaml</DependentUpon>
     </Compile>
@@ -192,6 +195,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Vistas\Horario\ConsultaHorarios.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\Horario\ConsultaRapidaHorario.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

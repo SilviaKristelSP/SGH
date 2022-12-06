@@ -38,7 +38,7 @@
                     </ListBox>
                 </Grid>                                                       
             </StackPanel>
-            
+
             <StackPanel Height="550" Width="680" Margin="10 0 0 0">
                 <Grid Name="gridBoard" Height="465" Width="680">
                     <ListBox Name="listBoxGenerarHorario" MouseUp="SeleccionHorario" Padding="0" BorderThickness="1" >
@@ -55,10 +55,10 @@
                     Style="{StaticResource MaterialDesignRaisedButton}"                
                     materialDesign:ButtonAssist.CornerRadius="5"
                     ToolTip="Consultar" 
-                    IsEnabled="True" Margin="0 10 0 0"
+                    IsEnabled="True" Margin="0 10 0 0" Click="ConsultaRapidaHorario"
                 >
                     <TextBlock
-                    Text="Consultar Horario" />
+                    Text="Consultar Horarios" />
                 </Button>
 
                 <Button x:Name="botonGuardarHorario" HorizontalAlignment="Center" Background="#6B4240"
@@ -72,13 +72,9 @@
                     Text="Guardar" />
                 </Button>
             </StackPanel>
-            
-            
-
-            
-
         </WrapPanel>
 
+        <StackPanel x:Name="stackPanelBlack" Background="Black" Opacity="0.8" Visibility="Collapsed"/>
 
     </Grid>
 </Window>

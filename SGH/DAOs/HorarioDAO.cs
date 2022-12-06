@@ -68,9 +68,14 @@ namespace SGH.DAOs
 
         public string GetGrupoId(string letra, int semestre)
         {
-
             Grupo grupo = sghContext.Grupoes.Where(gr => gr.Letra == letra && gr.Semestre == semestre).FirstOrDefault();
             return grupo.ID;
+        }
+
+        public Grupo GetGrupoByID(string id)
+        {
+            Grupo grupo = sghContext.Grupoes.Where(gr => gr.ID.Equals(id)).FirstOrDefault();
+            return grupo;
         }
 
         public Grupo GetGrupo(string letra, int semestre)
@@ -175,9 +180,16 @@ namespace SGH.DAOs
             return profesor_Materia;
         }
     
-        public Sesion ValidarSesion(Sesion sesion, string idProfesorMateria)
+        public Sesion ValidarSesion(Sesion sesion, string idProfesorMateria, int semestre)
         {
-            Sesion sesionEncontrada = (from se in sghContext.Sesions
+
+            List<Sesion> listaSesiones = (from se in sghContext.Sesions
+                                          join grupo in sghContext.Grupoes
+                                          on se.ID_Grupo equals grupo.ID
+                                          where grupo.Semestre == semestre
+                                          select se).ToList();
+
+            Sesion sesionEncontrada = (from se in listaSesiones
                                        join ms in sghContext.Materia_Sesion
                                        on se.ID equals ms.ID_Sesion
                                        where 
