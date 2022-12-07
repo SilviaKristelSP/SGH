@@ -61,6 +61,7 @@ namespace SGH.Vistas.Horario
         private int indexMateriaSeleccionadaGlobal;
         private string contenidoSeleccionadoHorario = "";        
         private string colorSeleccionado = "";
+        private Grupo grupoSolapamiento = null;
 
         public GenerarHorarioRegistro()
         {
@@ -667,24 +668,106 @@ namespace SGH.Vistas.Horario
             return dia;
         }
 
-        private void GuardarHorario(object sender, RoutedEventArgs e)
+        private void ValidarHorario(object sender, RoutedEventArgs e)
         {
-            bool solapamiento;
+            bool solapamientoHorarioLunes;
+            bool solapamientoHorarioMartes;
+            bool solapamientoHorarioMiercoles;
+            bool solapamientoHorarioJueves;
+            bool solapamientoHorarioViernes;
+            List<bool> listaSolapamiento = new List<bool>();
 
-            solapamiento = ValidarSesionesPorDia(arregloLunes);
-            solapamiento = ValidarSesionesPorDia(arregloMartes);
-            solapamiento = ValidarSesionesPorDia(arregloMiercoles);
-            solapamiento = ValidarSesionesPorDia(arregloJueves);
-            solapamiento = ValidarSesionesPorDia(arregloViernes);
+            solapamientoHorarioLunes = ValidarSesionesPorDia(arregloLunes);
+            solapamientoHorarioMartes = ValidarSesionesPorDia(arregloMartes);
+            solapamientoHorarioMiercoles = ValidarSesionesPorDia(arregloMiercoles);
+            solapamientoHorarioJueves = ValidarSesionesPorDia(arregloJueves);
+            solapamientoHorarioViernes = ValidarSesionesPorDia(arregloViernes);
 
+            listaSolapamiento.Add(solapamientoHorarioLunes);
+            listaSolapamiento.Add(solapamientoHorarioMartes);
+            listaSolapamiento.Add(solapamientoHorarioMiercoles);
+            listaSolapamiento.Add(solapamientoHorarioJueves);
+            listaSolapamiento.Add(solapamientoHorarioViernes);
+           
+            bool horarioSolapado = listaSolapamiento.Any(x => x == true);
             
 
+            if (horarioSolapado && grupoSolapamiento != null)
+            {
+                stackPanelBlack.Visibility = Visibility.Visible;
+                string mensajeAlerta = "Solapamiento con grupo: " + grupoSolapamiento.Semestre + "-" + grupoSolapamiento.Letra;
+                Alerta alerta = new Alerta(mensajeAlerta,
+                                     MessageType.Warning, MessageButtons.Ok, "short");
+                new MessageBoxCustom(alerta).ShowDialog();
+                stackPanelBlack.Visibility = Visibility.Collapsed;
+
+            }
+            else
+            {
+                GuardarHorario();
+            }
+
+            grupoSolapamiento = null;
 
         }
 
+        public void GuardarHorario()
+        {
+
+        }
+
+        public void GuardarSesionesPorDia(List<int> arregloDia)
+        {
+            foreach (int indexDia in arregloDia)
+            {
+                var border = (Border)listBoxGenerarHorario.Items[indexDia];
+
+                if (border != null)
+                {
+                    TextBlock textBlock = (TextBlock)border.Child;
+                    string contenido = textBlock.Text.ToString();
+                    bool campoVacio = contenido.Equals("-");
+
+                    if (!campoVacio)
+                    {
+
+
+
+                        string[] materiaInformacion = contenido.Split('\n');
+                        string nrc = GetField(materiaInformacion[0]);
+                        string rfc = GetField(materiaInformacion[1]);
+                        string materia = materiaInformacion[2];
+
+                        Profesor_Materia profesor_Materia = horarioDAO.GetProfesorMateria(rfc, nrc);
+
+                        string dia = GetDia(indexDia);
+                        string hora = GetHora(indexDia);
+                        string[] horaInformacion = hora.Split('-');
+                        string horaInicio = horaInformacion[0];
+                        string horaFin = horaInformacion[1];
+
+                        Sesion sesion = new Sesion();
+                        sesion.DiaSemana = dia;
+                        sesion.HoraFinal = horaFin;
+                        sesion.HoraInicio = horaInicio;
+
+                        Sesion sesionEncontrada = horarioDAO.ValidarSesion(sesion, profesor_Materia.ID_Profesor_Materia, grupo.Semestre);
+                        if (sesionEncontrada != null)
+                        {
+                            solapamiento = true;
+                            grupoSolapamiento = horarioDAO.GetGrupoByID(sesionEncontrada.ID_Grupo);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+
+
         public bool ValidarSesionesPorDia(List<int> arregloDia)
         {
-            bool solapamiento = false;
+            bool solapamiento = false;            
 
             foreach (int indexDia in arregloDia)
             {
@@ -721,18 +804,13 @@ namespace SGH.Vistas.Horario
                         if (sesionEncontrada != null)
                         {
                             solapamiento = true;
-                            Grupo grupoSolapamiento = horarioDAO.GetGrupoByID(sesionEncontrada.ID_Grupo);
-                            Console.WriteLine("Solapamiento con grupo: " + grupoSolapamiento.Semestre + "-" + grupoSolapamiento.Letra);
-                            stackPanelBlack.Visibility = Visibility.Visible;
-                            string mensajeAlerta = "Translape con grupo: " + grupo.Semestre;
-                            Alerta alerta = new Alerta(mensajeAlerta,
-                                                 MessageType.Error, MessageButtons.Ok, "short");
-                            stackPanelBlack.Visibility = Visibility.Collapsed;
-                            //break;
+                            grupoSolapamiento = horarioDAO.GetGrupoByID(sesionEncontrada.ID_Grupo);                            
+                            break;
                         }                        
                     }
                 }
-            }
+            }            
+
             return solapamiento;
         }
 
