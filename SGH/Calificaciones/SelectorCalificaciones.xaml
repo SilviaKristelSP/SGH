@@ -32,7 +32,7 @@
 
             <Button x:Name="calificacionEstudiante" Content="Calificacion de un estudiante" HorizontalAlignment="Center" Margin="0,98,0,0" VerticalAlignment="Top" Height="129" Width="250" Click="calificacionEstudiante_Click" Background="#FF4C78FF" BorderBrush="#FF4C78FF"/>
 
-            <Button Grid.Column="1" x:Name="calificacionGrupal" Content="Calificacion de un grupo" HorizontalAlignment="Center" Margin="0,98,0,0" VerticalAlignment="Top" Height="129" Width="250" Click="calificacionGrupal_Click" Background="#FF4C78FF"/>
+            <Button Grid.Column="1" x:Name="calificacionGrupal" Content="Calificacion de un grupo" HorizontalAlignment="Center" Margin="0,98,0,0" VerticalAlignment="Top" Height="129" Width="250" Click="calificacionGrupal_Click" Background="#FF4C78FF" BorderBrush="#FF4C78FF"/>
 
         </Grid>
         

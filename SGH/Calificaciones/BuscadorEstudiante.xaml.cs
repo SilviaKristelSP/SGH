@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SGH.POCO;
+using System;
 using System.ComponentModel;
 using System.Windows;
 
