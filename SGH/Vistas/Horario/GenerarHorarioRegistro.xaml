@@ -32,7 +32,7 @@
                     <ListBox Name="listBoxMaterias" MouseUp="SeleccionMateria" Padding="0" BorderThickness="1" >
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <UniformGrid Columns="2" Rows="20"/>
+                                <UniformGrid Columns="2" Rows="15"/>
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
                     </ListBox>
@@ -65,7 +65,7 @@
                     BorderBrush="#6B4240" Height="33" Width="680" Foreground="White"
                     Style="{StaticResource MaterialDesignRaisedButton}"                
                     materialDesign:ButtonAssist.CornerRadius="5"
-                    ToolTip="Continuar" 
+                    ToolTip="Guardar" 
                     IsEnabled="True" Margin="0 10 0 0" Click="ValidarHorario"
                 >
                     <TextBlock

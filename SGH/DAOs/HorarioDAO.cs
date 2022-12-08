@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using SGH.Vistas;
 using System.Data.Entity.Core;
+using System.Data.SqlClient;
+using System.Windows.Controls.Primitives;
 
 namespace SGH.DAOs
 {
@@ -200,6 +202,78 @@ namespace SGH.DAOs
                                        select se).FirstOrDefault();
 
             return sesionEncontrada;
+
+        }
+    
+        public bool EncontrarSesionPorId(string sesionID)
+        {
+            bool existeSesion = false;
+            Sesion sesion = sghContext.Sesions.Where(se => se.ID.Equals(sesionID)).FirstOrDefault();            
+            if (sesion != null)
+            {
+                existeSesion = true;
+            }
+            return existeSesion;
+        }        
+
+        public bool EncontrarMateriaSesionPorId(string materiSesionID)
+        {
+            bool existeSesion = false;
+            Materia_Sesion materia_Sesion = sghContext.Materia_Sesion.Where(se => se.ID_Materia_Sesion.Equals(materiSesionID)).FirstOrDefault();
+            if (materia_Sesion != null)
+            {
+                existeSesion = true;
+            }
+            return existeSesion;
+        }
+
+        public bool GuardarSesion(Sesion sesion)
+        {
+            int cambiosHechos;
+            bool sesionGuardada = false;
+            try
+            {
+                sghContext.Sesions.Add(sesion);
+                cambiosHechos = sghContext.SaveChanges();
+
+                if (cambiosHechos == 1)
+                {
+                    sesionGuardada = true;
+                }
+
+            }
+            catch (System.Data.Entity.Core.EntityException ex)
+            {
+                MessageBox.Show(ex.ToString());
+                log.Add(ex.ToString());
+            }
+
+            return sesionGuardada;
+        }      
+
+        public bool GuardarMateriaSesion(Materia_Sesion materia_Sesion)
+        {
+            int cambiosHechos;
+            bool registroGuardado = false;
+            try
+            {
+
+                sghContext.Materia_Sesion.Add(materia_Sesion);
+                cambiosHechos = sghContext.SaveChanges();
+
+                if (cambiosHechos == 1)
+                {
+                    registroGuardado = true;
+                }
+
+            }
+            catch (System.Data.Entity.Core.EntityException ex)
+            {
+                MessageBox.Show(ex.ToString());
+                log.Add(ex.ToString());
+            }
+
+            return registroGuardado;
 
         }
     }

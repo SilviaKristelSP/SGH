@@ -76,16 +76,7 @@ namespace SGH.Vistas.Horario
             //SetMateriasDisponiblesProvicional();
         }
 
-        #region Tabla Horario
-        private void Salir(object sender, MouseButtonEventArgs e)
-        {
-            GenerarHorario generarHorario = new GenerarHorario();
-            Application.Current.MainWindow = generarHorario;
-            Application.Current.MainWindow.Show();
-
-            foreach (Window window in Application.Current.Windows.OfType<GenerarHorarioRegistro>())
-                ((GenerarHorarioRegistro)window).Close();
-        }
+        #region Tabla Horario        
 
         public void SetRangos()
         {
@@ -169,7 +160,7 @@ namespace SGH.Vistas.Horario
 
         public void SetTableroMaterias()
         {
-            int cantidadFilas = 20;
+            int cantidadFilas = 15;
             int cantidadColumnas = 2;
             int tamañoTablero = cantidadFilas * cantidadColumnas;
 
@@ -177,7 +168,6 @@ namespace SGH.Vistas.Horario
             {
                 Border border = CrearElemento("-", "#fff", true);
                 InsertarCampo(border, i, listBoxMaterias);
-
             }            
         }
 
@@ -356,8 +346,9 @@ namespace SGH.Vistas.Horario
                                     + "\n" +
                                     nombre;
                 
-                Border border = CrearElemento(contenido, materia.Color, true);                
-                InsertarCampo(border, indexMateria, listBoxMaterias);
+                Border border = CrearElemento(contenido, materia.Color, true);
+                //InsertarCampo(border, indexMateria, listBoxMaterias);
+                SetCampo(border, indexMateria, listBoxMaterias);
                 indexMateria++;
             }                    
         }
@@ -689,35 +680,84 @@ namespace SGH.Vistas.Horario
             listaSolapamiento.Add(solapamientoHorarioJueves);
             listaSolapamiento.Add(solapamientoHorarioViernes);
            
-            bool horarioSolapado = listaSolapamiento.Any(x => x == true);
-            
+            bool horarioSolapado = listaSolapamiento.Any(x => x == true);            
 
             if (horarioSolapado && grupoSolapamiento != null)
-            {
-                stackPanelBlack.Visibility = Visibility.Visible;
-                string mensajeAlerta = "Solapamiento con grupo: " + grupoSolapamiento.Semestre + "-" + grupoSolapamiento.Letra;
-                Alerta alerta = new Alerta(mensajeAlerta,
-                                     MessageType.Warning, MessageButtons.Ok, "short");
-                new MessageBoxCustom(alerta).ShowDialog();
-                stackPanelBlack.Visibility = Visibility.Collapsed;
-
+            {                
+                string mensajeAlerta = "Solapamiento con grupo: " + grupoSolapamiento.Semestre + "-" + grupoSolapamiento.Letra;                
+                MostrarAlertaShortOk(mensajeAlerta, MessageType.Warning);
             }
             else
             {
-                GuardarHorario();
+                bool sesionesCubiertas = ValidarCoberturaSesiones();
+                if (sesionesCubiertas)
+                {
+                    GuardarHorario();
+                }
+                else
+                {
+                    MostrarAlertaShortOk("Faltan sesiones por asignar", MessageType.Warning);
+                }
+            }
+            grupoSolapamiento = null;
+        }
+
+        public bool ValidarCoberturaSesiones()
+        {
+            bool sesionesCubiertas = true;
+            foreach (KeyValuePair<string, int> entry in materiasSesiones)
+            {                
+                if (entry.Value > 0)
+                {
+                    sesionesCubiertas = false;
+                    break;
+                }
             }
 
-            grupoSolapamiento = null;
-
+            return sesionesCubiertas;
         }
 
         public void GuardarHorario()
-        {
+        {            
+            bool sesionesGuardadasLunes;
+            bool sesionesGuardadasMartes;
+            bool sesionesGuardadasMiercoles;
+            bool sesionesGuardadasJueves;
+            bool sesionesGuardadasViernes;
+            List<bool> listaSesionesGuardadas = new List<bool>();
 
+            sesionesGuardadasLunes = GuardarSesionesPorDia(arregloLunes);
+            sesionesGuardadasMartes = GuardarSesionesPorDia(arregloMartes);
+            sesionesGuardadasMiercoles = GuardarSesionesPorDia(arregloMiercoles);
+            sesionesGuardadasJueves = GuardarSesionesPorDia(arregloJueves);
+            sesionesGuardadasViernes = GuardarSesionesPorDia(arregloViernes);
+
+            listaSesionesGuardadas.Add(sesionesGuardadasLunes);
+            listaSesionesGuardadas.Add(sesionesGuardadasMartes);
+            listaSesionesGuardadas.Add(sesionesGuardadasMiercoles);
+            listaSesionesGuardadas.Add(sesionesGuardadasJueves);
+            listaSesionesGuardadas.Add(sesionesGuardadasViernes);
+
+            bool horarioGuardado = listaSesionesGuardadas.Any(x => x == false);
+
+            if (horarioGuardado)
+            {
+                MostrarAlertaShortOk("Error de conexión con la base de datos", MessageType.Warning);
+                Console.WriteLine("Entre aqui 1");
+            }
+            else
+            {
+                MostrarAlertaShortOk("El horario ha sido guardado exitosamente", MessageType.Confirmation);
+                SalirGenerarHorario();
+
+            }
         }
 
-        public void GuardarSesionesPorDia(List<int> arregloDia)
+        public bool GuardarSesionesPorDia(List<int> arregloDia)
         {
+
+            bool registroGuardados = true;
+
             foreach (int indexDia in arregloDia)
             {
                 var border = (Border)listBoxGenerarHorario.Items[indexDia];
@@ -731,12 +771,9 @@ namespace SGH.Vistas.Horario
                     if (!campoVacio)
                     {
 
-
-
                         string[] materiaInformacion = contenido.Split('\n');
                         string nrc = GetField(materiaInformacion[0]);
-                        string rfc = GetField(materiaInformacion[1]);
-                        string materia = materiaInformacion[2];
+                        string rfc = GetField(materiaInformacion[1]);                        
 
                         Profesor_Materia profesor_Materia = horarioDAO.GetProfesorMateria(rfc, nrc);
 
@@ -746,24 +783,82 @@ namespace SGH.Vistas.Horario
                         string horaInicio = horaInformacion[0];
                         string horaFin = horaInformacion[1];
 
-                        Sesion sesion = new Sesion();
+                        Sesion sesion = new Sesion();                        
                         sesion.DiaSemana = dia;
                         sesion.HoraFinal = horaFin;
                         sesion.HoraInicio = horaInicio;
+                        sesion.ID_Grupo = grupo.ID;
 
-                        Sesion sesionEncontrada = horarioDAO.ValidarSesion(sesion, profesor_Materia.ID_Profesor_Materia, grupo.Semestre);
-                        if (sesionEncontrada != null)
+                        registroGuardados = GuardarSesion(sesion, profesor_Materia);
+
+                        if (!registroGuardados)
                         {
-                            solapamiento = true;
-                            grupoSolapamiento = horarioDAO.GetGrupoByID(sesionEncontrada.ID_Grupo);
+                            MostrarAlertaShortOk("Error de conexión con la base de datos", MessageType.Warning);
+                            Console.WriteLine("Entre aqui 2");
                             break;
-                        }
+                        }                        
                     }
                 }
             }
+
+            return registroGuardados;
         }
 
+        public bool GuardarSesion(Sesion sesion, Profesor_Materia profesor_Materia)
+        {
+            bool registroGuardados = true;
+            string idSesion;
+            bool existeSesion;
 
+            do
+            {
+                idSesion = Utiles.Util.generarID(50);
+                existeSesion = horarioDAO.EncontrarSesionPorId(idSesion);
+                
+            } while (existeSesion);
+
+            sesion.ID = idSesion;
+            bool sesionGuardada = horarioDAO.GuardarSesion(sesion);
+
+            if (!sesionGuardada)
+            {
+                registroGuardados = false;                
+            }
+            else
+            {
+
+                string idMateriaSesion;
+                bool existeMateriaSesion;
+                do
+                {
+                    idMateriaSesion = Utiles.Util.generarID(50);
+                    existeMateriaSesion = horarioDAO.EncontrarMateriaSesionPorId(idMateriaSesion);
+
+                } while (existeMateriaSesion);
+
+                Materia_Sesion materiaSesion = new Materia_Sesion();
+                materiaSesion.ID_Materia_Sesion = idMateriaSesion;
+                materiaSesion.ID_Profesor_Materia = profesor_Materia.ID_Profesor_Materia;
+                materiaSesion.ID_Sesion = idSesion;
+
+                bool materiaSesionGuardada = horarioDAO.GuardarMateriaSesion(materiaSesion);
+
+                if (!materiaSesionGuardada)
+                {
+                    registroGuardados = false;                    
+                }
+            }
+            return registroGuardados;
+        }
+
+        public void MostrarAlertaShortOk(string mensaje, MessageType messageType)
+        {
+            stackPanelBlack.Visibility = Visibility.Visible;
+            Alerta alerta = new Alerta(mensaje,
+                                    messageType, MessageButtons.Ok, "short");
+            new MessageBoxCustom(alerta).ShowDialog();
+            stackPanelBlack.Visibility = Visibility.Collapsed;
+        }       
 
         public bool ValidarSesionesPorDia(List<int> arregloDia)
         {
@@ -818,8 +913,24 @@ namespace SGH.Vistas.Horario
         {            
             ConsultaRapidaHorario window = new ConsultaRapidaHorario();
             window.Owner = this;
-            window.Show();
+            window.ShowDialog();
+        }
 
+        private void Salir(object sender, MouseButtonEventArgs e)
+        {
+            SalirGenerarHorario();
+        }
+
+        public void SalirGenerarHorario()
+        {
+            GenerarHorario generarHorario = new GenerarHorario();
+            Application.Current.MainWindow = generarHorario;
+            Application.Current.MainWindow.Show();
+
+            foreach (Window window in Application.Current.Windows.OfType<GenerarHorarioRegistro>())
+            {
+                ((GenerarHorarioRegistro)window).Close();
+            }
         }
     }
 }

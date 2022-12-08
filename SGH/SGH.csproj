@@ -159,6 +159,7 @@
       <DependentUpon>SGHContext.edmx</DependentUpon>
     </Compile>
     <Compile Include="Utiles\MateriaHorario.cs" />
+    <Compile Include="Utiles\Util.cs" />
     <Compile Include="Vistas\Excepciones\ErrorAlertException.cs" />
     <Compile Include="Vistas\Horario\ConsultaHorarios.xaml.cs">
       <DependentUpon>ConsultaHorarios.xaml</DependentUpon>
