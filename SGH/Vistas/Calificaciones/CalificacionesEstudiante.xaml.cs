@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SGH.Vistas.MenuPrincipal;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,9 +27,14 @@ namespace SGH.Calificaciones
 
         private void ClickRegresar(object sender, RoutedEventArgs e)
         {
-            BuscadorEstudiante ventana = new BuscadorEstudiante();
-            this.Close();
-            ventana.Show();
+            BuscadorEstudiante buscadorEstudiante = new BuscadorEstudiante();
+            Application.Current.MainWindow = buscadorEstudiante;
+            Application.Current.MainWindow.Show();
+
+            foreach (Window window in Application.Current.Windows.OfType<CalificacionesEstudiante>())
+            {
+                ((CalificacionesEstudiante)window).Close();
+            }
         }
 
         private void ClickGuardar(object sender, RoutedEventArgs e)

@@ -274,22 +274,15 @@
                         <Button FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
                             Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
                             BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                       
-                            Foreground="White" FontSize="14" Content="Consultar Calificaciones"
-                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                   
+                            Foreground="White" FontSize="14" Content="De un estudiante" 
+                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Click="ClickCalificacionesEstudiante"                                   
                         />
 
                         <Button FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
                             Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
                             BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                        
-                            Foreground="White" Content="Registrar Calificaciones" FontSize="14"
-                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                   
-                        />
-
-                        <Button FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
-                            Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
-                            BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                         
-                            Foreground="White" Content="Eliminar Calificaciones" FontSize="14"
-                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                   
+                            Foreground="White" Content="De un grupo" FontSize="14"
+                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Click="ClickCalificacionesGrupo"                                   
                         />
 
                     </StackPanel>

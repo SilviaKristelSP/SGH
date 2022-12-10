@@ -1,4 +1,8 @@
-﻿using System;
+﻿using SGH.Modelos;
+using SGH.Vistas.MenuPrincipal;
+using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 
 namespace SGH.Calificaciones
@@ -13,13 +17,30 @@ namespace SGH.Calificaciones
         public BuscadorEstudiante()
         {
             InitializeComponent();
+            recuperarGrupos();
+        }
+
+        private void recuperarGrupos()
+        {
+            ObservableCollection<string> grupos = new ObservableCollection<string>
+            {
+                "Grupo 1",
+                "Grupo 2",
+                "Grupo 3"
+            };
+            cb_grupo.ItemsSource = grupos;
         }
 
         private void Regresar_Click(object sender, RoutedEventArgs e)
         {
-            SelectorCalificaciones ventana = new SelectorCalificaciones();
-            this.Close();
-            ventana.Show();
+            MenuPrincipalSGH menuPrincipalSGH = new MenuPrincipalSGH();
+            Application.Current.MainWindow = menuPrincipalSGH;
+            Application.Current.MainWindow.Show();
+
+            foreach (Window window in Application.Current.Windows.OfType<BuscadorEstudiante>())
+            {
+                ((BuscadorEstudiante)window).Close();
+            }
         }
 
         private void Buscar_Click(object sender, RoutedEventArgs e)
@@ -55,7 +76,8 @@ namespace SGH.Calificaciones
             if (!HayCamposVacios())
             {
                 Estudiante estudiante = new Estudiante();
-                estudiante.nombre = tb_nombre.Text;
+                estudiante.Persona = new Persona();
+                estudiante.Persona.Nombre = tb_nombre.Text;
                 return estudiante;
             }
 

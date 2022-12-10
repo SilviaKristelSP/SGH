@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using SGH.Modelos;
 using SGH.Vistas.Horario.Consulta;
+using SGH.Calificaciones;
 
 namespace SGH.Vistas.MenuPrincipal
 {
@@ -106,6 +107,30 @@ namespace SGH.Vistas.MenuPrincipal
         {
             GenerarHorario generarHorario = new GenerarHorario();
             Application.Current.MainWindow = generarHorario;
+            Application.Current.MainWindow.Show();
+
+            foreach (Window window in Application.Current.Windows.OfType<MenuPrincipalSGH>())
+            {
+                ((MenuPrincipalSGH)window).Close();
+            }
+        }
+
+        private void ClickCalificacionesEstudiante(object sender, RoutedEventArgs e)
+        {
+            BuscadorEstudiante buscadorEstudiante = new BuscadorEstudiante();
+            Application.Current.MainWindow = buscadorEstudiante;
+            Application.Current.MainWindow.Show();
+
+            foreach (Window window in Application.Current.Windows.OfType<MenuPrincipalSGH>())
+            {
+                ((MenuPrincipalSGH)window).Close();
+            }
+        }
+
+        private void ClickCalificacionesGrupo(object sender, RoutedEventArgs e)
+        {
+            CalificacionesGrupal calificacionesGrupal = new CalificacionesGrupal();
+            Application.Current.MainWindow = calificacionesGrupal;
             Application.Current.MainWindow.Show();
 
             foreach (Window window in Application.Current.Windows.OfType<MenuPrincipalSGH>())

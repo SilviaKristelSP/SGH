@@ -160,6 +160,16 @@
     </Compile>
     <Compile Include="Utiles\MateriaHorario.cs" />
     <Compile Include="Utiles\Util.cs" />
+    <Compile Include="Validaciones\Verificacion.cs" />
+    <Compile Include="Vistas\Calificaciones\BuscadorEstudiante.xaml.cs">
+      <DependentUpon>BuscadorEstudiante.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Calificaciones\CalificacionesEstudiante.xaml.cs">
+      <DependentUpon>CalificacionesEstudiante.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Calificaciones\CalificacionesGrupal.xaml.cs">
+      <DependentUpon>CalificacionesGrupal.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vistas\Excepciones\ErrorAlertException.cs" />
     <Compile Include="Vistas\Horario\ConsultaHorarios.xaml.cs">
       <DependentUpon>ConsultaHorarios.xaml</DependentUpon>
@@ -192,6 +202,18 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Vistas\Alertas\MessageBoxCustom.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Vistas\Calificaciones\BuscadorEstudiante.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Vistas\Calificaciones\CalificacionesEstudiante.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Vistas\Calificaciones\CalificacionesGrupal.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -277,6 +299,18 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>SGHContext.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <Resource Include="Fuente\Roboto-Black.ttf" />
+    <Resource Include="Fuente\Roboto-BlackItalic.ttf" />
+    <Resource Include="Fuente\Roboto-Bold.ttf" />
+    <Resource Include="Fuente\Roboto-BoldItalic.ttf" />
+    <Resource Include="Fuente\Roboto-Italic.ttf" />
+    <Resource Include="Fuente\Roboto-Light.ttf" />
+    <Resource Include="Fuente\Roboto-LightItalic.ttf" />
+    <Resource Include="Fuente\Roboto-Medium.ttf" />
+    <Resource Include="Fuente\Roboto-MediumItalic.ttf" />
+    <Resource Include="Fuente\Roboto-Regular.ttf" />
+    <Resource Include="Fuente\Roboto-Thin.ttf" />
+    <Resource Include="Fuente\Roboto-ThinItalic.ttf" />
     <None Include="Modelos\SGHContext.edmx.diagram">
       <DependentUpon>SGHContext.edmx</DependentUpon>
     </None>
@@ -314,6 +348,7 @@
     <Resource Include="Recursos\Logo_sgh.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Fuente\LICENSE.txt" />
     <Content Include="Modelos\SGHContext.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>SGHContext.edmx</DependentUpon>

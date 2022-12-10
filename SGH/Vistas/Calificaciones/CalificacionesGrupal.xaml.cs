@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SGH.Vistas.MenuPrincipal;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,9 +27,14 @@ namespace SGH.Calificaciones
 
         private void ClickRegresar(object sender, RoutedEventArgs e)
         {
-            SelectorCalificaciones ventana = new SelectorCalificaciones();
-            this.Close();
-            ventana.Show();
+            MenuPrincipalSGH menuPrincipalSGH = new MenuPrincipalSGH();
+            Application.Current.MainWindow = menuPrincipalSGH;
+            Application.Current.MainWindow.Show();
+
+            foreach (Window window in Application.Current.Windows.OfType<CalificacionesGrupal>())
+            {
+                ((CalificacionesGrupal)window).Close();
+            }
         }
 
         private void ClickGuardar(object sender, RoutedEventArgs e)
