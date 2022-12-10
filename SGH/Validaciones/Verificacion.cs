@@ -1,5 +1,7 @@
 ﻿using SGH.Calificaciones;
+using SGH.Modelos;
 using System;
+using System.Net.Http.Headers;
 using System.Text.RegularExpressions;
 
 namespace SGH.Validaciones
@@ -9,11 +11,15 @@ namespace SGH.Validaciones
     {
         public static bool VerificarNombre(String nombre)
         {
-            Regex regex = new Regex("^[A-Za-z]+$");
+            Regex regex = new Regex("[a-zA-Z]+('[a-zA-Z])?[a-zA-Z]*");
+            
+            foreach (string word in nombre.Split(' '))
+            {
+                if(!regex.IsMatch(word))
+                    return false;
+            }
 
-            if (regex.IsMatch(nombre)){
-                return true; }
-            return false;
+            return true;
         }
 
         public static bool VerificarExistencia(Estudiante estudiante)
@@ -28,7 +34,7 @@ namespace SGH.Validaciones
                 return -3;
             }
 
-            if (!VerificarNombre(estudiante.nombre))
+            if (!VerificarNombre(estudiante.Persona.Nombre))
             {
                 return -1;
             }
