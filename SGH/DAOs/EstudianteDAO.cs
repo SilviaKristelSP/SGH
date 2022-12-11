@@ -9,6 +9,7 @@ namespace SGH.DAOs
 {
     public class EstudianteDAO
     {
+      
         public static Estudiante recuperarEstudianteID(string idPersona)
         {
             Estudiante lista = null;
@@ -16,7 +17,7 @@ namespace SGH.DAOs
             {
                 using (SGHContext bd = new SGHContext())
                 {
-                    lista = bd.Estudiantes.Find(idPersona);
+                    lista = bd.Estudiantes.Where(r => r.ID_Persona == idPersona).First();
                 }
             }
             catch (Exception ex)
@@ -24,6 +25,26 @@ namespace SGH.DAOs
                 lista = null;
             }
             return lista;
+        }
+
+        public static List<String> recuperarIDsEstudiantesActivos()
+        {
+            List<String> idsRecuperados = null;
+            List<Estudiante> estudiantes = null;
+            IEnumerable<Estudiante> lista = null;
+
+            using (SGHContext bd = new SGHContext())
+            {
+                lista = bd.Estudiantes;
+                estudiantes = lista.ToList();
+            }
+            idsRecuperados = new List<String>();
+            foreach (Estudiante estudiante in estudiantes)
+            {
+                idsRecuperados.Add(estudiante.ID_Persona);
+            }
+
+            return idsRecuperados;
         }
 
         public static bool editarEstudiante(Estudiante estudiante)
@@ -42,6 +63,43 @@ namespace SGH.DAOs
                 ejecucionExitosa = false;
             }
             return ejecucionExitosa;
+        }
+
+        public static bool registrarEstudiante(Estudiante estudiante)
+        {
+            bool ejecucionExitosa = true;
+            try
+            {
+                using (SGHContext bd = new SGHContext())
+                {
+                    bd.Estudiantes.Add(estudiante);
+                    bd.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                ejecucionExitosa = false;
+            }
+            return ejecucionExitosa;
+        }
+
+        public static string obtenerMatricula(string idPersona)
+        {
+            string matricula = "";
+            Estudiante est= null;
+            try
+            {
+                using (SGHContext bd = new SGHContext())
+                {
+                    est = bd.Estudiantes.Find(idPersona);
+                    matricula = est.Matricula;
+                }
+            }
+            catch (Exception ex)
+            {
+                matricula = "";
+            }
+            return matricula;
         }
     }
 }
