@@ -13,29 +13,41 @@ namespace SGH.Utiles
 {
     public class Util
     {
-        //public static DatosArchivo convertirPDFABites()
-        //{
-        //    DatosArchivo datos = new DatosArchivo();
-        //    OpenFileDialog openFileDialog1 = new OpenFileDialog();
-        //    openFileDialog1.Filter = "Archivos PDF (.pdf)|*.pdf";
-        //    openFileDialog1.FilterIndex = 1;
-        //    openFileDialog1.Multiselect = false;
-        //    if (openFileDialog1.ShowDialog() == true)
-        //    {
-        //        byte[] archivoEnByte = null;
-        //        datos.NombreArchivo = System.IO.Path.GetFileName(openFileDialog1.FileName);
+        public static DatosArchivo convertirPDFABites()
+        {
+            DatosArchivo datos = new DatosArchivo();
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            openFileDialog1.Filter = "Archivos PDF (.pdf)|*.pdf";
+            openFileDialog1.FilterIndex = 1;
+            openFileDialog1.Multiselect = false;
+            if (openFileDialog1.ShowDialog() == true)
+            {
+                byte[] archivoEnByte = null;
+                datos.NombreArchivo = System.IO.Path.GetFileName(openFileDialog1.FileName);
 
-        //        Stream miStream = openFileDialog1.OpenFile();
-        //        using (MemoryStream ms = new MemoryStream())
-        //        {
-        //            miStream.CopyTo(ms);
-        //            archivoEnByte = ms.ToArray();
-        //            datos.PDFEnByte = archivoEnByte;
-        //            return datos;
-        //        }
-        //    }
-        //    return null;
-        //}
+                Stream miStream = openFileDialog1.OpenFile();
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    miStream.CopyTo(ms);
+                    archivoEnByte = ms.ToArray();
+                    datos.PDFEnByte = archivoEnByte;
+                    return datos;
+                }
+            }
+            return null;
+        }
+
+        public static bool comprobarArchivoByteVacio(byte[] documento)
+        {
+            bool equivalente = false;
+
+            string s = Encoding.Default.GetString(documento);
+
+            if (s.Equals("Sin Doc"))
+                equivalente = true;
+
+            return equivalente;
+        }
 
         public static void abrirArchivoPDF(byte[] archivoByte, string nombreArchivo)
         {
@@ -61,32 +73,67 @@ namespace SGH.Utiles
             return xPersona.Nombre + xPersona.ApellidoPaterno + xPersona.ApellidoMaterno;
         }
 
-        //public static DatosArchivo convertirImgABitesYBitMap()
-        //{
-        //    OpenFileDialog abrir = new OpenFileDialog();
-        //    DatosArchivo datos = new DatosArchivo();
-        //    abrir.InitialDirectory = "c:\\";
-        //    abrir.Filter = "Archivos jpg (.jpg)|*.jpg|Archivos png (.png)|*.png";
-        //    abrir.FilterIndex = 1;
-        //    abrir.RestoreDirectory = true;
+        public static string obtenerNombreConEspacios(Persona xPersona)
+        {
+            return xPersona.Nombre + " " + xPersona.ApellidoPaterno + " " + xPersona.ApellidoMaterno;
+        }
 
-        //    if (abrir.ShowDialog() == true)
-        //    {
-        //        datos.NombreArchivo = System.IO.Path.GetFileName(abrir.FileName);
-        //        byte[] file = null;
-        //        Stream myStream = abrir.OpenFile();
-        //        using (MemoryStream ms = new MemoryStream())
-        //        {
-        //            myStream.CopyTo(ms);
-        //            file = ms.ToArray();
-        //            datos.ImgEnByte = file;
-        //        }
-        //        Uri imgUri = new Uri(abrir.FileName);
-        //        datos.ImagenBitMap = new BitmapImage(imgUri);
-        //        return datos;
-        //    }
-        //    return null;
-        //}
+        public static DatosArchivo convertirImgABitesYBitMap()
+        {
+            OpenFileDialog abrir = new OpenFileDialog();
+            DatosArchivo datos = new DatosArchivo();
+            abrir.InitialDirectory = "c:\\";
+            abrir.Filter = "Archivos jpg (.jpg)|*.jpg|Archivos png (.png)|*.png";
+            abrir.FilterIndex = 1;
+            abrir.RestoreDirectory = true;
+
+            if (abrir.ShowDialog() == true)
+            {
+                datos.NombreArchivo = System.IO.Path.GetFileName(abrir.FileName);
+                byte[] file = null;
+                Stream myStream = abrir.OpenFile();
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    myStream.CopyTo(ms);
+                    file = ms.ToArray();
+                    datos.ImgEnByte = file;
+                }
+                Uri imgUri = new Uri(abrir.FileName);
+                datos.ImagenBitMap = new BitmapImage(imgUri);
+                return datos;
+            }
+            return null;
+        }
+
+        public static String generarRutaParaImagen(byte[] imgByte, String nombreArchivo)
+        {
+            //List<String> ret = new List<String>();
+
+            string path = AppDomain.CurrentDomain.BaseDirectory;
+            Console.WriteLine(path);
+            string folder = path + "temp\\";
+            string complete = path + "temp";
+            string fullFilePath = folder + "Foto" + nombreArchivo + ".jpg";
+            if (!Directory.Exists(folder))
+                Directory.CreateDirectory(folder);
+            if (File.Exists(fullFilePath))
+            {
+                Console.WriteLine(fullFilePath);
+                try
+                {
+                    File.Delete(fullFilePath);
+                }
+                catch (System.IO.IOException ex)
+                {
+                    
+                }
+                
+            }
+
+            File.WriteAllBytes(fullFilePath, imgByte);
+
+            return fullFilePath;
+        }
 
         public static string generarID(int tamanioID)
         {
@@ -94,7 +141,7 @@ namespace SGH.Utiles
             Random random = new Random();
 
             const string caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
+            
             id = new string(Enumerable.Repeat(caracteres, tamanioID)
               .Select(s => s[random.Next(s.Length)]).ToArray());
 
