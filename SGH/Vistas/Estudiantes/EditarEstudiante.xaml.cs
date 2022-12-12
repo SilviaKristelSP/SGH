@@ -333,6 +333,8 @@ namespace SGH.Vistas.Estudiantes
         {
             estudiante.NumSeguroSocial = txbSeguridadSocial.Text;
             estudiante.ID_Persona = idPersona;
+            estudiante.Matricula = "ESC1-" + txbCURP.Text;
+            estudiante.ID_Grupo = "Sin grupo";
         }
 
         private bool registrarEnBD(string idPersona)
