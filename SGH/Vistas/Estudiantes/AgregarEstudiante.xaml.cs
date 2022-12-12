@@ -19,7 +19,7 @@ using Microsoft.Win32;
 using System.IO;
 using SGH.Vistas.Alertas;
 using System.Drawing;
-using System.Drawing.Imaging;
+//using System.Drawing.Imaging;
 using SGH.DAOs;
 
 namespace SGH.Vistas.Estudiantes
@@ -297,23 +297,23 @@ namespace SGH.Vistas.Estudiantes
             }
         }
 
-        private BitmapImage convertirABitmapImg(Bitmap bmp, byte[] imagen)
-        {
-            using (var memory = new MemoryStream(imagen))
-            {
-                bmp.Save(memory, ImageFormat.Png);
-                memory.Position = 0;
+        //private BitmapImage convertirABitmapImg(Bitmap bmp, byte[] imagen)
+        //{
+        //    using (var memory = new MemoryStream(imagen))
+        //    {
+        //        bmp.Save(memory, ImageFormat.Png);
+        //        memory.Position = 0;
 
-                var bitmapImage = new BitmapImage();
-                bitmapImage.BeginInit();
-                bitmapImage.StreamSource = memory;
-                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                bitmapImage.EndInit();
-                bitmapImage.Freeze();
+        //        var bitmapImage = new BitmapImage();
+        //        bitmapImage.BeginInit();
+        //        bitmapImage.StreamSource = memory;
+        //        bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+        //        bitmapImage.EndInit();
+        //        bitmapImage.Freeze();
 
-                return bitmapImage;
-            }
-        }
+        //        return bitmapImage;
+        //    }
+        //}
 
 
         private void clickAbrirArchivoCURP(object sender, MouseButtonEventArgs e)

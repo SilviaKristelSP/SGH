@@ -91,7 +91,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DAOs\AdministradorDAO.cs" />
+    <Compile Include="DAOs\BajaDAO.cs" />
+    <Compile Include="DAOs\EstudianteDAO.cs" />
     <Compile Include="DAOs\HorarioDAO.cs" />
+    <Compile Include="DAOs\MateriaDAO.cs" />
+    <Compile Include="DAOs\PersonaDAO.cs" />
+    <Compile Include="DAOs\ProfesorDAO.cs" />
     <Compile Include="Modelos\Administrador.cs">
       <DependentUpon>SGHContext.tt</DependentUpon>
     </Compile>
@@ -158,8 +163,37 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SGHContext.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Utiles\DatosArchivo.cs" />
     <Compile Include="Utiles\MateriaHorario.cs" />
     <Compile Include="Utiles\Util.cs" />
+    <Compile Include="Validaciones\Verificacion.cs" />
+    <Compile Include="Vistas\Calificaciones\BuscadorEstudiante.xaml.cs">
+      <DependentUpon>BuscadorEstudiante.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Calificaciones\CalificacionesEstudiante.xaml.cs">
+      <DependentUpon>CalificacionesEstudiante.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Calificaciones\CalificacionesGrupal.xaml.cs">
+      <DependentUpon>CalificacionesGrupal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Estudiantes\AgregarEstudiante.xaml.cs">
+      <DependentUpon>AgregarEstudiante.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Estudiantes\BajaEstudiante.xaml.cs">
+      <DependentUpon>BajaEstudiante.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Estudiantes\ConsultarEstudiante.xaml.cs">
+      <DependentUpon>ConsultarEstudiante.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Estudiantes\ConsultarEstudianteBAja.xaml.cs">
+      <DependentUpon>ConsultarEstudianteBAja.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Estudiantes\EditarEstudiante.xaml.cs">
+      <DependentUpon>EditarEstudiante.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Estudiantes\Estudiantes.xaml.cs">
+      <DependentUpon>Estudiantes.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vistas\Excepciones\ErrorAlertException.cs" />
     <Compile Include="Vistas\Horario\ConsultaHorarios.xaml.cs">
       <DependentUpon>ConsultaHorarios.xaml</DependentUpon>
@@ -187,11 +221,65 @@
     <Compile Include="Vistas\MenuPrincipal\MenuPrincipalSGH.xaml.cs">
       <DependentUpon>MenuPrincipalSGH.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\Profesores\AgregarProfesor.xaml.cs">
+      <DependentUpon>AgregarProfesor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Profesores\BajaProfesor.xaml.cs">
+      <DependentUpon>BajaProfesor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Profesores\ConsultarProfesor.xaml.cs">
+      <DependentUpon>ConsultarProfesor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Profesores\ConsultarProfesorBaja.xaml.cs">
+      <DependentUpon>ConsultarProfesorBaja.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Profesores\EdicionProfesor.xaml.cs">
+      <DependentUpon>EdicionProfesor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Profesores\Profesores.xaml.cs">
+      <DependentUpon>Profesores.xaml</DependentUpon>
+    </Compile>
     <Page Include="Vistas\Alertas\MessageBoxConfirmation.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Vistas\Alertas\MessageBoxCustom.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Vistas\Calificaciones\BuscadorEstudiante.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Vistas\Calificaciones\CalificacionesEstudiante.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Vistas\Calificaciones\CalificacionesGrupal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Vistas\Estudiantes\AgregarEstudiante.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Vistas\Estudiantes\BajaEstudiante.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Vistas\Estudiantes\ConsultarEstudiante.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Vistas\Estudiantes\ConsultarEstudianteBAja.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Vistas\Estudiantes\EditarEstudiante.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Vistas\Estudiantes\Estudiantes.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -253,6 +341,30 @@
     <Page Include="Vistas\MenuPrincipal\MenuPrincipalSGH.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\Profesores\AgregarProfesor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Vistas\Profesores\BajaProfesor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Vistas\Profesores\ConsultarProfesor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Vistas\Profesores\ConsultarProfesorBaja.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Vistas\Profesores\EdicionProfesor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Vistas\Profesores\Profesores.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -328,7 +440,6 @@
       <LastGenOutput>SGHContext.cs</LastGenOutput>
     </Content>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\MaterialDesignThemes.4.6.1\build\MaterialDesignThemes.targets" Condition="Exists('packages\MaterialDesignThemes.4.6.1\build\MaterialDesignThemes.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
