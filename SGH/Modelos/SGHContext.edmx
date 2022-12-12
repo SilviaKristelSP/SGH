@@ -46,6 +46,7 @@
           <Property Name="ID_Calificacion_Parcial" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="ID_Cali" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CaliParcial" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Parcial" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Escuela">
           <Key>
@@ -126,13 +127,13 @@
           </Key>
           <Property Name="ID" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="ActaNacimiento" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ActaNacimiento" Type="varbinary(max)" />
           <Property Name="ApellidoPaterno" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="ApellidoMaterno" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Curp" Type="varchar" MaxLength="18" Nullable="false" />
-          <Property Name="DocCurp" Type="varbinary(max)" Nullable="false" />
+          <Property Name="DocCurp" Type="varbinary(max)" />
           <Property Name="Estado" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="Foto" Type="image" Nullable="false" />
+          <Property Name="Foto" Type="image" />
           <Property Name="TipoSangre" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Clave_Escuela" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
@@ -141,10 +142,10 @@
             <PropertyRef Name="RFC" />
           </Key>
           <Property Name="RFC" Type="varchar" MaxLength="13" Nullable="false" />
-          <Property Name="Titulo" Type="varbinary(max)" Nullable="false" />
+          <Property Name="Titulo" Type="varbinary(max)" />
           <Property Name="Carrera" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="INE" Type="varbinary(max)" Nullable="false" />
-          <Property Name="DocContrato" Type="varbinary(max)" Nullable="false" />
+          <Property Name="INE" Type="varbinary(max)" />
+          <Property Name="DocContrato" Type="varbinary(max)" />
           <Property Name="ID_Persona" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Profesor_Materia">
@@ -567,6 +568,7 @@
           <Property Name="ID_Calificacion_Parcial" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ID_Cali" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CaliParcial" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Parcial" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Calificacion" Relationship="Self.FK_Calificacion_Parcial_Calificacion" FromRole="Calificacion_Parcial" ToRole="Calificacion" />
         </EntityType>
         <EntityType Name="Escuela">
@@ -666,13 +668,13 @@
           </Key>
           <Property Name="ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ActaNacimiento" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="ActaNacimiento" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="ApellidoPaterno" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ApellidoMaterno" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Curp" Type="String" MaxLength="18" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="DocCurp" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="DocCurp" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="Estado" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Foto" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="Foto" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="TipoSangre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Clave_Escuela" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Bajas" Relationship="Self.FK_Baja_Persona" FromRole="Persona" ToRole="Baja" />
@@ -685,10 +687,10 @@
             <PropertyRef Name="RFC" />
           </Key>
           <Property Name="RFC" Type="String" MaxLength="13" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Titulo" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="Titulo" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="Carrera" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="INE" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
-          <Property Name="DocContrato" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="INE" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="DocContrato" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="ID_Persona" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Persona" Relationship="Self.FK_Profesor_Profesor" FromRole="Profesor" ToRole="Persona" />
           <NavigationProperty Name="Profesor_Materia" Relationship="Self.FK_Profesor_Materia_Profesor" FromRole="Profesor" ToRole="Profesor_Materia" />
@@ -1117,6 +1119,7 @@
                 <ScalarProperty Name="ID_Calificacion_Parcial" ColumnName="ID_Calificacion_Parcial" />
                 <ScalarProperty Name="ID_Cali" ColumnName="ID_Cali" />
                 <ScalarProperty Name="CaliParcial" ColumnName="CaliParcial" />
+                <ScalarProperty Name="Parcial" ColumnName="Parcial" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
