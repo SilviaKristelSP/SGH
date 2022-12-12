@@ -115,6 +115,9 @@
     <Compile Include="Vistas\Profesores\ConsultarProfesorBaja.xaml.cs">
       <DependentUpon>ConsultarProfesorBaja.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\Profesores\EdicionProfesor.xaml.cs">
+      <DependentUpon>EdicionProfesor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vistas\Profesores\Profesores.xaml.cs">
       <DependentUpon>Profesores.xaml</DependentUpon>
     </Compile>
@@ -236,6 +239,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Vistas\Profesores\ConsultarProfesorBaja.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\Profesores\EdicionProfesor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

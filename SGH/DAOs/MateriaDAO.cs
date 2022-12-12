@@ -60,6 +60,42 @@ namespace SGH.DAOs
             return ejecucionExitosa;
         }
 
+        /*public static bool editarMateriasProfesor(List<Profesor_Materia>[] pmAEditar)
+        {
+            bool ejecucionExitosa = true;
+            List<Profesor_Materia> aAgregar = pmAEditar[0];
+            List<Profesor_Materia> aEliminar = pmAEditar[1];
+            
+            try
+            {
+                using (SGHContext bd = new SGHContext())
+                {
+                    if(aEliminar != null)
+                    {
+                        foreach (Profesor_Materia pf in aEliminar)
+                        {
+                            bd.Profesor_Materia.Remove(pf);
+                        }
+                    }
+
+                    foreach (Profesor_Materia pf in impartidas)
+                    {
+                        var materia = new Profesor_Materia();
+                        materia.NRC_Materia = pf.NRC_Materia;
+                        materia.RFC_Profesor = pf.RFC_Profesor;
+                        materia.ID_Profesor_Materia = Util.generarID(50);
+                        bd.Profesor_Materia.Add(materia);
+                    }
+                    bd.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                ejecucionExitosa = false;
+            }
+            return ejecucionExitosa;
+        }*/
+
         public static bool asignarMateriasProfesor(List<Profesor_Materia> impartidas)
         {
             bool ejecucionExitosa = true;
@@ -141,6 +177,21 @@ namespace SGH.DAOs
 
             return materias;
         }
+
+        public static List<Profesor_Materia> recuperarProfesorMaterias(String rfcProfesor)
+        {
+            List<Profesor_Materia> impartidas = null;
+            IEnumerable<Profesor_Materia> lista = null;
+
+            using (SGHContext bd = new SGHContext())
+            {
+                lista = bd.Profesor_Materia.Where(r => r.RFC_Profesor == rfcProfesor);
+                impartidas = lista.ToList();
+            }
+
+            return impartidas;
+        }
+
 
     }
 }
