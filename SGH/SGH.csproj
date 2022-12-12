@@ -195,6 +195,12 @@
       <DependentUpon>Estudiantes.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vistas\Excepciones\ErrorAlertException.cs" />
+    <Compile Include="Vistas\Grupos\CrearGrupo.xaml.cs">
+      <DependentUpon>CrearGrupo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Grupos\Grupos.xaml.cs">
+      <DependentUpon>Grupos.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vistas\Horario\ConsultaHorarios.xaml.cs">
       <DependentUpon>ConsultaHorarios.xaml</DependentUpon>
     </Compile>
@@ -280,6 +286,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Vistas\Estudiantes\Estudiantes.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Vistas\Grupos\CrearGrupo.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Vistas\Grupos\Grupos.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
