@@ -19,17 +19,17 @@
     <Grid>
 
 
-        <Image Source="/Recursos/Logo_sgh.png" Margin="-19,10,892,605"  />
+        <!--<Image Source="/Recursos/Logo_sgh.png" Margin="-19,10,892,605"  />-->
 
 
         <StackPanel  Margin="0,0,500,0">
 
-            <TextBlock Margin="0 130 0 0" HorizontalAlignment="Center" FontSize="50"
-                FontFamily="roboto" Text="Bienvenido" FontWeight="Medium"      
+            <TextBlock Margin="0 130 0 0" HorizontalAlignment="Center" FontSize="30"
+                FontFamily="roboto" Text="Inicio Sesión" FontWeight="Medium"      
                 TextWrapping="Wrap" VerticalAlignment="Center"/>
 
             <Label HorizontalAlignment="Center" HorizontalContentAlignment="left" Padding="0 10 10 0"
-               FontSize="13" FontWeight="Medium" Margin="0 30 0 -58"
+               FontSize="12" FontWeight="Regular" Margin="0 30 0 -58"
                Background="{x:Null}" Foreground="Black" Content="Correo" Width="336" Height="31" />
 
             <Border HorizontalAlignment="Center" Width="340" Margin="0 60 0 0" CornerRadius="4,4,4,4"
@@ -45,8 +45,8 @@
 
 
             <Label HorizontalAlignment="Center" HorizontalContentAlignment="left" Padding="0 10 10 0"
-               FontSize="13" FontWeight="Medium" Margin="0 20 0 -40"
-               Background="{x:Null}" Foreground="Black" Content="Constraseña" Width="336" Height="31" />
+               FontSize="12" FontWeight="Regular" Margin="0 20 0 -40"
+               Background="{x:Null}" Foreground="Black" Content="Contraseña" Width="336" Height="31" />
 
             <Border HorizontalAlignment="Center" Margin="0 40 0 0" CornerRadius="4,4,4,4" Height="40"
                     BorderThickness="1.6" BorderBrush="#FF545454" Width="340">

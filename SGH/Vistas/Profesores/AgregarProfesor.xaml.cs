@@ -19,7 +19,7 @@ using Microsoft.Win32;
 using System.IO;
 using SGH.Vistas.Alertas;
 using System.Drawing;
-using System.Drawing.Imaging;
+//using System.Drawing.Imaging;
 using SGH.DAOs;
 
 namespace SGH.Vistas.Profesores

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SGH.Vistas.MenuPrincipal"
         xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
         mc:Ignorable="d"
-        Title="Log In" Height="700" Width="1000" WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
+        Title="Menu Principal" Height="700" Width="1000" WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
@@ -64,14 +64,14 @@
                         <Button FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
                             Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
                             BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                        
-                            Foreground="White" Content="Consulta de Horarios" FontSize="14"
-                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                   
+                            Foreground="White" Content="Consulta de Horarios" FontSize="14" Click="ClickConsultaHorarios"
+                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                    
                         />
 
                         <Button x:Name="generarHorarioButton" FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
                             Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
                             BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                         
-                            Foreground="White" Content="Generación de Horarios" FontSize="14"
+                            Foreground="White" Content="Generación de Horarios" FontSize="14" Click="ClickGeneracionHorarios"
                             IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                   
                         />
 
@@ -274,22 +274,15 @@
                         <Button FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
                             Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
                             BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                       
-                            Foreground="White" FontSize="14" Content="Consultar Calificaciones"
-                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                   
+                            Foreground="White" FontSize="14" Content="De un estudiante" 
+                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Click="ClickCalificacionesEstudiante"                                   
                         />
 
                         <Button FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
                             Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
                             BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                        
-                            Foreground="White" Content="Registrar Calificaciones" FontSize="14"
-                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                   
-                        />
-
-                        <Button FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
-                            Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
-                            BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                         
-                            Foreground="White" Content="Eliminar Calificaciones" FontSize="14"
-                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                   
+                            Foreground="White" Content="De un grupo" FontSize="14"
+                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Click="ClickCalificacionesGrupo"                                   
                         />
 
                     </StackPanel>

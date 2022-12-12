@@ -1,0 +1,73 @@
+﻿<Window x:Class="SGH.Vistas.Horario.GenerarHorario"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SGH.Vistas.Horario"
+        mc:Ignorable="d"
+        Title="Generación de Horarios" Height="700" Width="1000" WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Icon="/Recursos/Logo_sgh.png">
+    <Grid>
+
+        <materialDesign:PackIcon Kind="ArrowULeftBottomBold" Margin="10,20,0,0" Visibility="Visible" Foreground="Black"
+                                     Cursor="Hand" Width="58" Height="44" MouseLeftButtonDown="Salir"/>
+        <StackPanel>
+
+            <TextBlock Margin="0 80 0 0" HorizontalAlignment="Center" FontSize="45"
+                FontFamily="roboto" Text="Generación de Horarios" FontWeight="Medium"      
+                VerticalAlignment="Center" TextAlignment="Center" Width="600"/>
+
+            <TextBlock Width="600" Margin="0 60 0 0" FontSize="15" Opacity="0.6">
+                Selecciona un grupo sin horario asignado y presiona Continuar
+            </TextBlock>
+
+
+            <ComboBox
+                x:Name="gruposSinHorarioComboBox" Margin="0 20 0 0" Padding="10 15 10 0"
+                Style="{StaticResource MaterialDesignOutlinedComboBox}"                
+                materialDesign:HintAssist.Hint="Seleccione un grupo"
+                ItemsSource="{Binding ShortStringList}"
+                Width="600" Height="45" materialDesign:TextFieldAssist.UnderlineBrush="#6B4240"
+                materialDesign:HintAssist.Foreground="Black" SelectionChanged="GruposSinHorarioComboBoxSelectionChanged"/>
+
+            <Button x:Name="botonContinuarGeneracion" HorizontalAlignment="Center" Margin="0 20 0 0" Background="#6B4240"
+                    BorderBrush="#6B4240" Height="40" Width="600" Foreground="White"
+                    Style="{StaticResource MaterialDesignRaisedButton}"                
+                    materialDesign:ButtonAssist.CornerRadius="5"
+                    ToolTip="Continuar" Click="ContinuarGeneracionHorario"
+                    IsEnabled="False"
+                    >
+                <TextBlock
+                      Text="Continuar" />
+            </Button>
+
+        </StackPanel>
+        <Rectangle Fill="Brown" Stroke="Black" Margin="884,555,-40,-27" RenderTransformOrigin="0.5,0.5">
+            <Rectangle.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-13.603"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Rectangle.RenderTransform>
+        </Rectangle>
+
+        <Ellipse
+                Fill="#D98582" Margin="-96,291,898,119"/>
+
+        <!--<Canvas>
+            <Ellipse Fill="Gainsboro" Canvas.Left="109" Canvas.Top="474" Width="200" Height="200" />
+        </Canvas>-->
+
+
+    </Grid>
+</Window>

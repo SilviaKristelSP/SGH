@@ -240,7 +240,9 @@ namespace SGH.Vistas.Profesores
             DatosTabla seleccionado = (DatosTabla)dgProfesores.SelectedItem;
             if(seleccionado != null)
             {
-                //Editar
+                EdicionProfesor edicionProfesor = new EdicionProfesor(seleccionado.Id);
+                edicionProfesor.Show();
+                this.Close();
             }
             else
             {

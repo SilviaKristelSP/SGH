@@ -17,6 +17,7 @@ namespace SGH.Modelos
         public string ID_Calificacion_Parcial { get; set; }
         public string ID_Cali { get; set; }
         public decimal CaliParcial { get; set; }
+        public string Parcial { get; set; }
     
         public virtual Calificacion Calificacion { get; set; }
     }

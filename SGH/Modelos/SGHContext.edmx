@@ -46,6 +46,7 @@
           <Property Name="ID_Calificacion_Parcial" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="ID_Cali" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CaliParcial" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Parcial" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Escuela">
           <Key>
@@ -91,13 +92,14 @@
           <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="NumSesiones" Type="int" Nullable="false" />
           <Property Name="Semestre" Type="int" Nullable="false" />
+          <Property Name="Color" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Materia_Sesion">
           <Key>
             <PropertyRef Name="ID_Materia_Sesion" />
           </Key>
           <Property Name="ID_Materia_Sesion" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="NRC_Materia" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ID_Profesor_Materia" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="ID_Sesion" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="PeriodoEscolar">
@@ -125,13 +127,13 @@
           </Key>
           <Property Name="ID" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="ActaNacimiento" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ActaNacimiento" Type="varbinary(max)" />
           <Property Name="ApellidoPaterno" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="ApellidoMaterno" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Curp" Type="varchar" MaxLength="18" Nullable="false" />
-          <Property Name="DocCurp" Type="varbinary(max)" Nullable="false" />
+          <Property Name="DocCurp" Type="varbinary(max)" />
           <Property Name="Estado" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="Foto" Type="image" Nullable="false" />
+          <Property Name="Foto" Type="image" />
           <Property Name="TipoSangre" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Clave_Escuela" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
@@ -140,10 +142,10 @@
             <PropertyRef Name="RFC" />
           </Key>
           <Property Name="RFC" Type="varchar" MaxLength="13" Nullable="false" />
-          <Property Name="Titulo" Type="varbinary(max)" Nullable="false" />
+          <Property Name="Titulo" Type="varbinary(max)" />
           <Property Name="Carrera" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="INE" Type="varbinary(max)" Nullable="false" />
-          <Property Name="DocContrato" Type="varbinary(max)" Nullable="false" />
+          <Property Name="INE" Type="varbinary(max)" />
+          <Property Name="DocContrato" Type="varbinary(max)" />
           <Property Name="ID_Persona" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Profesor_Materia">
@@ -299,16 +301,16 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Materia_Sesion_Materia">
-          <End Role="Materia" Type="Self.Materia" Multiplicity="1">
+          <End Role="Profesor_Materia" Type="Self.Profesor_Materia" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
           <End Role="Materia_Sesion" Type="Self.Materia_Sesion" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Materia">
-              <PropertyRef Name="NRC" />
+            <Principal Role="Profesor_Materia">
+              <PropertyRef Name="ID_Profesor_Materia" />
             </Principal>
             <Dependent Role="Materia_Sesion">
-              <PropertyRef Name="NRC_Materia" />
+              <PropertyRef Name="ID_Profesor_Materia" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -479,7 +481,7 @@
             <End Role="Grupo_Salon" EntitySet="Grupo_Salon" />
           </AssociationSet>
           <AssociationSet Name="FK_Materia_Sesion_Materia" Association="Self.FK_Materia_Sesion_Materia">
-            <End Role="Materia" EntitySet="Materia" />
+            <End Role="Profesor_Materia" EntitySet="Profesor_Materia" />
             <End Role="Materia_Sesion" EntitySet="Materia_Sesion" />
           </AssociationSet>
           <AssociationSet Name="FK_Materia_Sesion_Sesion" Association="Self.FK_Materia_Sesion_Sesion">
@@ -566,6 +568,7 @@
           <Property Name="ID_Calificacion_Parcial" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ID_Cali" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CaliParcial" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Parcial" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Calificacion" Relationship="Self.FK_Calificacion_Parcial_Calificacion" FromRole="Calificacion_Parcial" ToRole="Calificacion" />
         </EntityType>
         <EntityType Name="Escuela">
@@ -623,8 +626,8 @@
           <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="NumSesiones" Type="Int32" Nullable="false" />
           <Property Name="Semestre" Type="Int32" Nullable="false" />
+          <Property Name="Color" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Calificacions" Relationship="Self.FK_Calificacion_Materia" FromRole="Materia" ToRole="Calificacion" />
-          <NavigationProperty Name="Materia_Sesion" Relationship="Self.FK_Materia_Sesion_Materia" FromRole="Materia" ToRole="Materia_Sesion" />
           <NavigationProperty Name="Profesor_Materia" Relationship="Self.FK_Profesor_Materia_Materia" FromRole="Materia" ToRole="Profesor_Materia" />
         </EntityType>
         <EntityType Name="Materia_Sesion">
@@ -632,9 +635,9 @@
             <PropertyRef Name="ID_Materia_Sesion" />
           </Key>
           <Property Name="ID_Materia_Sesion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="NRC_Materia" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ID_Profesor_Materia" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ID_Sesion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Materia" Relationship="Self.FK_Materia_Sesion_Materia" FromRole="Materia_Sesion" ToRole="Materia" />
+          <NavigationProperty Name="Profesor_Materia" Relationship="Self.FK_Materia_Sesion_Materia" FromRole="Materia_Sesion" ToRole="Profesor_Materia" />
           <NavigationProperty Name="Sesion" Relationship="Self.FK_Materia_Sesion_Sesion" FromRole="Materia_Sesion" ToRole="Sesion" />
         </EntityType>
         <EntityType Name="PeriodoEscolar">
@@ -665,13 +668,13 @@
           </Key>
           <Property Name="ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ActaNacimiento" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="ActaNacimiento" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="ApellidoPaterno" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ApellidoMaterno" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Curp" Type="String" MaxLength="18" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="DocCurp" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="DocCurp" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="Estado" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Foto" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="Foto" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="TipoSangre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Clave_Escuela" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Bajas" Relationship="Self.FK_Baja_Persona" FromRole="Persona" ToRole="Baja" />
@@ -684,10 +687,10 @@
             <PropertyRef Name="RFC" />
           </Key>
           <Property Name="RFC" Type="String" MaxLength="13" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Titulo" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="Titulo" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="Carrera" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="INE" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
-          <Property Name="DocContrato" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="INE" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="DocContrato" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="ID_Persona" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Persona" Relationship="Self.FK_Profesor_Profesor" FromRole="Profesor" ToRole="Persona" />
           <NavigationProperty Name="Profesor_Materia" Relationship="Self.FK_Profesor_Materia_Profesor" FromRole="Profesor" ToRole="Profesor_Materia" />
@@ -700,6 +703,7 @@
           <Property Name="RFC_Profesor" Type="String" MaxLength="13" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="NRC_Materia" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Materia" Relationship="Self.FK_Profesor_Materia_Materia" FromRole="Profesor_Materia" ToRole="Materia" />
+          <NavigationProperty Name="Materia_Sesion" Relationship="Self.FK_Materia_Sesion_Materia" FromRole="Profesor_Materia" ToRole="Materia_Sesion" />
           <NavigationProperty Name="Profesor" Relationship="Self.FK_Profesor_Materia_Profesor" FromRole="Profesor_Materia" ToRole="Profesor" />
         </EntityType>
         <EntityType Name="Salon">
@@ -891,20 +895,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Materia_Sesion_Materia">
-          <End Role="Materia" Type="Self.Materia" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Materia_Sesion" Type="Self.Materia_Sesion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Materia">
-              <PropertyRef Name="NRC" />
-            </Principal>
-            <Dependent Role="Materia_Sesion">
-              <PropertyRef Name="NRC_Materia" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Profesor_Materia_Materia">
           <End Role="Materia" Type="Self.Materia" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -916,6 +906,20 @@
             </Principal>
             <Dependent Role="Profesor_Materia">
               <PropertyRef Name="NRC_Materia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Materia_Sesion_Materia">
+          <End Role="Profesor_Materia" Type="Self.Profesor_Materia" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Materia_Sesion" Type="Self.Materia_Sesion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profesor_Materia">
+              <PropertyRef Name="ID_Profesor_Materia" />
+            </Principal>
+            <Dependent Role="Materia_Sesion">
+              <PropertyRef Name="ID_Profesor_Materia" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1041,13 +1045,13 @@
             <End Role="Salon" EntitySet="Salons" />
             <End Role="Grupo_Salon" EntitySet="Grupo_Salon" />
           </AssociationSet>
-          <AssociationSet Name="FK_Materia_Sesion_Materia" Association="Self.FK_Materia_Sesion_Materia">
-            <End Role="Materia" EntitySet="Materias" />
-            <End Role="Materia_Sesion" EntitySet="Materia_Sesion" />
-          </AssociationSet>
           <AssociationSet Name="FK_Profesor_Materia_Materia" Association="Self.FK_Profesor_Materia_Materia">
             <End Role="Materia" EntitySet="Materias" />
             <End Role="Profesor_Materia" EntitySet="Profesor_Materia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Materia_Sesion_Materia" Association="Self.FK_Materia_Sesion_Materia">
+            <End Role="Profesor_Materia" EntitySet="Profesor_Materia" />
+            <End Role="Materia_Sesion" EntitySet="Materia_Sesion" />
           </AssociationSet>
           <AssociationSet Name="FK_Materia_Sesion_Sesion" Association="Self.FK_Materia_Sesion_Sesion">
             <End Role="Sesion" EntitySet="Sesions" />
@@ -1115,6 +1119,7 @@
                 <ScalarProperty Name="ID_Calificacion_Parcial" ColumnName="ID_Calificacion_Parcial" />
                 <ScalarProperty Name="ID_Cali" ColumnName="ID_Cali" />
                 <ScalarProperty Name="CaliParcial" ColumnName="CaliParcial" />
+                <ScalarProperty Name="Parcial" ColumnName="Parcial" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1165,6 +1170,7 @@
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="NumSesiones" ColumnName="NumSesiones" />
                 <ScalarProperty Name="Semestre" ColumnName="Semestre" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1172,7 +1178,7 @@
             <EntityTypeMapping TypeName="SGHModel.Materia_Sesion">
               <MappingFragment StoreEntitySet="Materia_Sesion">
                 <ScalarProperty Name="ID_Materia_Sesion" ColumnName="ID_Materia_Sesion" />
-                <ScalarProperty Name="NRC_Materia" ColumnName="NRC_Materia" />
+                <ScalarProperty Name="ID_Profesor_Materia" ColumnName="ID_Profesor_Materia" />
                 <ScalarProperty Name="ID_Sesion" ColumnName="ID_Sesion" />
               </MappingFragment>
             </EntityTypeMapping>

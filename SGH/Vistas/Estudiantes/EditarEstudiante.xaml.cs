@@ -18,7 +18,7 @@ using SGH.Modelos;
 using SGH.DAOs;
 using System.IO;
 using System.Drawing;
-using System.Drawing.Imaging;
+//using System.Drawing.Imaging;
 using SGH.Vistas.Alertas;
 
 namespace SGH.Vistas.Estudiantes
@@ -227,23 +227,23 @@ namespace SGH.Vistas.Estudiantes
             }
         }
 
-        private BitmapImage convertirABitmapImg(Bitmap bmp, byte[] imagen)
-        {
-            using (var memory = new MemoryStream(imagen))
-            {
-                bmp.Save(memory, ImageFormat.Png);
-                memory.Position = 0;
+        //private BitmapImage convertirABitmapImg(Bitmap bmp, byte[] imagen)
+        //{
+        //    using (var memory = new MemoryStream(imagen))
+        //    {
+        //        bmp.Save(memory, ImageFormat.Png);
+        //        memory.Position = 0;
 
-                var bitmapImage = new BitmapImage();
-                bitmapImage.BeginInit();
-                bitmapImage.StreamSource = memory;
-                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                bitmapImage.EndInit();
-                bitmapImage.Freeze();
+        //        var bitmapImage = new BitmapImage();
+        //        bitmapImage.BeginInit();
+        //        bitmapImage.StreamSource = memory;
+        //        bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+        //        bitmapImage.EndInit();
+        //        bitmapImage.Freeze();
 
-                return bitmapImage;
-            }
-        }
+        //        return bitmapImage;
+        //    }
+        //}
 
         //Guardar
         private void clickGuardarEstudiante(object sender, RoutedEventArgs e)

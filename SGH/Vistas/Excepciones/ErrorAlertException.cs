@@ -13,6 +13,11 @@ namespace SGH.Vistas.Excepciones
         {
             new MessageBoxCustom(alerta).ShowDialog();
         }
+
+        public ErrorAlertException(string mensaje) : base()
+        {
+            Console.WriteLine(mensaje);
+        }
       
     }
 }
