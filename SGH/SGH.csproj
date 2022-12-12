@@ -91,7 +91,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-<<<<<<< HEAD
     <Compile Include="DAOs\AdministradorDAO.cs" />
     <Compile Include="DAOs\HorarioDAO.cs" />
     <Compile Include="Modelos\Administrador.cs">
@@ -198,37 +197,6 @@
     <Compile Include="Vistas\Log.cs" />
     <Compile Include="Vistas\MenuPrincipal\MenuPrincipalSGH.xaml.cs">
       <DependentUpon>MenuPrincipalSGH.xaml</DependentUpon>
-=======
-    <Compile Include="DAOs\BajaDAO.cs" />
-    <Compile Include="DAOs\EstudianteDAO.cs" />
-    <Compile Include="DAOs\MateriaDAO.cs" />
-    <Compile Include="DAOs\PersonaDAO.cs" />
-    <Compile Include="DAOs\ProfesorDAO.cs" />
-    <Compile Include="System\Drawing\FontWeights.cs" />
-    <Compile Include="Utiles\DatosArchivo.cs" />
-    <Compile Include="Utiles\Util.cs" />
-    <Compile Include="Vistas\Excepciones\ErrorAlertException.cs" />
-    <Compile Include="Vistas\Profesores\AgregarProfesor.xaml.cs">
-      <DependentUpon>AgregarProfesor.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Vistas\MenuPrincipal\MenuPrincipalSGH.xaml.cs">
-      <DependentUpon>MenuPrincipalSGH.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Vistas\Profesores\BajaProfesor.xaml.cs">
-      <DependentUpon>BajaProfesor.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Vistas\Profesores\ConsultarProfesor.xaml.cs">
-      <DependentUpon>ConsultarProfesor.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Vistas\Profesores\ConsultarProfesorBaja.xaml.cs">
-      <DependentUpon>ConsultarProfesorBaja.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Vistas\Profesores\EdicionProfesor.xaml.cs">
-      <DependentUpon>EdicionProfesor.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Vistas\Profesores\Profesores.xaml.cs">
-      <DependentUpon>Profesores.xaml</DependentUpon>
->>>>>>> 8de4d8aed722432d05e55df4041bb2fd2375170d
     </Compile>
     <Page Include="Vistas\Alertas\MessageBoxConfirmation.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -238,7 +206,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-<<<<<<< HEAD
     <Page Include="Vistas\Calificaciones\BuscadorEstudiante.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -276,9 +243,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Vistas\Horario\Test.xaml">
-=======
-    <Page Include="Vistas\Profesores\AgregarProfesor.xaml">
->>>>>>> 8de4d8aed722432d05e55df4041bb2fd2375170d
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -352,7 +316,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-<<<<<<< HEAD
     <EntityDeploy Include="Modelos\SGHContext.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>SGHContext.Designer.cs</LastGenOutput>
@@ -372,8 +335,6 @@
     <None Include="Modelos\SGHContext.edmx.diagram">
       <DependentUpon>SGHContext.edmx</DependentUpon>
     </None>
-=======
->>>>>>> 8de4d8aed722432d05e55df4041bb2fd2375170d
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -410,7 +371,6 @@
     <Resource Include="Recursos\Group.png" />
     <Resource Include="Recursos\Calendar.png" />
     <Resource Include="Recursos\Logo_sgh.png" />
-<<<<<<< HEAD
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Vistas\Excepciones\Logs\" />
@@ -426,8 +386,6 @@
       <DependentUpon>SGHContext.edmx</DependentUpon>
       <LastGenOutput>SGHContext.cs</LastGenOutput>
     </Content>
-=======
->>>>>>> 8de4d8aed722432d05e55df4041bb2fd2375170d
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Modelos\" />
