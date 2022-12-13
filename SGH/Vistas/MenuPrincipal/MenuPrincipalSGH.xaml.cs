@@ -17,6 +17,7 @@ using System.Windows.Shapes;
 using SGH.Modelos;
 using SGH.Vistas.Horario.Consulta;
 using SGH.Vistas.Estudiantes;
+using SGH.Vistas.Profesores;
 using SGH.Calificaciones;
 using SGH.Vistas.Grupos;
 
@@ -147,8 +148,6 @@ namespace SGH.Vistas.MenuPrincipal
             Application.Current.MainWindow = estudiantes;
             Application.Current.MainWindow.Show();
 
-
-
            foreach (Window window in Application.Current.Windows.OfType<MenuPrincipalSGH>())
             {
                 ((MenuPrincipalSGH)window).Close();
@@ -167,10 +166,32 @@ namespace SGH.Vistas.MenuPrincipal
             }
         }
 
+        private void ClickConsultarProfesores(object sender, RoutedEventArgs e)
+        {
+            ListaProfesores prof = new ListaProfesores();
+            Application.Current.MainWindow = prof;
+            Application.Current.MainWindow.Show();
+            foreach (Window window in Application.Current.Windows.OfType<MenuPrincipalSGH>())
+            {
+                ((MenuPrincipalSGH)window).Close();
+            }
+        }
+
         private void clickRegistrarEstudiante(object sender, RoutedEventArgs e)
         {
             AgregarEstudiante agregarEstudiante = new AgregarEstudiante();
             Application.Current.MainWindow = agregarEstudiante;
+            Application.Current.MainWindow.Show();
+            foreach (Window window in Application.Current.Windows.OfType<MenuPrincipalSGH>())
+            {
+                ((MenuPrincipalSGH)window).Close();
+            }
+        }
+
+        private void ClickRegistrarProfesor(object sender, RoutedEventArgs e)
+        {
+            AgregarProfesor aProf = new AgregarProfesor();
+            Application.Current.MainWindow = aProf;
             Application.Current.MainWindow.Show();
             foreach (Window window in Application.Current.Windows.OfType<MenuPrincipalSGH>())
             {

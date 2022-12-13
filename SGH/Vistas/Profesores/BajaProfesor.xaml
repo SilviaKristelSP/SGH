@@ -16,372 +16,75 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         Icon="/Recursos/Logo_sgh.png">
     <Grid>
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,0,732,0">
-            <StackPanel>
-                <StackPanel.Background>
-                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                        <GradientStop Color="#6B4240" Offset="0.5" />
-                        <GradientStop Color="#B8726E" Offset="1" />
-                    </LinearGradientBrush>
-                </StackPanel.Background>
 
-                <ToggleButton x:Name="toggleAdministrador" Width="100" Height="100" Content="K" Foreground="white" FontSize="50"
-                          Background="#B8A6A5" Style="{StaticResource MaterialDesignActionToggleButton}" 
-                          IsEnabled="False" Margin="0 50 0 13" ToolTip="MaterialDesignActionToggleButton"  />
+        <Label Content="Datos Profesor" HorizontalAlignment="Left" Margin="444,59,0,0" VerticalAlignment="Top" FontSize="18" RenderTransformOrigin="0.649,2.117" FontWeight="Bold"/>
 
-                <TextBlock Name="textBlockAdministrador" FontFamily="Roboto" FontSize="17" VerticalAlignment="Center"
-                       HorizontalAlignment="Center" Text="Nombre usuario"
-                       Foreground="White" Margin="0 0 0 30"/>
+        <Label Content="Baja Profesor" HorizontalAlignment="Left" Margin="432,19,0,0" VerticalAlignment="Top"  FontWeight="Bold" FontSize="24"/>
 
-                <!--#region Horarios-->
-                <Expander x:Name="menuHorario" Background="Transparent" Foreground="white" BorderThickness=".3"
-                    HorizontalAlignment="Stretch" BorderBrush="#382322">
-                    <Expander.Header>
+        <Label Content="Nombre:" HorizontalAlignment="Left" Margin="380,95,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <Label x:Name="lbNombre" HorizontalAlignment="Left" Margin="439,93,0,0" VerticalAlignment="Top" FontSize="13"  Width="152" Height="26"/>
 
-                        <TextBlock FontFamily="Roboto" FontSize="17" VerticalAlignment="Center"
-                               FontWeight="Medium" HorizontalAlignment="Left">                        
-                        <Image Source="/Recursos/Calendar.png" Height="30" Margin="0 5 10 0" />                       
-                        <TextBlock Margin="0 -6 0 0">
-                            Horarios
-                        </TextBlock>
-                    </TextBlock>
-                    </Expander.Header>
+        <Label Content="Apellido&#xA;Paterno:" HorizontalAlignment="Left" Margin="378,137,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <Label x:Name="lbApellidoP" HorizontalAlignment="Left" Margin="439,145,0,0" VerticalAlignment="Top" Width="152" Height="24" FontSize="13"/>
 
-                    <StackPanel
-                    Orientation="Vertical"
-                    TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
-                    Margin="24,8,24,16">
+        <Label Content="Apellido&#xA;Materno:" HorizontalAlignment="Left" Margin="378,189,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <Label x:Name="lbApellidoM" HorizontalAlignment="Left" Margin="439,197,0,0" VerticalAlignment="Top" Width="152" Height="24" FontSize="13"/>
 
-                        <Button x:Name="asignacionMateriasButton" FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
-                            Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
-                            BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                       
-                            Foreground="White" FontSize="14" Content="Asignación de Materias"
-                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                   
-                        />
+        <Label Content="Tipo de&#xA;Sangre:" HorizontalAlignment="Left" Margin="610,189,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <Label x:Name="lbTipoSangre" HorizontalAlignment="Left" Margin="670,197,0,0" VerticalAlignment="Top" Width="74" Height="24" FontSize="13"/>
 
-                        <Button FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
-                            Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
-                            BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                        
-                            Foreground="White" Content="Consulta de Horarios" FontSize="14"
-                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                   
-                        />
+        <Label Content="Carrera:" HorizontalAlignment="Left" Margin="614,145,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <Label x:Name="lbCarrera" HorizontalAlignment="Left" Margin="668,143,0,0" VerticalAlignment="Top" Width="152" Height="26" FontSize="13"/>
 
-                        <Button x:Name="generarHorarioButton" FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
-                            Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
-                            BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                         
-                            Foreground="White" Content="Generación de Horarios" FontSize="14"
-                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                   
-                        />
+        <Label Content="CURP:" HorizontalAlignment="Left" Margin="614,95,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <Label x:Name="lbCURP" HorizontalAlignment="Left" Margin="668,93,0,0" VerticalAlignment="Top" Width="186" Height="26" FontSize="13"/>
 
-                    </StackPanel>
-                </Expander>
-                <!--#endregion-->
+        <Label Content="Titulo:" HorizontalAlignment="Left" Margin="192,256,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <TextBlock x:Name="tbNombreTitulo" HorizontalAlignment="Left" Margin="308,249,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="100" Height="32" FontSize="10" TextDecorations="Underline" Foreground="Chocolate" MouseLeftButtonDown="clickAbrirArchivoTitulo"/>
+        <Image Source="/Recursos/img_PDF.png" HorizontalAlignment="Left" Height="35" Margin="254,244,0,0" VerticalAlignment="Top" Width="36"/>
 
-                <!--#region Grupos-->
-                <Expander x:Name="menuGrupos" Background="Transparent" Foreground="white" BorderThickness=".3"
-                    HorizontalAlignment="Stretch" BorderBrush="#382322" >
-                    <Expander.Header>
+        <Label Content="Contrato:" HorizontalAlignment="Left" Margin="426,255,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <TextBlock x:Name="tbNombreContrato" HorizontalAlignment="Left" Margin="538,249,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="104" Height="32" FontSize="10" TextDecorations="Underline" Foreground="Chocolate" MouseLeftButtonDown="clickAbrirArchivoContrato"/>
+        <Image Source="/Recursos/img_PDF.png" HorizontalAlignment="Left" Height="36" Margin="491,249,0,0" VerticalAlignment="Top" Width="36"/>
 
-                        <TextBlock FontFamily="Roboto" FontSize="17" VerticalAlignment="Center"
-                               FontWeight="Medium" HorizontalAlignment="Left">                        
-                        <Image Source="/Recursos/Group.png" Height="30" Margin="0 5 10 0" />                       
-                        <TextBlock Margin="0 -6 0 0">
-                            Grupos
-                        </TextBlock>
-                    </TextBlock>
-                    </Expander.Header>
+        <Label Content="Acta de Na-&#xA;cimiento:" HorizontalAlignment="Left" Margin="258,309,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <TextBlock x:Name="tbNombreActa" HorizontalAlignment="Left" Margin="376,307,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="96" Height="32" FontSize="10" TextDecorations="Underline" Foreground="Chocolate" MouseLeftButtonDown="clickAbrirArchivoActaNacimiento"/>
+        <Image Source="/Recursos/img_PDF.png" HorizontalAlignment="Left" Height="35" Margin="330,311,0,0" VerticalAlignment="Top" Width="36"/>
 
-                    <StackPanel
-                    Orientation="Vertical"
-                    TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
-                    Margin="24,8,24,16">
+        <Label Content="INE:" HorizontalAlignment="Left" Margin="491,311,0,0" VerticalAlignment="Top"/>
+        <TextBlock x:Name="tbNombreINE" HorizontalAlignment="Left" Margin="602,303,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="98" Height="32" FontSize="10" TextDecorations="Underline" Foreground="Chocolate" MouseLeftButtonDown="clickAbrirArchivoINE"/>
+        <Image Source="/Recursos/img_PDF.png" HorizontalAlignment="Left" Height="36" Margin="558,305,0,0" VerticalAlignment="Top" Width="34"/>
 
-                        <Button FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
-                            Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
-                            BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                       
-                            Foreground="White" FontSize="14" Content="Consultar Grupos"
-                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                   
-                        />
+        <Label Content="CURP Doc-&#xA;umento:" HorizontalAlignment="Left" Margin="644,250,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <TextBlock x:Name="tbNombreCURP" HorizontalAlignment="Left" Margin="760,248,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="96" Height="32" FontSize="10" TextDecorations="Underline" Foreground="Chocolate" MouseLeftButtonDown="clickAbrirArchivoCURPDoc"/>
+        <Image Source="/Recursos/img_PDF.png" HorizontalAlignment="Left" Height="34" Margin="710,250,0,0" VerticalAlignment="Top" Width="34"/>
 
-                        <Button FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
-                            Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
-                            BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                        
-                            Foreground="White" Content="Generar Grupos" FontSize="14"
-                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                   
-                        />
+        <Label Content="Foto:" HorizontalAlignment="Left" Margin="182,95,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <Image x:Name="imgFoto" Source="/Recursos/imagen_persona.png" HorizontalAlignment="Left" Height="145" Margin="224,88,0,0" VerticalAlignment="Top" Width="146" Stretch="UniformToFill"/>
+        <TextBlock x:Name="tbNombreFoto" HorizontalAlignment="Left" Margin="241,65,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="134" Height="14" FontSize="10" Foreground="#fafbfb"/>
 
-                        <Button FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
-                            Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
-                            BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                         
-                            Foreground="White" Content="Eliminar Grupos" FontSize="14"
-                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                   
-                        />
-                    </StackPanel>
-                </Expander>
-                <!--#endregion-->
+        <Button Content="Dar de Baja" HorizontalAlignment="Left" Margin="189,623,0,0" VerticalAlignment="Top" Width="640" Background="#6D1814" BorderBrush="#6D1814" Click="ClickDarDeBaja"/>
 
-                <!--#region Profesores-->
-                <Expander x:Name="menuProfesores" Background="Transparent" Foreground="white" BorderThickness=".3"
-                    HorizontalAlignment="Stretch" BorderBrush="#382322" >
-                    <Expander.Header>
-
-                        <TextBlock FontFamily="Roboto" FontSize="17" VerticalAlignment="Center"
-                               FontWeight="Medium" HorizontalAlignment="Left">                        
-                        <Image Source="/Recursos/Teacher.png" Height="30" Margin="0 5 10 0" />                       
-                        <TextBlock Margin="0 -6 0 0">
-                            Profesores
-                        </TextBlock>
-                    </TextBlock>
-                    </Expander.Header>
-
-                    <StackPanel
-                    Orientation="Vertical"
-                    TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
-                    Margin="24,8,24,16">
-
-                        <Button FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
-                            Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
-                            BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                       
-                            Foreground="White" FontSize="14" Content="Consultar Profesores"
-                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                   
-                        />
-
-                        <Button FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
-                            Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
-                            BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                        
-                            Foreground="White" Content="Registrar Profesor" FontSize="14"
-                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                   
-                        />
-
-                        <Button FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
-                            Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
-                            BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                         
-                            Foreground="White" Content="Eliminar Profesor" FontSize="14"
-                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                   
-                        />
-                    </StackPanel>
-                </Expander>
-                <!--#endregion-->
-
-                <!--#region Estudiantes-->
-                <Expander x:Name="menuEstudiantes" Background="Transparent" Foreground="white" BorderThickness=".3"
-                    HorizontalAlignment="Stretch" BorderBrush="#382322" >
-                    <Expander.Header>
-
-                        <TextBlock FontFamily="Roboto" FontSize="17" VerticalAlignment="Center"
-                               FontWeight="Medium" HorizontalAlignment="Left">                        
-                        <Image Source="/Recursos/Cap.png" Height="30" Margin="0 5 10 0" />                       
-                        <TextBlock Margin="0 -6 0 0">
-                            Estudiantes
-                        </TextBlock>
-                    </TextBlock>
-                    </Expander.Header>
-
-                    <StackPanel
-                    Orientation="Vertical"
-                    TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
-                    Margin="24,8,24,16">
-
-                        <Button FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
-                            Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
-                            BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                       
-                            Foreground="White" FontSize="14" Content="Consultar Estudiantes"
-                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                   
-                        />
-
-                        <Button FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
-                            Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
-                            BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                        
-                            Foreground="White" Content="Registrar Estudiante" FontSize="14"
-                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                   
-                        />
-
-                        <Button FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
-                            Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
-                            BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                         
-                            Foreground="White" Content="Eliminar Estudiante" FontSize="14"
-                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                   
-                        />
-                    </StackPanel>
-                </Expander>
-                <!--#endregion-->
-
-                <!--#region Plan de estudios-->
-                <Expander x:Name="menuPlanEstudio" Background="Transparent" Foreground="white" BorderThickness=".3"
-                    HorizontalAlignment="Stretch" BorderBrush="#382322" Visibility="Collapsed" >
-                    <Expander.Header>
-
-                        <TextBlock FontFamily="Roboto" FontSize="17" VerticalAlignment="Center"
-                               FontWeight="Medium" HorizontalAlignment="Left">                        
-                        <Image Source="/Recursos/Open-book.png" Height="30" Margin="0 5 10 0" />                       
-                        <TextBlock Margin="0 -6 0 0">
-                            Plan de estudios
-                        </TextBlock>
-                    </TextBlock>
-                    </Expander.Header>
-
-                    <StackPanel
-                    Orientation="Vertical"
-                    TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
-                    Margin="24,8,24,16">
-
-                        <Button FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
-                            Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
-                            BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                       
-                            Foreground="White" FontSize="14" Content="Consultar Plan de Estudios"
-                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                   
-                        />
-
-                        <Button FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
-                            Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
-                            BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                        
-                            Foreground="White" Content="Registrar Plan de Estudios" FontSize="14"
-                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                   
-                        />
-
-                        <Button FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
-                            Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
-                            BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                         
-                            Foreground="White" Content="Eliminar Plan de Estudios" FontSize="14"
-                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                   
-                        />
-
-                    </StackPanel>
-                </Expander>
-                <!--#endregion-->
-
-                <!--#region Calificaciones-->
-                <Expander x:Name="menuCalificaciones" Background="Transparent" Foreground="white" BorderThickness=".3"
-                    HorizontalAlignment="Stretch" BorderBrush="#382322">
-                    <Expander.Header>
-
-                        <TextBlock FontFamily="Roboto" FontSize="17" VerticalAlignment="Center"
-                               FontWeight="Medium" HorizontalAlignment="Left">                        
-                        <Image Source="/Recursos/Score.png" Height="30" Margin="0 5 10 0" />                       
-                        <TextBlock Margin="0 -6 0 0">
-                            Calificaciones
-                        </TextBlock>
-                    </TextBlock>
-                    </Expander.Header>
-
-                    <StackPanel
-                    Orientation="Vertical"
-                    TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
-                    Margin="24,8,24,16">
-
-                        <Button FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
-                            Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
-                            BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                       
-                            Foreground="White" FontSize="14" Content="Consultar Calificaciones"
-                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                   
-                        />
-
-                        <Button FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
-                            Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
-                            BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                        
-                            Foreground="White" Content="Registrar Calificaciones" FontSize="14"
-                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                   
-                        />
-
-                        <Button FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
-                            Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
-                            BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                         
-                            Foreground="White" Content="Eliminar Calificaciones" FontSize="14"
-                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                   
-                        />
-
-                    </StackPanel>
-                </Expander>
-                <!--#endregion-->
-
-                <!--#region Salir-->
-                <Button
-                    Style="{StaticResource MaterialDesignFlatLightButton}"                    
-                    Foreground="White" FontWeight="Normal"
-                    HorizontalContentAlignment="Left" Height="55" BorderBrush="#382322" BorderThickness="0 0 0 .3"
-                    IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Click="LogOut">
-
-                    <TextBlock FontFamily="Roboto" FontSize="17" VerticalAlignment="Center"
-                               FontWeight="Medium" HorizontalAlignment="Left">                        
-                        <Image Source="/Recursos/Logout.png" Height="30" Margin="10 5 10 0" />                       
-                        <TextBlock Margin="0 -6 0 0">
-                            Salir
-                        </TextBlock>
-                    </TextBlock>
-                </Button>
-                <!--#endregion-->
-
-            </StackPanel>
-        </ScrollViewer>
-
-        <Label Content="Datos Profesor" HorizontalAlignment="Left" Margin="564,50,0,0" VerticalAlignment="Top" FontSize="18" RenderTransformOrigin="0.649,2.117" FontWeight="Bold"/>
-
-        <Label Content="Baja Profesor" HorizontalAlignment="Left" Margin="551,10,0,0" VerticalAlignment="Top"  FontWeight="Bold" FontSize="24"/>
-
-        <Label Content="Nombre:" HorizontalAlignment="Left" Margin="500,86,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-        <Label x:Name="lbNombre" HorizontalAlignment="Left" Margin="560,84,0,0" VerticalAlignment="Top" FontSize="13"  Width="152" Height="26"/>
-
-        <Label Content="Apellido&#xA;Paterno:" HorizontalAlignment="Left" Margin="498,128,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-        <Label x:Name="lbApellidoP" HorizontalAlignment="Left" Margin="558,136,0,0" VerticalAlignment="Top" Width="152" Height="24" FontSize="13"/>
-
-        <Label Content="Apellido&#xA;Materno:" HorizontalAlignment="Left" Margin="498,180,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-        <Label x:Name="lbApellidoM" HorizontalAlignment="Left" Margin="560,188,0,0" VerticalAlignment="Top" Width="152" Height="24" FontSize="13"/>
-
-        <Label Content="Tipo de&#xA;Sangre:" HorizontalAlignment="Left" Margin="730,180,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-        <Label x:Name="lbTipoSangre" HorizontalAlignment="Left" Margin="790,188,0,0" VerticalAlignment="Top" Width="74" Height="24" FontSize="13"/>
-
-        <Label Content="Carrera:" HorizontalAlignment="Left" Margin="734,136,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-        <Label x:Name="lbCarrera" HorizontalAlignment="Left" Margin="788,134,0,0" VerticalAlignment="Top" Width="152" Height="26" FontSize="13"/>
-
-        <Label Content="CURP:" HorizontalAlignment="Left" Margin="734,86,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-        <Label x:Name="lbCURP" HorizontalAlignment="Left" Margin="788,84,0,0" VerticalAlignment="Top" Width="186" Height="26" FontSize="13"/>
-
-        <Label Content="Titulo:" HorizontalAlignment="Left" Margin="312,247,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-        <TextBlock x:Name="tbNombreTitulo" HorizontalAlignment="Left" Margin="428,240,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="100" Height="32" FontSize="10" TextDecorations="Underline" Foreground="Chocolate" MouseLeftButtonDown="clickAbrirArchivoTitulo"/>
-        <Image Source="/Recursos/img_PDF.png" HorizontalAlignment="Left" Height="35" Margin="374,235,0,0" VerticalAlignment="Top" Width="36"/>
-
-        <Label Content="Contrato:" HorizontalAlignment="Left" Margin="546,246,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-        <TextBlock x:Name="tbNombreContrato" HorizontalAlignment="Left" Margin="658,240,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="104" Height="32" FontSize="10" TextDecorations="Underline" Foreground="Chocolate" MouseLeftButtonDown="clickAbrirArchivoContrato"/>
-        <Image Source="/Recursos/img_PDF.png" HorizontalAlignment="Left" Height="36" Margin="612,240,0,0" VerticalAlignment="Top" Width="36"/>
-
-        <Label Content="Acta de Na-&#xA;cimiento:" HorizontalAlignment="Left" Margin="378,300,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-        <TextBlock x:Name="tbNombreActa" HorizontalAlignment="Left" Margin="496,298,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="96" Height="32" FontSize="10" TextDecorations="Underline" Foreground="Chocolate" MouseLeftButtonDown="clickAbrirArchivoActaNacimiento"/>
-        <Image Source="/Recursos/img_PDF.png" HorizontalAlignment="Left" Height="35" Margin="450,302,0,0" VerticalAlignment="Top" Width="36"/>
-
-        <Label Content="INE:" HorizontalAlignment="Left" Margin="610,302,0,0" VerticalAlignment="Top"/>
-        <TextBlock x:Name="tbNombreINE" HorizontalAlignment="Left" Margin="722,294,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="98" Height="32" FontSize="10" TextDecorations="Underline" Foreground="Chocolate" MouseLeftButtonDown="clickAbrirArchivoINE"/>
-        <Image Source="/Recursos/img_PDF.png" HorizontalAlignment="Left" Height="36" Margin="678,296,0,0" VerticalAlignment="Top" Width="34"/>
-
-        <Label Content="CURP Doc-&#xA;umento:" HorizontalAlignment="Left" Margin="764,241,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-        <TextBlock x:Name="tbNombreCURP" HorizontalAlignment="Left" Margin="880,239,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="96" Height="32" FontSize="10" TextDecorations="Underline" Foreground="Chocolate" MouseLeftButtonDown="clickAbrirArchivoCURPDoc"/>
-        <Image Source="/Recursos/img_PDF.png" HorizontalAlignment="Left" Height="34" Margin="830,241,0,0" VerticalAlignment="Top" Width="34"/>
-
-        <Label Content="Foto:" HorizontalAlignment="Left" Margin="302,86,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-        <Image x:Name="imgFoto" Source="/Recursos/imagen_persona.png" HorizontalAlignment="Left" Height="145" Margin="344,79,0,0" VerticalAlignment="Top" Width="146" Stretch="UniformToFill"/>
-        <TextBlock x:Name="tbNombreFoto" HorizontalAlignment="Left" Margin="361,56,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="134" Height="14" FontSize="10" Foreground="#fafbfb"/>
-
-        <Button Content="Dar de Baja" HorizontalAlignment="Left" Margin="308,614,0,0" VerticalAlignment="Top" Width="640" Background="#6D1814" BorderBrush="#6D1814" Click="ClickDarDeBaja"/>
-
-        <Button Background="#fafbfb" BorderBrush="#fafbfb" HorizontalAlignment="Left" Margin="304,12,0,0" VerticalAlignment="Top" Width="50" Height="50" Padding="1" Click="ClickRetroceder" >
+        <Button Background="#fafbfb" BorderBrush="#fafbfb" HorizontalAlignment="Left" Margin="184,21,0,0" VerticalAlignment="Top" Width="50" Height="50" Padding="1" Click="ClickRetroceder" >
             <Image Source="/Recursos/retroceder.png" Width="48" Height="48"></Image>
         </Button>
 
-        <Label Content="Formulario Baja" HorizontalAlignment="Left" Margin="551,361,0,0" VerticalAlignment="Top" FontSize="18" RenderTransformOrigin="0.649,2.117" FontWeight="Bold"/>
-        <Label Content="Motivo:" HorizontalAlignment="Left" Margin="321,408,0,0" VerticalAlignment="Top" />
-        <ComboBox x:Name="cbMotivo" HorizontalAlignment="Left" Margin="383,408,0,0" VerticalAlignment="Top" Width="144">
+        <Label Content="Formulario Baja" HorizontalAlignment="Center" Margin="0,370,0,0" VerticalAlignment="Top" FontSize="18" RenderTransformOrigin="0.649,2.117" FontWeight="Bold"/>
+        <Label Content="Motivo:" HorizontalAlignment="Left" Margin="201,417,0,0" VerticalAlignment="Top" />
+        <ComboBox x:Name="cbMotivo" HorizontalAlignment="Left" Margin="263,417,0,0" VerticalAlignment="Top" Width="144">
             <ComboBoxItem Content="Decisión de la Junta Directiva"/>
             <ComboBoxItem Content="Cambio de Escuela"/>
             <ComboBoxItem Content="Fallecimiento"/>
             <ComboBoxItem Content="Jubilación"/>
         </ComboBox>
 
-        <Label Content="Descripción detallada del motivo:" HorizontalAlignment="Left" Margin="321,450,0,0" VerticalAlignment="Top" />
-        <TextBox x:Name="tbDescripcion" TextWrapping="Wrap" MinWidth="280" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Text="" BorderBrush="#382322" Margin="325,477,356,97"/>
+        <Label Content="Descripción detallada del motivo:" HorizontalAlignment="Left" Margin="201,459,0,0" VerticalAlignment="Top" />
+        <TextBox x:Name="tbDescripcion" TextWrapping="Wrap" MinWidth="280" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Text="" BorderBrush="#382322" Margin="205,486,476,88"/>
 
-        <Label Content="Documento Probatorio" HorizontalAlignment="Left" Margin="778,400,0,0" VerticalAlignment="Top"/>
-        <TextBlock x:Name="txbDocProbatorio" HorizontalAlignment="Left" Margin="791,556,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="113" Height="27" FontSize="10" TextDecorations="Underline" Foreground="Chocolate"/>
-        <Image Source="/Recursos/img_PDF.png" HorizontalAlignment="Left" Height="90" Margin="802,456,0,0" VerticalAlignment="Top" Width="79" RenderTransformOrigin="0.543,0.644"/>
-        <Button Background="#6B4240" BorderBrush="#6B4240"  HorizontalAlignment="Left" Margin="863,442,0,0" VerticalAlignment="Top" Width="30" Height="30" Padding="1" Click="ClickAgregarDocProbatorio" >
+        <Label Content="Documento Probatorio" HorizontalAlignment="Left" Margin="658,409,0,0" VerticalAlignment="Top"/>
+        <TextBlock x:Name="txbDocProbatorio" HorizontalAlignment="Left" Margin="671,565,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="113" Height="27" FontSize="10" TextDecorations="Underline" Foreground="Chocolate"/>
+        <Image Source="/Recursos/img_PDF.png" HorizontalAlignment="Left" Height="90" Margin="682,465,0,0" VerticalAlignment="Top" Width="79" RenderTransformOrigin="0.543,0.644"/>
+        <Button Background="#6B4240" BorderBrush="#6B4240"  HorizontalAlignment="Left" Margin="743,451,0,0" VerticalAlignment="Top" Width="30" Height="30" Padding="1" Click="ClickAgregarDocProbatorio" >
             <Image Source="/Recursos/simbolo_mas.png" Width="18" Height="18"/>
         </Button>
 

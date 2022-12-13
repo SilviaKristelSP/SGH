@@ -25,7 +25,6 @@ namespace SGH.Vistas.Profesores
     /// </summary>
     public partial class ConsultarProfesorBaja : Window
     {
-        private static Administrador administradorMenu = new Administrador();
         private Persona persona = new Persona();
         private Profesor profesor = new Profesor();
         private Baja baja = new Baja();
@@ -38,13 +37,6 @@ namespace SGH.Vistas.Profesores
 
             recuperarPersonaProfesorYBaja();
             cargarDatosProfesor();
-
-
-            administradorMenu.Rol = "secretaria";
-            administradorMenu.NombreCompleto = "usuario prueba";
-
-            FiltrarMenus(administradorMenu.Rol);
-            SetInformacionAdministrador(administradorMenu);
         }
 
         private void recuperarPersonaProfesorYBaja()
@@ -65,7 +57,7 @@ namespace SGH.Vistas.Profesores
             tbDescripcion.Text = baja.Descripcion;
             lbMotivo.Content = baja.Motivo;
             inicializarNombreArchivos();
-            Uri uri = new Uri(Util.generarRutaParaImagen(persona.Foto, tbNombreFoto.Text));
+            Uri uri = new Uri(Util.generarRutaParaImagen(persona.Foto, tbNombreFoto.Text + Util.generarID(30)));
             imgFoto.Source = new BitmapImage(uri);
         }
 
@@ -147,7 +139,7 @@ namespace SGH.Vistas.Profesores
         }
         private void ClickRetroceder(object sender, RoutedEventArgs e)
         {
-            Profesores profesores = new Profesores();
+            ListaProfesores profesores = new ListaProfesores();
             profesores.Show();
             this.Close();
         }
@@ -203,64 +195,15 @@ namespace SGH.Vistas.Profesores
 
         private void cambiarAVentanaProfesores()
         {
-            Profesores profesores = new Profesores();
-            profesores.Show();
-            this.Close();
-        }
-
-        //Funcionalidad MENÚ
-        public void SetInformacionAdministrador(Administrador administrador)
-        {
-
-            toggleAdministrador.Content = administrador.NombreCompleto.ToUpper().First();
-            textBlockAdministrador.Text = administrador.NombreCompleto;
-
-        }
-
-        private void LogOut(object sender, RoutedEventArgs e)
-        {
-            LogInSGH logInSGH = new LogInSGH();
-            Application.Current.MainWindow = logInSGH;
+            ListaProfesores lista = new ListaProfesores();
+            Application.Current.MainWindow = lista;
             Application.Current.MainWindow.Show();
 
-            foreach (Window window in Application.Current.Windows.OfType<MenuPrincipalSGH>())
+            foreach (Window window in Application.Current.Windows.OfType<ConsultarProfesorBaja>())
             {
-                ((MenuPrincipalSGH)window).Close();
-            }
-
-        }
-
-        public void FiltrarMenus(string rol)
-        {
-            if (rol == "secretario")
-            {
-
-                menuCalificaciones.Visibility = Visibility.Visible;
-                menuHorario.Visibility = Visibility.Visible;
-                menuEstudiantes.Visibility = Visibility.Visible;
-                asignacionMateriasButton.Visibility = Visibility.Visible;
-                generarHorarioButton.Visibility = Visibility.Visible;
-
-                menuGrupos.Visibility = Visibility.Collapsed;
-                menuProfesores.Visibility = Visibility.Collapsed;
-
-
-            }
-            else
-            {
-                menuEstudiantes.Visibility = Visibility.Visible;
-                menuGrupos.Visibility = Visibility.Visible;
-                menuProfesores.Visibility = Visibility.Visible;
-                menuHorario.Visibility = Visibility.Visible;
-
-                menuCalificaciones.Visibility = Visibility.Collapsed;
-                asignacionMateriasButton.Visibility = Visibility.Collapsed;
-                generarHorarioButton.Visibility = Visibility.Collapsed;
-
-
+                ((ConsultarProfesorBaja)window).Close();
             }
         }
-
 
     }
 }

@@ -25,7 +25,6 @@ namespace SGH.Vistas.Profesores
     /// </summary>
     public partial class EdicionProfesor : Window
     {
-        private static Administrador administradorMenu = new Administrador();
         private Persona persona = new Persona();
         private Profesor profesor = new Profesor();
         private List<Profesor_Materia> impartidasPrevioEdicion = new List<Profesor_Materia>();
@@ -39,12 +38,6 @@ namespace SGH.Vistas.Profesores
             recuperarPersonaYProfesor();
             cargarDatosProfesor();
 
-
-            administradorMenu.Rol = "secretaria";
-            administradorMenu.NombreCompleto = "usuario prueba";
-
-            FiltrarMenus(administradorMenu.Rol);
-            SetInformacionAdministrador(administradorMenu);
         }
 
         private void recuperarPersonaYProfesor()
@@ -60,6 +53,8 @@ namespace SGH.Vistas.Profesores
             txbApellidoP.Text = persona.ApellidoPaterno;
             txbCarrera.Text = profesor.Carrera;
             txbCURP.Text = persona.Curp;
+            txbRFC.Text = profesor.RFC;
+            txbRFC.IsReadOnly = true;
             for(int i = 0; i < 8; i++)
             {
                 cbTipoSangre.SelectedIndex = i;
@@ -72,8 +67,8 @@ namespace SGH.Vistas.Profesores
                 }
             }
             inicializarNombreArchivos();
-            /*Uri uri = new Uri(Util.generarRutaParaImagen(persona.Foto, tbNombreFoto.Text));
-            imgFoto.Source = new BitmapImage(uri);*/
+            Uri uri = new Uri(Util.generarRutaParaImagen(persona.Foto, tbNombreFoto.Text + Util.generarID(30)));
+            imgFoto.Source = new BitmapImage(uri);
             cargarMaterias();
             marcarMateriasSeleccionadas();
         }
@@ -117,6 +112,30 @@ namespace SGH.Vistas.Profesores
                 }
             }
 
+        }
+
+        private bool verificarMateriasSeleccionadas()
+        {
+            bool materiasSeleccionadas = true;
+
+            int cantidadSeleccionada = 0;
+
+            UIElementCollection elementosWp = wpMaterias.Children;
+            List<CheckBox> listaCheckDinamicos = elementosWp.OfType<CheckBox>().ToList();
+
+            foreach (CheckBox check in listaCheckDinamicos)
+            {
+                if (check.IsChecked == true)
+                {
+                    cantidadSeleccionada++;
+                }
+            }
+            if (cantidadSeleccionada == 0)
+            {
+                materiasSeleccionadas = false;
+            }
+
+            return materiasSeleccionadas;
         }
 
         private void marcarMateriasSeleccionadas()
@@ -164,6 +183,18 @@ namespace SGH.Vistas.Profesores
             profesor.ID_Persona = id;
         }
 
+        private bool comprobarTamanioCadena()
+        {
+            if (txbRFC.Text.Length <= 13 && txbCURP.Text.Length <= 18)
+                return true;
+            else
+            {
+                lbMaxCURP.Visibility = Visibility.Visible;
+
+                return false;
+            }
+        }
+
         private List<Profesor_Materia> encontrarMateriasAQuitar()
         {
             List<Profesor_Materia> aBorrar = new List<Profesor_Materia>();
@@ -171,10 +202,11 @@ namespace SGH.Vistas.Profesores
             List<CheckBox> listaCheckDinamicos = elementosWp.OfType<CheckBox>().ToList();
             foreach (CheckBox check in listaCheckDinamicos)
             {
-                foreach (Profesor_Materia materia in impartidasPrevioEdicion)
+                if (encontrarNRC(check.Name) && check.IsChecked == false)
                 {
-                    if (check.Name.Equals(materia.NRC_Materia) && check.IsChecked == false)
-                        aBorrar.Add(materia);
+                    int posicion = encontrarPosicionNRC(check.Name);
+                    if(posicion > -1)
+                        aBorrar.Add(impartidasPrevioEdicion[posicion]);
                 }
             }
 
@@ -186,20 +218,27 @@ namespace SGH.Vistas.Profesores
 
         private List<Profesor_Materia> encontrarMateriasAAsignar()
         {
-            List<Profesor_Materia> aAsignar = new List<Profesor_Materia>();
             UIElementCollection elementosWp = wpMaterias.Children;
             List<CheckBox> listaCheckDinamicos = elementosWp.OfType<CheckBox>().ToList();
+            if (impartidasPrevioEdicion != null && impartidasPrevioEdicion.Count > 0)
+                return asignarConBaseAExistentes(listaCheckDinamicos);
+            else
+                return asignarSinBaseAExistentes(listaCheckDinamicos);
+        }
+
+        private List<Profesor_Materia> asignarConBaseAExistentes(List<CheckBox> listaCheckDinamicos)
+        {
+            List<Profesor_Materia> aAsignar = new List<Profesor_Materia>();
             foreach (CheckBox check in listaCheckDinamicos)
             {
-                foreach (Profesor_Materia materia in impartidasPrevioEdicion)
+                if (check.IsChecked == true && (!encontrarNRC(check.Name)))
                 {
-                    if (check.IsChecked == true && (!check.Name.Equals(materia.NRC_Materia)))
-                    {
-                        Profesor_Materia profesor_Materia = new Profesor_Materia();
-                        profesor_Materia.RFC_Profesor = profesor.RFC;
-                        profesor_Materia.NRC_Materia = check.Name;
-                        aAsignar.Add(profesor_Materia);
-                    }
+                    Profesor_Materia profesor_Materia = new Profesor_Materia();
+                    profesor_Materia.RFC_Profesor = profesor.RFC;
+                    profesor_Materia.NRC_Materia = check.Name;
+                    int aux = check.Name.Length;
+                    profesor_Materia.ID_Profesor_Materia = Util.generarID(50 - aux) + check.Name;
+                    aAsignar.Add(profesor_Materia);
                 }
             }
 
@@ -207,6 +246,122 @@ namespace SGH.Vistas.Profesores
                 aAsignar = null;
 
             return aAsignar;
+        }
+
+        private bool encontrarNRC(string nrc)
+        {
+            bool encontrado = false;
+            foreach (Profesor_Materia materia in impartidasPrevioEdicion)
+            {
+                if (nrc.Equals(materia.NRC_Materia))
+                {
+                    encontrado = true;
+                    break;
+                }
+            }
+            return encontrado;
+        }
+
+        private int encontrarPosicionNRC(string nrc)
+        {
+            int posicion = -1;
+            bool encontrado = false;
+            foreach (Profesor_Materia materia in impartidasPrevioEdicion)
+            {
+                posicion++;
+                if (nrc.Equals(materia.NRC_Materia))
+                {
+                    encontrado = true;
+                    break;
+                }   
+            }
+
+            if(!encontrado)
+                posicion = -1;
+
+            return posicion;
+        }
+
+        private List<Profesor_Materia> asignarSinBaseAExistentes(List<CheckBox> listaCheckDinamicos)
+        {
+            List<Profesor_Materia> aAsignar = new List<Profesor_Materia>();
+            foreach (CheckBox check in listaCheckDinamicos)
+            {
+                if (check.IsChecked == true)
+                {
+                    Profesor_Materia profesor_Materia = new Profesor_Materia();
+                    profesor_Materia.RFC_Profesor = profesor.RFC;
+                    profesor_Materia.NRC_Materia = check.Name;
+                    int aux = check.Name.Length;
+                    profesor_Materia.ID_Profesor_Materia = Util.generarID(50 - aux) + check.Name;
+                    aAsignar.Add(profesor_Materia);
+                }
+            }
+
+            if (aAsignar.Count <= 0)
+                aAsignar = null;
+
+            return aAsignar;
+        }
+
+        private bool verificarFormulario()
+        {
+            bool formularioAprobado = true;
+
+            if (txbNombre.Text.Equals(""))
+            {
+                formularioAprobado = false;
+            }
+            else if (txbApellidoP.Text.Equals(""))
+            {
+                formularioAprobado = false;
+            }
+            else if (txbApellidoM.Text.Equals(""))
+            {
+                formularioAprobado = false;
+            }
+            else if (txbCarrera.Text.Equals(""))
+            {
+                formularioAprobado = false;
+            }
+            else if (txbCURP.Text.Equals(""))
+            {
+                formularioAprobado = false;
+            }
+            else if (tbNombreActa.Text.Equals(""))
+            {
+                formularioAprobado = false;
+            }
+            else if (tbNombreContrato.Text.Equals(""))
+            {
+                formularioAprobado = false;
+            }
+            else if (tbNombreCURP.Text.Equals(""))
+            {
+                formularioAprobado = false;
+            }
+            else if (tbNombreINE.Text.Equals(""))
+            {
+                formularioAprobado = false;
+            }
+            else if (tbNombreTitulo.Text.Equals(""))
+            {
+                formularioAprobado = false;
+            }
+            else if (tbNombreFoto.Text.Equals(""))
+            {
+                formularioAprobado = false;
+            }
+            else if (cbTipoSangre.SelectedIndex < 0)
+            {
+                formularioAprobado = false;
+            }
+            else if (txbRFC.Text.Equals(""))
+            {
+                formularioAprobado = false;
+            }
+
+            return formularioAprobado;
         }
 
         private List<Profesor_Materia>[] generarArregloMateriasProfesor()
@@ -326,69 +481,130 @@ namespace SGH.Vistas.Profesores
 
         private void clickGuardarCambios(object sender, RoutedEventArgs e)
         {
-
+            if (verificarFormulario())
+            {
+                if (comprobarTamanioCadena())
+                {
+                    modificarDatosPersonaYProfesor();
+                    if (verificarMateriasSeleccionadas())
+                    {
+                        if (ProfesorDAO.editarProfesor(encontrarMateriasAQuitar(), encontrarMateriasAAsignar(), profesor, persona))
+                            mostrarVentanaExito();
+                        else
+                            mostrarVentanaError();
+                    }
+                    else
+                    {
+                        if (mostrarVentanaConfirmacion())
+                        {
+                            if (ProfesorDAO.editarProfesor(impartidasPrevioEdicion, new List<Profesor_Materia>(), profesor, persona))
+                                mostrarVentanaExito();
+                            else
+                                mostrarVentanaError();
+                        }
+                    }
+                }
+            }
+            else
+            {
+                mostrarVentanaFormularioVacio();
+            }
         }
 
         private void ClickRetroceder(object sender, RoutedEventArgs e)
         {
-            Profesores profesores = new Profesores();
-            profesores.Show();
-            this.Close();
+            if (mostrarVentanaConfirmacion2())
+                cambiarAVentanaProfesores();
         }
 
-
-        //Funcionalidad MENÚ
-        public void SetInformacionAdministrador(Administrador administrador)
+        //dialogos
+        private bool mostrarVentanaConfirmacion()
         {
+            Alerta alerta = new Alerta("El profesor no tiene materias asignadas, ¿está seguro de querer continuar?",
+                        Alertas.MessageType.Warning,
+                        MessageButtons.AcceptCancel, "medium");
+            bool seleccion = false;
 
-            toggleAdministrador.Content = administrador.NombreCompleto.ToUpper().First();
-            textBlockAdministrador.Text = administrador.NombreCompleto;
-
-        }
-
-        private void LogOut(object sender, RoutedEventArgs e)
-        {
-            LogInSGH logInSGH = new LogInSGH();
-            Application.Current.MainWindow = logInSGH;
-            Application.Current.MainWindow.Show();
-
-            foreach (Window window in Application.Current.Windows.OfType<MenuPrincipalSGH>())
+            MessageBoxCustom confirmation = new MessageBoxCustom(alerta);
+            confirmation.ShowDialog();
+            if (confirmation.GetDialog())
             {
-                ((MenuPrincipalSGH)window).Close();
-            }
-
-        }
-
-
-
-        public void FiltrarMenus(string rol)
-        {
-            if (rol == "secretario")
-            {
-
-                menuCalificaciones.Visibility = Visibility.Visible;
-                menuHorario.Visibility = Visibility.Visible;
-                menuEstudiantes.Visibility = Visibility.Visible;
-                asignacionMateriasButton.Visibility = Visibility.Visible;
-                generarHorarioButton.Visibility = Visibility.Visible;
-
-                menuGrupos.Visibility = Visibility.Collapsed;
-                menuProfesores.Visibility = Visibility.Collapsed;
-
-
+                seleccion = true;
             }
             else
             {
-                menuEstudiantes.Visibility = Visibility.Visible;
-                menuGrupos.Visibility = Visibility.Visible;
-                menuProfesores.Visibility = Visibility.Visible;
-                menuHorario.Visibility = Visibility.Visible;
+                confirmation.Close();
+            }
+            return seleccion;
+        }
 
-                menuCalificaciones.Visibility = Visibility.Collapsed;
-                asignacionMateriasButton.Visibility = Visibility.Collapsed;
-                generarHorarioButton.Visibility = Visibility.Collapsed;
+        private bool mostrarVentanaConfirmacion2()
+        {
+            Alerta alerta = new Alerta("Cualquier registro en proceso será perdido, ¿está seguro de querer continuar?",
+                        Alertas.MessageType.Warning,
+                        MessageButtons.AcceptCancel, "medium");
+            bool seleccion = false;
 
+            MessageBoxCustom confirmation = new MessageBoxCustom(alerta);
+            confirmation.ShowDialog();
+            if (confirmation.GetDialog())
+            {
+                seleccion = true;
+            }
+            else
+            {
+                confirmation.Close();
+            }
+            return seleccion;
+        }
 
+        private void mostrarVentanaExito()
+        {
+            Alerta alerta = new Alerta("Profesor editado exitosamente", Alertas.MessageType.Success,
+                        MessageButtons.Ok, "medium");
+            MessageBoxCustom mensaje = new MessageBoxCustom(alerta);
+            mensaje.ShowDialog();
+            if (mensaje.GetDialog())
+            {
+                mensaje.Close();
+            }
+            cambiarAVentanaProfesores();
+        }
+
+        private void mostrarVentanaError()
+        {
+            Alerta alerta = new Alerta("Error con la base de datos, intente más tarde", Alertas.MessageType.Error,
+                        MessageButtons.Ok, "medium");
+            MessageBoxCustom mensaje = new MessageBoxCustom(alerta);
+            mensaje.ShowDialog();
+            if (mensaje.GetDialog())
+            {
+                mensaje.Close();
+            }
+            cambiarAVentanaProfesores();
+        }
+
+        private void mostrarVentanaFormularioVacio()
+        {
+            Alerta alerta = new Alerta("Debe llenar el formulario para continuar", Alertas.MessageType.Warning,
+                        MessageButtons.Ok, "medium");
+            MessageBoxCustom mensaje = new MessageBoxCustom(alerta);
+            mensaje.ShowDialog();
+            if (mensaje.GetDialog())
+            {
+                mensaje.Close();
+            }
+        }
+
+        private void cambiarAVentanaProfesores()
+        {
+            ListaProfesores listaProfesores = new ListaProfesores();
+            Application.Current.MainWindow = listaProfesores;
+            Application.Current.MainWindow.Show();
+
+            foreach (Window window in Application.Current.Windows.OfType<EdicionProfesor>())
+            {
+                ((EdicionProfesor)window).Close();
             }
         }
 
