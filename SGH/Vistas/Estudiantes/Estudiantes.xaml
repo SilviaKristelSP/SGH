@@ -57,20 +57,20 @@
                             Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
                             BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                       
                             Foreground="White" FontSize="14" Content="Asignación de Materias"
-                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                   
+                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Cursor="Hand"                                   
                         />
 
                         <Button FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
                             Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
                             BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                        
-                            Foreground="White" Content="Consulta de Horarios" FontSize="14"
-                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                   
+                            Foreground="White" Content="Consulta de Horarios" FontSize="14" Click="ClickConsultaHorarios"
+                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                    
                         />
 
                         <Button x:Name="generarHorarioButton" FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
                             Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
                             BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                         
-                            Foreground="White" Content="Generación de Horarios" FontSize="14"
+                            Foreground="White" Content="Generación de Horarios" FontSize="14" Click="ClickGeneracionHorarios"
                             IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                   
                         />
 
@@ -187,21 +187,14 @@
                             Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
                             BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                       
                             Foreground="White" FontSize="14" Content="Consultar Estudiantes"
-                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                   
+                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Click="clickConsultarEstudiantes"                                   
                         />
 
                         <Button FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
                             Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
                             BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                        
                             Foreground="White" Content="Registrar Estudiante" FontSize="14"
-                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                   
-                        />
-
-                        <Button FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
-                            Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
-                            BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                         
-                            Foreground="White" Content="Eliminar Estudiante" FontSize="14"
-                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                   
+                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Click="clickRegistrarEstudiante"                                   
                         />
                     </StackPanel>
                 </Expander>
@@ -273,22 +266,15 @@
                         <Button FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
                             Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
                             BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                       
-                            Foreground="White" FontSize="14" Content="Consultar Calificaciones"
-                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                   
+                            Foreground="White" FontSize="14" Content="De un estudiante" 
+                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Click="ClickCalificacionesEstudiante"                                   
                         />
 
                         <Button FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
                             Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
                             BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                        
-                            Foreground="White" Content="Registrar Calificaciones" FontSize="14"
-                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                   
-                        />
-
-                        <Button FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
-                            Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
-                            BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                         
-                            Foreground="White" Content="Eliminar Calificaciones" FontSize="14"
-                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                   
+                            Foreground="White" Content="De un grupo" FontSize="14"
+                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Click="ClickCalificacionesGrupo"                                   
                         />
 
                     </StackPanel>
@@ -316,22 +302,16 @@
         </ScrollViewer>
 
         <Label  Content="Estudiantes" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" FontSize="24" Margin="559,10,0,0"/>
-        <Label  Content="Estado" HorizontalAlignment="Left" Margin="404,100,0,0" VerticalAlignment="Top" FontSize="15"/>
-        <ComboBox x:Name="cbEstado" HorizontalAlignment="Center" Margin="0,99,0,0" VerticalAlignment="Top" Width="72">
+        <Label  Content="Estado" HorizontalAlignment="Left" Margin="490,103,0,0" VerticalAlignment="Top" FontSize="15"/>
+        <ComboBox x:Name="cbEstado" HorizontalAlignment="Left" Margin="550,102,0,0" VerticalAlignment="Top" Width="72">
             <ComboBoxItem Content="Activo"/>
             <ComboBoxItem Content="Baja"/>
         </ComboBox>
-        <TextBox x:Name="txbBuscador" HorizontalAlignment="Left" Margin="317,170,0,0" TextWrapping="Wrap" Text="Buscar por nombre" VerticalAlignment="Top" Width="535"/>
+        <TextBox x:Name="txbBuscador" HorizontalAlignment="Left" Margin="317,170,0,0" TextWrapping="Wrap" Text="Buscar por nombre o matricula" VerticalAlignment="Top" Width="535" MouseDown="clickEnBuscador"/>
         <DataGrid x:Name="dgEstudiantes" Margin="313,222,41,79" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" ItemsSource="{Binding DatosTabla}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Nombre Completo" Width="*" Binding="{Binding NombreCompleto}"></DataGridTextColumn>
-                <DataGridTemplateColumn Header="Foto" Width="100" IsReadOnly="True">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Image Source="{Binding Imagen}"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Matricula" Width="*" Binding="{Binding Matricula}"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
         <Button x:Name="btnAgregar" Content="Agregar" HorizontalAlignment="Left" Margin="861,624,0,0" VerticalAlignment="Top" Width="100" Background="#6D1814" BorderBrush="#6D1814" Click="ClickAgregar" />
@@ -341,10 +321,8 @@
         <Label Content="Filtros" HorizontalAlignment="Left" Margin="593,52,0,0" VerticalAlignment="Top" FontSize="18" RenderTransformOrigin="0.649,2.117" FontWeight="Bold"/>
         <Label Content="Buscador" HorizontalAlignment="Left" Margin="580,140,0,0" VerticalAlignment="Top" FontSize="18" RenderTransformOrigin="0.649,2.117" FontWeight="Bold"/>
         <Button x:Name="btnCancelarBaja" Content="Cancelar Baja" HorizontalAlignment="Left" Margin="535,624,0,0" VerticalAlignment="Top" Background="#6C2A27" BorderBrush="#6C2A27" Click="ClickCancelarBaja"/>
-        <Button  Content="Aplicar Filtros" HorizontalAlignment="Left" Margin="702,50,0,0" VerticalAlignment="Top" Width="128" Background="#6B4240" BorderBrush="#6B4240" Click="ClickAplicarFiltros"/>
-        <Label  Content="Semestre" HorizontalAlignment="Left" Margin="686,101,0,0" VerticalAlignment="Top" FontSize="15" RenderTransformOrigin="7.555,2.827"/>
-        <ComboBox x:Name="cbSemestre" HorizontalAlignment="Left" Margin="766,100,0,0"  VerticalAlignment="Top" Width="40"/>
-        <Button  Content="Limpiar Filtros" HorizontalAlignment="Left" Margin="844,50,0,0" VerticalAlignment="Top" Width="128" Background="#6B4240" BorderBrush="#6B4240" Click="ClickLimpiarFiltros" />
+        <Button  Content="Aplicar Filtro" HorizontalAlignment="Left" Margin="702,102,0,0" VerticalAlignment="Top" Width="128" Background="#6B4240" BorderBrush="#6B4240" Click="ClickAplicarFiltros"/>
+        <Button  Content="Limpiar Filtro" HorizontalAlignment="Left" Margin="852,102,0,0" VerticalAlignment="Top" Width="128" Background="#6B4240" BorderBrush="#6B4240" Click="ClickLimpiarFiltros" />
         <Button x:Name="btnConsultar" Content="Consultar" HorizontalAlignment="Left" Margin="702,624,0,0" VerticalAlignment="Top" Width="106" RenderTransformOrigin="0.5,0.5" Background="#6C2A27" BorderBrush="#6C2A27" Click="ClickConsultar"/>
         <Button x:Name="btnConsultarBaja" Content="Consultar" HorizontalAlignment="Left" Margin="666,624,0,0" VerticalAlignment="Top" Background="#6C2A27" BorderBrush="#6C2A27" Click="ClickConsultarBaja"/>
 
