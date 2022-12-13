@@ -9,7 +9,7 @@ namespace SGH.DAOs
 {
     public class EstudianteDAO
     {
-      
+
         public static Estudiante recuperarEstudianteID(string idPersona)
         {
             Estudiante lista = null;
@@ -86,7 +86,7 @@ namespace SGH.DAOs
         public static string obtenerMatricula(string idPersona)
         {
             string matricula = "";
-            Estudiante est= null;
+            Estudiante est = null;
             try
             {
                 using (SGHContext bd = new SGHContext())
@@ -101,5 +101,6 @@ namespace SGH.DAOs
             }
             return matricula;
         }
+
     }
 }

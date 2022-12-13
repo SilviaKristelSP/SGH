@@ -17,6 +17,7 @@ using System.Windows.Shapes;
 using SGH.Modelos;
 using SGH.Vistas.Horario.Consulta;
 using SGH.Calificaciones;
+using SGH.Vistas.Grupos;
 
 namespace SGH.Vistas.MenuPrincipal
 {
@@ -131,6 +132,43 @@ namespace SGH.Vistas.MenuPrincipal
         {
             CalificacionesGrupal calificacionesGrupal = new CalificacionesGrupal();
             Application.Current.MainWindow = calificacionesGrupal;
+            Application.Current.MainWindow.Show();
+
+            foreach (Window window in Application.Current.Windows.OfType<MenuPrincipalSGH>())
+            {
+                ((MenuPrincipalSGH)window).Close();
+            }
+        }
+
+        private void ClickConsultarGrupos(object sender, RoutedEventArgs e)
+        {
+            ConsultarGrupos grupos = new ConsultarGrupos();
+            Application.Current.MainWindow = grupos;
+            Application.Current.MainWindow.Show();
+
+            foreach (Window window in Application.Current.Windows.OfType<MenuPrincipalSGH>())
+            {
+                ((MenuPrincipalSGH)window).Close();
+            }
+        }
+
+        private void ClickAgregarGrupos(object sender, RoutedEventArgs e)
+        {
+            CrearGrupo crearGrupo = new CrearGrupo();
+            Application.Current.MainWindow = crearGrupo;
+            Application.Current.MainWindow.Show();
+
+            foreach (Window window in Application.Current.Windows.OfType<MenuPrincipalSGH>())
+            {
+                ((MenuPrincipalSGH)window).Close();
+            }
+
+        }
+
+        private void ClickEliminarGrupos(object sender, RoutedEventArgs e)
+        {
+            EliminarGrupo eliminarGrupo = new EliminarGrupo();
+            Application.Current.MainWindow = eliminarGrupo;
             Application.Current.MainWindow.Show();
 
             foreach (Window window in Application.Current.Windows.OfType<MenuPrincipalSGH>())
