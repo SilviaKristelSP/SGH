@@ -101,7 +101,7 @@ namespace SGH.DAOs
         public static string obtenerMatricula(string idPersona)
         {
             string matricula = "";
-            Estudiante est= null;
+            Estudiante est = null;
             try
             {
                 using (SGHContext bd = new SGHContext())
@@ -116,5 +116,6 @@ namespace SGH.DAOs
             }
             return matricula;
         }
+
     }
 }

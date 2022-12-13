@@ -12,26 +12,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace SGH
+namespace SGH.Vistas.Grupos
 {
     /// <summary>
-    /// Lógica de interacción para Grupos.xaml
+    /// Lógica de interacción para EliminarGrupo.xaml
     /// </summary>
-    public partial class Grupos : Window
+    public partial class EliminarGrupo : Window
     {
-        public Grupos()
+        public EliminarGrupo()
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
         }
     }
 }

@@ -169,6 +169,7 @@
     <Compile Include="Utiles\DatosArchivo.cs" />
     <Compile Include="Utiles\MateriaHorario.cs" />
     <Compile Include="Utiles\Util.cs" />
+    <Compile Include="Validaciones\GrupoValidator.cs" />
     <Compile Include="Validaciones\Verificacion.cs" />
     <Compile Include="Vistas\Calificaciones\BuscadorEstudiante.xaml.cs">
       <DependentUpon>BuscadorEstudiante.xaml</DependentUpon>
@@ -199,11 +200,17 @@
       <DependentUpon>Estudiantes.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vistas\Excepciones\ErrorAlertException.cs" />
+    <Compile Include="Vistas\Grupos\ConsultarGrupo.xaml.cs">
+      <DependentUpon>ConsultarGrupo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Grupos\ConsultarGrupos.xaml.cs">
+      <DependentUpon>ConsultarGrupos.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vistas\Grupos\CrearGrupo.xaml.cs">
       <DependentUpon>CrearGrupo.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Vistas\Grupos\Grupos.xaml.cs">
-      <DependentUpon>Grupos.xaml</DependentUpon>
+    <Compile Include="Vistas\Grupos\EliminarGrupo.xaml.cs">
+      <DependentUpon>EliminarGrupo.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vistas\Horario\ActualizarHorario.xaml.cs">
       <DependentUpon>ActualizarHorario.xaml</DependentUpon>
@@ -299,11 +306,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Vistas\Grupos\CrearGrupo.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Vistas\Grupos\ConsultarGrupo.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Vistas\Grupos\Grupos.xaml">
+    <Page Include="Vistas\Grupos\ConsultarGrupos.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\Grupos\CrearGrupo.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
