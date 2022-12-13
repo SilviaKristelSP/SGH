@@ -17,6 +17,10 @@ using SGH.Utiles;
 using SGH.Modelos;
 using SGH.DAOs;
 using SGH.Vistas.Alertas;
+using SGH.Vistas.Horario.Consulta;
+using SGH.Vistas.Estudiantes;
+using SGH.Calificaciones;
+using SGH.Vistas.Horario;
 
 
 namespace SGH.Vistas.Estudiantes
@@ -67,8 +71,8 @@ namespace SGH.Vistas.Estudiantes
             tbDescripcion.Text = baja.Descripcion;
             lbMotivo.Content = baja.Motivo;
             inicializarNombreArchivos();
-            //Uri uri = new Uri(Util.generarRutaParaImagen(persona.Foto, tbNombreFoto.Text));
-            //imgFoto.Source = new BitmapImage(uri);
+            Uri uri = new Uri(Util.generarRutaParaImagen(persona.Foto, tbNombreFoto.Text + Util.generarID(30)));
+            imgFoto.Source = new BitmapImage(uri);
         }
 
         private void inicializarNombreArchivos()
@@ -80,6 +84,7 @@ namespace SGH.Vistas.Estudiantes
             tbNombreCURPTutor.Text = "CURPTutor_" + nombreCompleto + ".pdf";
             tbNombreCertificadoSecundaria.Text = "CertificadoSecundaria_" + nombreCompleto + ".pdf";
             tbNombreCartaConducta.Text = "CartaBuenaConducta_" + nombreCompleto + ".pdf";
+            txbDocProbatorio.Text = "Baja_" + nombreCompleto + ".pdf";
 
         }
 
@@ -260,6 +265,83 @@ namespace SGH.Vistas.Estudiantes
 
 
             }
+        }
+
+        private void ClickConsultaHorarios(object sender, RoutedEventArgs e)
+        {
+            ConsultaHorarios consultaHorarios = new ConsultaHorarios();
+            Application.Current.MainWindow = consultaHorarios;
+            Application.Current.MainWindow.Show();
+
+            foreach (Window window in Application.Current.Windows.OfType<MenuPrincipalSGH>())
+            {
+                ((MenuPrincipalSGH)window).Close();
+            }
+            this.Close();
+        }
+
+        private void ClickGeneracionHorarios(object sender, RoutedEventArgs e)
+        {
+            GenerarHorario generarHorario = new GenerarHorario();
+            Application.Current.MainWindow = generarHorario;
+            Application.Current.MainWindow.Show();
+
+            foreach (Window window in Application.Current.Windows.OfType<MenuPrincipalSGH>())
+            {
+                ((MenuPrincipalSGH)window).Close();
+            }
+            this.Close();
+        }
+
+        private void ClickCalificacionesEstudiante(object sender, RoutedEventArgs e)
+        {
+            BuscadorEstudiante buscadorEstudiante = new BuscadorEstudiante();
+            Application.Current.MainWindow = buscadorEstudiante;
+            Application.Current.MainWindow.Show();
+
+            foreach (Window window in Application.Current.Windows.OfType<MenuPrincipalSGH>())
+            {
+                ((MenuPrincipalSGH)window).Close();
+            }
+            this.Close();
+        }
+
+        private void ClickCalificacionesGrupo(object sender, RoutedEventArgs e)
+        {
+            CalificacionesGrupal calificacionesGrupal = new CalificacionesGrupal();
+            Application.Current.MainWindow = calificacionesGrupal;
+            Application.Current.MainWindow.Show();
+
+            foreach (Window window in Application.Current.Windows.OfType<MenuPrincipalSGH>())
+            {
+                ((MenuPrincipalSGH)window).Close();
+            }
+            this.Close();
+        }
+
+        private void clickConsultarEstudiantes(object sender, RoutedEventArgs e)
+        {
+            Estudiantes estudiantes = new Estudiantes();
+            Application.Current.MainWindow = estudiantes;
+            Application.Current.MainWindow.Show();
+
+            foreach (Window window in Application.Current.Windows.OfType<MenuPrincipalSGH>())
+            {
+                ((MenuPrincipalSGH)window).Close();
+            }
+            this.Close();
+        }
+
+        private void clickRegistrarEstudiante(object sender, RoutedEventArgs e)
+        {
+            AgregarEstudiante agregarEstudiante = new AgregarEstudiante();
+            Application.Current.MainWindow = agregarEstudiante;
+            Application.Current.MainWindow.Show();
+            foreach (Window window in Application.Current.Windows.OfType<MenuPrincipalSGH>())
+            {
+                ((MenuPrincipalSGH)window).Close();
+            }
+            this.Close();
         }
     }
 }

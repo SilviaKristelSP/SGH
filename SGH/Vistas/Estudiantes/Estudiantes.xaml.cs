@@ -18,6 +18,10 @@ using SGH.DAOs;
 using SGH.Utiles;
 using SGH.Vistas.Alertas;
 using System.IO;
+using SGH.Vistas.Horario.Consulta;
+using SGH.Vistas.Estudiantes;
+using SGH.Calificaciones;
+using SGH.Vistas.Horario;
 
 namespace SGH.Vistas.Estudiantes
 {
@@ -28,7 +32,7 @@ namespace SGH.Vistas.Estudiantes
     {
         private static Administrador administradorMenu = new Administrador();
         private List<DatosTabla> datosConvertidos = new List<DatosTabla>();
-       
+        private List<DatosTabla> filtros = new List<DatosTabla>();
         public Estudiantes()
         {
             InitializeComponent();
@@ -48,7 +52,7 @@ namespace SGH.Vistas.Estudiantes
             btnCancelarBaja.Visibility = System.Windows.Visibility.Collapsed;
             btnConsultarBaja.Visibility = System.Windows.Visibility.Collapsed;
             LlenarTabla();
-            ConfigurarComboBoxes();
+
         }
 
         private void LlenarTabla()
@@ -63,15 +67,12 @@ namespace SGH.Vistas.Estudiantes
             dgEstudiantes.ItemsSource = datosConvertidos;
         }
 
-        private void ConfigurarComboBoxes()
-        {
-            int semestreMax = MateriaDAO.obtenerUltimoSemestre();
-            for (int i = 1; i <= semestreMax; i++)
-            {
-                cbSemestre.Items.Add(i.ToString());
-            }
+        private void filtrosGrupoActivos() {
+            datosConvertidos = ConfigurarADatosTabla(PersonaDAO.recuperarPersonas(EstudianteDAO.recuperarIDsEstudiantesActivos(), "Activo"));
+            dgEstudiantes.ItemsSource = datosConvertidos;
         }
 
+   
         private List<DatosTabla> ConfigurarADatosTabla(List<Persona> personas)
         {
             List<DatosTabla> datos = new List<DatosTabla>();
@@ -82,8 +83,7 @@ namespace SGH.Vistas.Estudiantes
                     DatosTabla dt = new DatosTabla();
                     dt.Id = persona.ID;
                     dt.NombreCompleto = Util.obtenerNombreConEspacios(persona);
-                    /*Uri uri = new Uri(Util.generarRutaParaImagen(persona.Foto, Util.obtenerNombreSinEspacios(persona)));
-                    dt.Imagen = new BitmapImage(uri);*/
+                    dt.Matricula = "ESC1-" + persona.Curp;
                     datos.Add(dt);
                 }
             }
@@ -96,13 +96,13 @@ namespace SGH.Vistas.Estudiantes
             return datos;
         }
 
-
+        
 
 
         //Funcionalidades Botones
         private void ClickLimpiarFiltros(object sender, RoutedEventArgs e)
         {
-            cbSemestre.SelectedIndex = -1;
+            
             cbEstado.SelectedIndex = 0;
             dgEstudiantes.ItemsSource = null;
             dgEstudiantes.Items.Clear();
@@ -120,6 +120,8 @@ namespace SGH.Vistas.Estudiantes
                 btnCancelarBaja.Visibility = System.Windows.Visibility.Visible;
                 btnConsultarBaja.Visibility = System.Windows.Visibility.Visible;
                 LlenarTablaFiltros();
+                
+                
             }
             else if (cbEstado.SelectedIndex == 0)
             {
@@ -130,6 +132,9 @@ namespace SGH.Vistas.Estudiantes
                 btnCancelarBaja.Visibility = System.Windows.Visibility.Collapsed;
                 btnConsultarBaja.Visibility = System.Windows.Visibility.Collapsed;
                 LlenarTabla();
+                
+
+
             }
         }
 
@@ -146,12 +151,16 @@ namespace SGH.Vistas.Estudiantes
         private void ClickBuscar(object sender, RoutedEventArgs e)
         {
             String textoBusqueda = txbBuscador.Text;
-            if (!textoBusqueda.Equals("Buscar por nombre"))
+            if (!textoBusqueda.Equals("Buscar por nombre o matricula"))
             {
                 List<DatosTabla> datosFiltrados = new List<DatosTabla>();
                 foreach (DatosTabla dt in datosConvertidos)
                 {
                     if (dt.NombreCompleto.Contains(textoBusqueda))
+                    {
+                        datosFiltrados.Add(dt);
+                    }
+                    if (dt.Matricula.Contains(textoBusqueda))
                     {
                         datosFiltrados.Add(dt);
                     }
@@ -178,7 +187,7 @@ namespace SGH.Vistas.Estudiantes
                     {
                         mostrarVentanaExito();
                         LlenarTabla();
-                        ConfigurarComboBoxes();
+                     
                         reconfigurarBotones();
                     }
                     else
@@ -367,6 +376,91 @@ namespace SGH.Vistas.Estudiantes
 
             }
         }
+
+        private void ClickConsultaHorarios(object sender, RoutedEventArgs e)
+        {
+            ConsultaHorarios consultaHorarios = new ConsultaHorarios();
+            Application.Current.MainWindow = consultaHorarios;
+            Application.Current.MainWindow.Show();
+
+            foreach (Window window in Application.Current.Windows.OfType<MenuPrincipalSGH>())
+            {
+                ((MenuPrincipalSGH)window).Close();
+            }
+            this.Close();
+        }
+
+        private void ClickGeneracionHorarios(object sender, RoutedEventArgs e)
+        {
+            GenerarHorario generarHorario = new GenerarHorario();
+            Application.Current.MainWindow = generarHorario;
+            Application.Current.MainWindow.Show();
+
+            foreach (Window window in Application.Current.Windows.OfType<MenuPrincipalSGH>())
+            {
+                ((MenuPrincipalSGH)window).Close();
+            }
+            this.Close();
+        }
+
+        private void ClickCalificacionesEstudiante(object sender, RoutedEventArgs e)
+        {
+            BuscadorEstudiante buscadorEstudiante = new BuscadorEstudiante();
+            Application.Current.MainWindow = buscadorEstudiante;
+            Application.Current.MainWindow.Show();
+
+            foreach (Window window in Application.Current.Windows.OfType<MenuPrincipalSGH>())
+            {
+                ((MenuPrincipalSGH)window).Close();
+            }
+            this.Close();
+        }
+
+        private void ClickCalificacionesGrupo(object sender, RoutedEventArgs e)
+        {
+            CalificacionesGrupal calificacionesGrupal = new CalificacionesGrupal();
+            Application.Current.MainWindow = calificacionesGrupal;
+            Application.Current.MainWindow.Show();
+
+            foreach (Window window in Application.Current.Windows.OfType<MenuPrincipalSGH>())
+            {
+                ((MenuPrincipalSGH)window).Close();
+            }
+            this.Close();
+        }
+
+        private void clickConsultarEstudiantes(object sender, RoutedEventArgs e)
+        {
+            Estudiantes estudiantes = new Estudiantes();
+            Application.Current.MainWindow = estudiantes;
+            Application.Current.MainWindow.Show();
+
+            foreach (Window window in Application.Current.Windows.OfType<MenuPrincipalSGH>())
+            {
+                ((MenuPrincipalSGH)window).Close();
+            }
+            this.Close();
+        }
+
+        private void clickRegistrarEstudiante(object sender, RoutedEventArgs e)
+        {
+            AgregarEstudiante agregarEstudiante = new AgregarEstudiante();
+            Application.Current.MainWindow = agregarEstudiante;
+            Application.Current.MainWindow.Show();
+            foreach (Window window in Application.Current.Windows.OfType<MenuPrincipalSGH>())
+            {
+                ((MenuPrincipalSGH)window).Close();
+            }
+            this.Close();
+        }
+
+        private void clickEnBuscador(object sender, MouseButtonEventArgs e)
+        {
+            txbBuscador.Text = "";
+            txbBuscador.Clear();
+        }
+
+        
     }
 
     partial class DatosTabla
@@ -374,5 +468,6 @@ namespace SGH.Vistas.Estudiantes
         public string Id { get; set; }
         public string NombreCompleto { get; set; }
         public BitmapImage Imagen { get; set; }
+        public string Matricula { get; set; }
     }
 }

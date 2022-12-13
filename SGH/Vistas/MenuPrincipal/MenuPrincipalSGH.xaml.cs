@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using SGH.Modelos;
 using SGH.Vistas.Horario.Consulta;
+using SGH.Vistas.Estudiantes;
 using SGH.Calificaciones;
 
 namespace SGH.Vistas.MenuPrincipal
@@ -133,6 +134,29 @@ namespace SGH.Vistas.MenuPrincipal
             Application.Current.MainWindow = calificacionesGrupal;
             Application.Current.MainWindow.Show();
 
+            foreach (Window window in Application.Current.Windows.OfType<MenuPrincipalSGH>())
+            {
+                ((MenuPrincipalSGH)window).Close();
+            }
+        }
+
+        private void clickConsultarEstudiantes(object sender, RoutedEventArgs e)
+        {
+            Estudiantes.Estudiantes estudiantes = new Estudiantes.Estudiantes();
+            Application.Current.MainWindow = estudiantes;
+            Application.Current.MainWindow.Show();
+
+            foreach (Window window in Application.Current.Windows.OfType<MenuPrincipalSGH>())
+            {
+                ((MenuPrincipalSGH)window).Close();
+            }
+        }
+
+        private void clickRegistrarEstudiante(object sender, RoutedEventArgs e)
+        {
+            AgregarEstudiante agregarEstudiante = new AgregarEstudiante();
+            Application.Current.MainWindow = agregarEstudiante;
+            Application.Current.MainWindow.Show();
             foreach (Window window in Application.Current.Windows.OfType<MenuPrincipalSGH>())
             {
                 ((MenuPrincipalSGH)window).Close();
