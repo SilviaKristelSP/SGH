@@ -40,19 +40,19 @@
             </StackPanel>
             <StackPanel Grid.Column="1" Orientation="Vertical">
                 <Label Margin="0 10 0 0" Content="Materia:" FontSize="15" HorizontalContentAlignment="Center" />
-                <ComboBox IsEnabled="False" x:Name="cb_Materia" Height="25" Width="250" HorizontalAlignment="Center" SelectionChanged="actualizarInformacionMateria"/>
+                <ComboBox IsEnabled="False" x:Name="cb_Materia" Height="25" Width="250" HorizontalAlignment="Center" SelectionChanged="ActualizarInformacionMateria"/>
             </StackPanel>
         </Grid>
         
         <!--Nombre del alumno-->
-        <Label x:Name="lbNombreEstudiante" Grid.Row="2" Content="Nombre del estudiante" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontWeight="Bold"/>
+        <Label x:Name="lbNombreEstudiante" Grid.Row="2" Content="Nombre del estudiante" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontWeight="Bold" Foreground="#DD000000"/>
         
         <!--Calificaciones-->
-        <DataGrid x:Name="dg_Calificaciones" Grid.Row="3" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False">
+        <DataGrid x:Name="dg_Calificaciones" Grid.Row="3" IsSynchronizedWithCurrentItem="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False">
             <DataGrid.Columns>
-                <materialDesign:DataGridTextColumn Width="1*" Header="1er Semestre" Binding="{Binding primerSemestre}"></materialDesign:DataGridTextColumn>
-                <materialDesign:DataGridTextColumn Width="1*" Header="2do Semestre" Binding="{Binding segundoSemestre}"></materialDesign:DataGridTextColumn>
-                <materialDesign:DataGridTextColumn IsReadOnly="True" Width="1*" Header="Promedio" Binding="{Binding promedio}"></materialDesign:DataGridTextColumn>
+                <materialDesign:DataGridTextColumn Width="1*" Header="1er parcial" Binding="{Binding primerParcial}"></materialDesign:DataGridTextColumn>
+                <materialDesign:DataGridTextColumn Width="1*" Header="2do parcial" Binding="{Binding segundoParcial}"></materialDesign:DataGridTextColumn>
+                <materialDesign:DataGridTextColumn IsReadOnly="True" Width="1*" Header="Promedio" Binding="{Binding promedioParcial}"></materialDesign:DataGridTextColumn>
                 <materialDesign:DataGridTextColumn Width="1*" Header="Evaluacion final" Binding="{Binding evaluacionFinal}"></materialDesign:DataGridTextColumn>
                 <materialDesign:DataGridTextColumn IsReadOnly="True" Width="1*" Header="Ponderado" Binding="{Binding ponderado}"></materialDesign:DataGridTextColumn>
             </DataGrid.Columns>

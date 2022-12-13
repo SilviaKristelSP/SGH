@@ -1,5 +1,6 @@
 ﻿using SGH.DAOs;
 using SGH.Modelos;
+using SGH.Vistas.Calificaciones;
 using SGH.Vistas.MenuPrincipal;
 using System;
 using System.Collections.Generic;
@@ -24,8 +25,11 @@ namespace SGH.Calificaciones
     {
         private Estudiante estudiante;
         private Grupo grupo;
+        private Materia materia;
+        private Calificacion calificacion;
         private GrupoDAO grupoDAO = new GrupoDAO();
         private MateriaDAO materiaDAO = new MateriaDAO();
+        private CalificacionDAO calificacionDAO = new CalificacionDAO();
 
         public CalificacionesEstudiante(Estudiante estudiante)
         {
@@ -76,12 +80,72 @@ namespace SGH.Calificaciones
             Console.Write("Click en guardar.");
         }
 
-        private void actualizarInformacionMateria(object sender, SelectionChangedEventArgs e)
+        private void DefinirMateria()
         {
-            string nombreMateria = cb_Materia.Text;
+            string nombreMateria = cb_Materia.SelectedItem.ToString();
             Materia materia = materiaDAO.recuperarMateria(nombreMateria);
+            this.materia = materia;
+        }
 
-            
+        private void RecuperarCalificacion()
+        {
+            Calificacion calificacionBD = calificacionDAO.recuperarCalificacion(materia.NRC, estudiante.Matricula);
+            calificacion = calificacionBD;
+        }
+
+        private void MostrarError(string error)
+        {
+            lbNombreEstudiante.Content = "";
+            lbNombreEstudiante.Foreground = Brushes.Red;
+            lbNombreEstudiante.Content = error;
+        }
+
+        private void LimpiarError()
+        {
+            lbNombreEstudiante.Content = "";
+            lbNombreEstudiante.Foreground = Brushes.Black;
+            lbNombreEstudiante.Content = $"{estudiante.Persona.Nombre} {estudiante.Persona.ApellidoPaterno} {estudiante.Persona.ApellidoMaterno}";
+        }
+
+        private void ActivarEdicion()
+        {
+            dg_Calificaciones.Columns[0].IsReadOnly = false;
+            dg_Calificaciones.Columns[1].IsReadOnly = false;
+            dg_Calificaciones.Columns[3].IsReadOnly = false;
+        }
+
+        private void CargarCalificaciones()
+        {
+            List<Calificacion_Parcial> parciales = calificacion.Calificacion_Parcial.ToList();
+            CalificacionOrdenada calificacionOrdenada = new CalificacionOrdenada();
+            calificacionOrdenada.primerParcial = (float)parciales[0].CaliParcial;
+            calificacionOrdenada.segundoParcial = (float)parciales[1].CaliParcial;
+            calificacionOrdenada.promedioParcial = (calificacionOrdenada.primerParcial + calificacionOrdenada.segundoParcial)/2;
+            calificacionOrdenada.evaluacionFinal = (float)calificacion.EvalFinal;
+            calificacionOrdenada.ponderado = ((calificacionOrdenada.primerParcial + calificacionOrdenada.segundoParcial + calificacionOrdenada.evaluacionFinal) / 3);
+
+            List<CalificacionOrdenada> calificacionesOrdenadas = new List<CalificacionOrdenada>();
+            calificacionesOrdenadas.Add(calificacionOrdenada);
+
+            dg_Calificaciones.ItemsSource = calificacionesOrdenadas;
+        }
+
+        private void ActualizarInformacionMateria(object sender, SelectionChangedEventArgs e)
+        {
+            LimpiarError();
+            DefinirMateria();
+            RecuperarCalificacion();
+
+            if (calificacion != null)
+            {
+                //ActivarEdicion();
+                CargarCalificaciones();
+            }
+            else
+            {
+                MostrarError("No hay registros para la materia seleccionada");
+                dg_Calificaciones.ItemsSource=null;
+            }
         }
     }
 }

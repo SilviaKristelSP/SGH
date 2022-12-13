@@ -12,11 +12,22 @@ namespace SGH.DAOs
     {
         private SGHContext sghContext = new SGHContext();
 
+        private String recuperarNRC(string nombreMateria)
+        {
+            String nrc = (from mt in sghContext.Materias
+                          where mt.Nombre == nombreMateria
+                          select mt.NRC).FirstOrDefault();
+            return nrc;
+        }
+
         public Materia recuperarMateria(string nombreMateria)
         {
+            string nrc = recuperarNRC(nombreMateria);
+
             Materia materia = (from mt in sghContext.Materias
-                               where mt.Nombre == nombreMateria
+                               where mt.NRC == nrc
                                select mt).FirstOrDefault();
+
             return materia;
         }
         public static List<Materia> recuperarMaterias()
