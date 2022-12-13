@@ -404,6 +404,18 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>SGHContext.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <Resource Include="Fuente\Roboto-Black.ttf" />
+    <Resource Include="Fuente\Roboto-BlackItalic.ttf" />
+    <Resource Include="Fuente\Roboto-Bold.ttf" />
+    <Resource Include="Fuente\Roboto-BoldItalic.ttf" />
+    <Resource Include="Fuente\Roboto-Italic.ttf" />
+    <Resource Include="Fuente\Roboto-Light.ttf" />
+    <Resource Include="Fuente\Roboto-LightItalic.ttf" />
+    <Resource Include="Fuente\Roboto-Medium.ttf" />
+    <Resource Include="Fuente\Roboto-MediumItalic.ttf" />
+    <Resource Include="Fuente\Roboto-Regular.ttf" />
+    <Resource Include="Fuente\Roboto-Thin.ttf" />
+    <Resource Include="Fuente\Roboto-ThinItalic.ttf" />
     <None Include="Modelos\SGHContext.edmx.diagram">
       <DependentUpon>SGHContext.edmx</DependentUpon>
     </None>
@@ -444,6 +456,7 @@
     <Folder Include="Vistas\Excepciones\Logs\" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Fuente\LICENSE.txt" />
     <Content Include="Modelos\SGHContext.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>SGHContext.edmx</DependentUpon>
