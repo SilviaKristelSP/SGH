@@ -91,6 +91,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DAOs\AdministradorDAO.cs" />
+    <Compile Include="DAOs\EstudianteDAO.cs" />
+    <Compile Include="DAOs\GrupoDAO.cs" />
     <Compile Include="DAOs\HorarioDAO.cs" />
     <Compile Include="Modelos\Administrador.cs">
       <DependentUpon>SGHContext.tt</DependentUpon>

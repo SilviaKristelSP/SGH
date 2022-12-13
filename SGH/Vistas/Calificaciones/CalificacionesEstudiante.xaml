@@ -35,12 +35,12 @@
 
             <StackPanel Grid.Column="0">
                 <Label Margin="0 10 0 0" Content="Semestre: " FontSize="15" HorizontalAlignment="Center"/>
-                <ComboBox x:Name="cb_Semestre" Height="25" Width="250" HorizontalAlignment="Center"/>
+                <Label Name="lb_semestre" Content="" FontSize="15" FontWeight="Black" HorizontalAlignment="Center" />
 
             </StackPanel>
             <StackPanel Grid.Column="1" Orientation="Vertical">
                 <Label Margin="0 10 0 0" Content="Materia:" FontSize="15" HorizontalContentAlignment="Center" />
-                <ComboBox IsEnabled="False" x:Name="cb_Materia" Height="25" Width="250" HorizontalAlignment="Center"/>
+                <ComboBox IsEnabled="False" x:Name="cb_Materia" Height="25" Width="250" HorizontalAlignment="Center" SelectionChanged="actualizarInformacionMateria"/>
             </StackPanel>
         </Grid>
         
