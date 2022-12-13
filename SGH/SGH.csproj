@@ -91,8 +91,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DAOs\AdministradorDAO.cs" />
-    <Compile Include="DAOs\BajaDAO.cs" />
+    <Compile Include="DAOs\CalificacionDAO.cs" />
     <Compile Include="DAOs\EstudianteDAO.cs" />
+    <Compile Include="DAOs\GrupoDAO.cs" />
+    <Compile Include="DAOs\BajaDAO.cs" />
     <Compile Include="DAOs\HorarioDAO.cs" />
     <Compile Include="DAOs\MateriaDAO.cs" />
     <Compile Include="DAOs\PersonaDAO.cs" />
@@ -176,6 +178,7 @@
     <Compile Include="Vistas\Calificaciones\CalificacionesGrupal.xaml.cs">
       <DependentUpon>CalificacionesGrupal.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\Calificaciones\CalificacionOrdenada.cs" />
     <Compile Include="Vistas\Estudiantes\AgregarEstudiante.xaml.cs">
       <DependentUpon>AgregarEstudiante.xaml</DependentUpon>
     </Compile>
@@ -417,6 +420,18 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>SGHContext.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <Resource Include="Fuente\Roboto-Black.ttf" />
+    <Resource Include="Fuente\Roboto-BlackItalic.ttf" />
+    <Resource Include="Fuente\Roboto-Bold.ttf" />
+    <Resource Include="Fuente\Roboto-BoldItalic.ttf" />
+    <Resource Include="Fuente\Roboto-Italic.ttf" />
+    <Resource Include="Fuente\Roboto-Light.ttf" />
+    <Resource Include="Fuente\Roboto-LightItalic.ttf" />
+    <Resource Include="Fuente\Roboto-Medium.ttf" />
+    <Resource Include="Fuente\Roboto-MediumItalic.ttf" />
+    <Resource Include="Fuente\Roboto-Regular.ttf" />
+    <Resource Include="Fuente\Roboto-Thin.ttf" />
+    <Resource Include="Fuente\Roboto-ThinItalic.ttf" />
     <None Include="Modelos\SGHContext.edmx.diagram">
       <DependentUpon>SGHContext.edmx</DependentUpon>
     </None>
@@ -457,6 +472,7 @@
     <Folder Include="Vistas\Excepciones\Logs\" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Fuente\LICENSE.txt" />
     <Content Include="Modelos\SGHContext.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>SGHContext.edmx</DependentUpon>
