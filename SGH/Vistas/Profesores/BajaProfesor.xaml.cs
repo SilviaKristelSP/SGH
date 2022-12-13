@@ -25,7 +25,6 @@ namespace SGH.Vistas.Profesores
     /// </summary>
     public partial class BajaProfesor : Window
     {
-        private static Administrador administradorMenu = new Administrador();
         private Persona persona = new Persona();
         private Profesor profesor = new Profesor();
         private String id = "";
@@ -38,13 +37,6 @@ namespace SGH.Vistas.Profesores
 
             recuperarPersonaYProfesor();
             cargarDatosProfesor();
-
-
-            administradorMenu.Rol = "secretaria";
-            administradorMenu.NombreCompleto = "usuario prueba";
-
-            FiltrarMenus(administradorMenu.Rol);
-            SetInformacionAdministrador(administradorMenu);
         }
 
 
@@ -63,7 +55,7 @@ namespace SGH.Vistas.Profesores
             lbCURP.Content = persona.Curp;
             lbTipoSangre.Content = persona.TipoSangre;
             inicializarNombreArchivos();
-            Uri uri = new Uri(Util.generarRutaParaImagen(persona.Foto, tbNombreFoto.Text));
+            Uri uri = new Uri(Util.generarRutaParaImagen(persona.Foto, tbNombreFoto.Text + Util.generarID(30)));
             imgFoto.Source = new BitmapImage(uri);
         }
 
@@ -101,7 +93,7 @@ namespace SGH.Vistas.Profesores
 
         private void ClickRetroceder(object sender, RoutedEventArgs e)
         {
-            Profesores profesores = new Profesores();
+            ListaProfesores profesores = new ListaProfesores();
             profesores.Show();
             this.Close();
         }
@@ -129,33 +121,18 @@ namespace SGH.Vistas.Profesores
             if (conDoc)
             {
                 llenarObjetoBaja(idBaja, conDoc);
-                if (PersonaDAO.darDeBajaPersona(persona.ID, baja))
-                {
-                    if (MateriaDAO.borrarMateriasProfesor(profesor.RFC))
-                        mostrarVentanaExito();
-                    else
-                        mostrarVentanaError();
-                }
+                if (ProfesorDAO.darDeBajaProfesor(persona.ID, profesor.RFC, baja))
+                    mostrarVentanaExito();
                 else
-                {
-                    mostrarVentanaError();
-                }                
+                    mostrarVentanaError();            
             }
             else
             {
                 llenarObjetoBaja(idBaja, conDoc);
-                if (PersonaDAO.darDeBajaPersona(persona.ID, baja))
-                {
-                    if (MateriaDAO.borrarMateriasProfesor(profesor.RFC))
-                        mostrarVentanaExito();
-                    else
-                        mostrarVentanaError();
-                }
+                if (ProfesorDAO.darDeBajaProfesor(persona.ID, profesor.RFC, baja))
+                    mostrarVentanaExito();
                 else
-                {
                     mostrarVentanaError();
-                }
-                    
             }
         }
 
@@ -245,9 +222,14 @@ namespace SGH.Vistas.Profesores
 
         private void cambiarAVentanaProfesores()
         {
-            Profesores profesores = new Profesores();
-            profesores.Show();
-            this.Close();
+            ListaProfesores listaProfesores = new ListaProfesores();
+            Application.Current.MainWindow = listaProfesores;
+            Application.Current.MainWindow.Show();
+
+            foreach (Window window in Application.Current.Windows.OfType<BajaProfesor>())
+            {
+                ((BajaProfesor)window).Close();
+            }
         }
 
 
@@ -289,60 +271,6 @@ namespace SGH.Vistas.Profesores
             if (!tbNombreContrato.Text.Equals(""))
             {
                 Util.abrirArchivoPDF(profesor.DocContrato, tbNombreContrato.Text);
-            }
-        }
-
-
-        //Funcionalidad MENÚ
-        public void SetInformacionAdministrador(Administrador administrador)
-        {
-
-            toggleAdministrador.Content = administrador.NombreCompleto.ToUpper().First();
-            textBlockAdministrador.Text = administrador.NombreCompleto;
-
-        }
-
-        private void LogOut(object sender, RoutedEventArgs e)
-        {
-            LogInSGH logInSGH = new LogInSGH();
-            Application.Current.MainWindow = logInSGH;
-            Application.Current.MainWindow.Show();
-
-            foreach (Window window in Application.Current.Windows.OfType<MenuPrincipalSGH>())
-            {
-                ((MenuPrincipalSGH)window).Close();
-            }
-
-        }
-
-        public void FiltrarMenus(string rol)
-        {
-            if (rol == "secretario")
-            {
-
-                menuCalificaciones.Visibility = Visibility.Visible;
-                menuHorario.Visibility = Visibility.Visible;
-                menuEstudiantes.Visibility = Visibility.Visible;
-                asignacionMateriasButton.Visibility = Visibility.Visible;
-                generarHorarioButton.Visibility = Visibility.Visible;
-
-                menuGrupos.Visibility = Visibility.Collapsed;
-                menuProfesores.Visibility = Visibility.Collapsed;
-
-
-            }
-            else
-            {
-                menuEstudiantes.Visibility = Visibility.Visible;
-                menuGrupos.Visibility = Visibility.Visible;
-                menuProfesores.Visibility = Visibility.Visible;
-                menuHorario.Visibility = Visibility.Visible;
-
-                menuCalificaciones.Visibility = Visibility.Collapsed;
-                asignacionMateriasButton.Visibility = Visibility.Collapsed;
-                generarHorarioButton.Visibility = Visibility.Collapsed;
-
-
             }
         }
 

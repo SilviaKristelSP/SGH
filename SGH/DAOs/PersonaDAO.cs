@@ -91,7 +91,6 @@ namespace SGH.DAOs
         public static List<Persona> recuperarPersonas(List<String> ids, string estado)
         {
             List<Persona> lista = new List<Persona>();
-            //IEnumerable<Persona> e;
             Persona personaAux = new Persona();
             try
             {

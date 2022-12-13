@@ -29,18 +29,12 @@ namespace SGH.Vistas.Profesores
     /// </summary>
     public partial class AgregarProfesor : Window
     {
-        private static Administrador administradorMenu = new Administrador();
         private Persona persona = new Persona();
         private Profesor profesor = new Profesor();
         private List<Profesor_Materia> materiasAsignadas = new List<Profesor_Materia>();
         public AgregarProfesor()
         {
             InitializeComponent();
-            administradorMenu.Rol = "secretaria";
-            administradorMenu.NombreCompleto = "usuario prueba";
-
-            FiltrarMenus(administradorMenu.Rol);
-            SetInformacionAdministrador(administradorMenu);
             cargarMaterias();
         }
 
@@ -49,22 +43,26 @@ namespace SGH.Vistas.Profesores
             String id = "";
             if (verificarFormulario())
             {
-                id = Util.generarID(50);
-                if (verificarMateriasSeleccionadas())
+                if (comprobarTamanioCadena())
                 {
-                    if (registrarEnBD(id, true))
-                        mostrarVentanaExito();
-                    else
-                        mostrarVentanaError();
-                }
-                else
-                {
-                    if (mostrarVentanaConfirmacion())
+                    id = Util.generarID(50);
+                    configurarObjetos(id);
+                    if (verificarMateriasSeleccionadas())
                     {
-                        if (registrarEnBD(id, false))
+                        if (ProfesorDAO.agregarProfesorConMaterias(persona, profesor, materiasAsignadas))
                             mostrarVentanaExito();
                         else
                             mostrarVentanaError();
+                    }
+                    else
+                    {
+                        if (mostrarVentanaConfirmacion())
+                        {
+                            if (ProfesorDAO.agregarProfesorSinMaterias(persona, profesor))
+                                mostrarVentanaExito();
+                            else
+                                mostrarVentanaError();
+                        }
                     }
                 }
             }
@@ -74,7 +72,25 @@ namespace SGH.Vistas.Profesores
             }
         }
 
+        private bool comprobarTamanioCadena()
+        {
+            if (txbRFC.Text.Length <= 13 && txbCURP.Text.Length <= 18)
+                return true;
+            else
+            {
+                lbMaxRFC.Visibility = Visibility.Visible;
+                lbMaxCURP.Visibility = Visibility.Visible;
 
+                return false;
+            }            
+        }
+
+        private void configurarObjetos(String idP)
+        {
+            llenarObjetoPersona(idP);
+            llenarObjetoProfesor(idP);
+            generarProfesor_Materia();
+        }
         private bool verificarFormulario()
         {
             bool formularioAprobado = true;
@@ -167,6 +183,8 @@ namespace SGH.Vistas.Profesores
                 Profesor_Materia profesor_Materia = new Profesor_Materia();
                 profesor_Materia.RFC_Profesor = profesor.RFC;
                 profesor_Materia.NRC_Materia = materia;
+                int aux = materia.Length;
+                profesor_Materia.ID_Profesor_Materia = Util.generarID(50-aux) + materia;
                 materiasAsignadas.Add(profesor_Materia);
             }
         }
@@ -208,32 +226,6 @@ namespace SGH.Vistas.Profesores
             profesor.RFC = txbRFC.Text;
             profesor.Carrera = txbCarrera.Text;
             profesor.ID_Persona = idPersona;
-        }
-
-        private bool registrarEnBD(string idPersona, bool materias)
-        {
-            bool exito = false;
-            llenarObjetoPersona(idPersona);
-            if (PersonaDAO.registrarPersona(persona))
-            {
-                llenarObjetoProfesor(idPersona);
-                if (ProfesorDAO.registrarProfesor(profesor))
-                {
-                    if (materias)
-                    {
-                        generarProfesor_Materia();
-                        if (MateriaDAO.asignarMateriasProfesor(materiasAsignadas))
-                            exito = true;
-                    }
-                    else
-                    {
-                        exito = true;
-                    }
-
-                }
-            }
-
-            return exito;
         }
 
         //Dialogos
@@ -317,18 +309,21 @@ namespace SGH.Vistas.Profesores
 
         private void cambiarAVentanaProfesores()
         {
-            Profesores profesores = new Profesores();
-            profesores.Show();
-            this.Close();
+            ListaProfesores listaProfesores = new ListaProfesores();
+            Application.Current.MainWindow = listaProfesores;
+            Application.Current.MainWindow.Show();
+
+            foreach (Window window in Application.Current.Windows.OfType<AgregarProfesor>())
+            {
+                ((AgregarProfesor)window).Close();
+            }
         }
 
         private void ClickRetroceder(object sender, RoutedEventArgs e)
         {
             if (mostrarVentanaConfirmacion2())
             {
-                Profesores profesores = new Profesores();
-                profesores.Show();
-                this.Close();
+                cambiarAVentanaProfesores();
             }
         }
 
@@ -463,59 +458,6 @@ namespace SGH.Vistas.Profesores
                         wpMaterias.Children.Add(checkDinamico);
                     }
                 }
-            }
-        }
-
-        //Funcionalidad MENÚ
-        public void SetInformacionAdministrador(Administrador administrador)
-        {
-
-            toggleAdministrador.Content = administrador.NombreCompleto.ToUpper().First();
-            textBlockAdministrador.Text = administrador.NombreCompleto;
-
-        }
-
-        private void LogOut(object sender, RoutedEventArgs e)
-        {
-            LogInSGH logInSGH = new LogInSGH();
-            Application.Current.MainWindow = logInSGH;
-            Application.Current.MainWindow.Show();
-
-            foreach (Window window in Application.Current.Windows.OfType<MenuPrincipalSGH>())
-            {
-                ((MenuPrincipalSGH)window).Close();
-            }
-
-        }
-
-        public void FiltrarMenus(string rol)
-        {
-            if (rol == "secretario")
-            {
-
-                menuCalificaciones.Visibility = Visibility.Visible;
-                menuHorario.Visibility = Visibility.Visible;
-                menuEstudiantes.Visibility = Visibility.Visible;
-                asignacionMateriasButton.Visibility = Visibility.Visible;
-                generarHorarioButton.Visibility = Visibility.Visible;
-
-                menuGrupos.Visibility = Visibility.Collapsed;
-                menuProfesores.Visibility = Visibility.Collapsed;
-
-
-            }
-            else
-            {
-                menuEstudiantes.Visibility = Visibility.Visible;
-                menuGrupos.Visibility = Visibility.Visible;
-                menuProfesores.Visibility = Visibility.Visible;
-                menuHorario.Visibility = Visibility.Visible;
-
-                menuCalificaciones.Visibility = Visibility.Collapsed;
-                asignacionMateriasButton.Visibility = Visibility.Collapsed;
-                generarHorarioButton.Visibility = Visibility.Collapsed;
-
-
             }
         }
 
