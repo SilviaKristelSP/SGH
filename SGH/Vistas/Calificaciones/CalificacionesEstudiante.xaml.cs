@@ -138,7 +138,7 @@ namespace SGH.Calificaciones
 
             if (calificacion != null)
             {
-                //ActivarEdicion();
+                ActivarEdicion();
                 CargarCalificaciones();
             }
             else

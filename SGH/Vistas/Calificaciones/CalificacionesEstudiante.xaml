@@ -48,7 +48,7 @@
         <Label x:Name="lbNombreEstudiante" Grid.Row="2" Content="Nombre del estudiante" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontWeight="Bold" Foreground="#DD000000"/>
         
         <!--Calificaciones-->
-        <DataGrid x:Name="dg_Calificaciones" Grid.Row="3" IsSynchronizedWithCurrentItem="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False">
+        <DataGrid x:Name="dg_Calificaciones" Grid.Row="3" IsSynchronizedWithCurrentItem="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <materialDesign:DataGridTextColumn Width="1*" Header="1er parcial" Binding="{Binding primerParcial}"></materialDesign:DataGridTextColumn>
                 <materialDesign:DataGridTextColumn Width="1*" Header="2do parcial" Binding="{Binding segundoParcial}"></materialDesign:DataGridTextColumn>
