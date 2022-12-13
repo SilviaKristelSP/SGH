@@ -201,6 +201,12 @@
     <Compile Include="Vistas\Grupos\Grupos.xaml.cs">
       <DependentUpon>Grupos.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\Horario\ActualizarHorario.xaml.cs">
+      <DependentUpon>ActualizarHorario.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Horario\ActualizarHorarioRegistro.xaml.cs">
+      <DependentUpon>ActualizarHorarioRegistro.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vistas\Horario\ConsultaHorarios.xaml.cs">
       <DependentUpon>ConsultaHorarios.xaml</DependentUpon>
     </Compile>
@@ -296,6 +302,14 @@
     <Page Include="Vistas\Grupos\Grupos.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Vistas\Horario\ActualizarHorario.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\Horario\ActualizarHorarioRegistro.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Vistas\Horario\ConsultaHorarios.xaml">
       <SubType>Designer</SubType>

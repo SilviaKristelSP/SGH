@@ -214,7 +214,13 @@ namespace SGH.DAOs
                 existeSesion = true;
             }
             return existeSesion;
-        }        
+        }
+
+        public List<Sesion> EncontrarSesionesPorGrupoID(string grupoID)
+        {           
+            List<Sesion> sesiones = sghContext.Sesions.Where(se => se.ID_Grupo.Equals(grupoID)).ToList();            
+            return sesiones;
+        }
 
         public bool EncontrarMateriaSesionPorId(string materiSesionID)
         {
@@ -275,6 +281,24 @@ namespace SGH.DAOs
 
             return registroGuardado;
 
+        }
+    
+        public void EliminarSesiones(string grupoID)
+        {         
+            try
+            {
+                List<Sesion> sesiones = EncontrarSesionesPorGrupoID(grupoID);
+                if (sesiones.Count > 0)
+                {                   
+                    sghContext.Sesions.RemoveRange(sesiones);
+                    sghContext.SaveChanges();
+                }                
+            }
+            catch (System.Data.Entity.Core.EntityException ex)
+            {
+                MessageBox.Show(ex.ToString());
+                log.Add(ex.ToString());
+            }            
         }
     }
 }
