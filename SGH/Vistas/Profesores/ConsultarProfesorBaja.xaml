@@ -1,0 +1,86 @@
+﻿<Window x:Class="SGH.Vistas.Profesores.ConsultarProfesorBaja"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SGH.Vistas.Profesores"
+        mc:Ignorable="d"
+        Title="ConsultarProfesorBaja" Height="700" Width="1000" WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Icon="/Recursos/Logo_sgh.png">
+    <Grid>
+
+        <Label Content="Datos Profesor" HorizontalAlignment="Left" Margin="444,62,0,0" VerticalAlignment="Top" FontSize="18" RenderTransformOrigin="0.649,2.117" FontWeight="Bold"/>
+
+        <Label Content="Profesor" HorizontalAlignment="Left" Margin="455,20,0,0" VerticalAlignment="Top"  FontWeight="Bold" FontSize="24"/>
+
+        <Label Content="Nombre:" HorizontalAlignment="Left" Margin="380,98,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <Label x:Name="lbNombre" HorizontalAlignment="Left" Margin="440,96,0,0" VerticalAlignment="Top" FontSize="13"  Width="152" Height="26"/>
+
+        <Label Content="Apellido&#xA;Paterno:" HorizontalAlignment="Left" Margin="378,140,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <Label x:Name="lbApellidoP" HorizontalAlignment="Left" Margin="438,148,0,0" VerticalAlignment="Top" Width="152" Height="24" FontSize="13"/>
+
+        <Label Content="Apellido&#xA;Materno:" HorizontalAlignment="Left" Margin="378,192,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <Label x:Name="lbApellidoM" HorizontalAlignment="Left" Margin="440,200,0,0" VerticalAlignment="Top" Width="152" Height="24" FontSize="13"/>
+
+        <Label Content="Tipo de&#xA;Sangre:" HorizontalAlignment="Left" Margin="610,192,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <Label x:Name="lbTipoSangre" HorizontalAlignment="Left" Margin="670,200,0,0" VerticalAlignment="Top" Width="74" Height="24" FontSize="13"/>
+
+        <Label Content="Carrera:" HorizontalAlignment="Left" Margin="614,148,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <Label x:Name="lbCarrera" HorizontalAlignment="Left" Margin="668,146,0,0" VerticalAlignment="Top" Width="152" Height="26" FontSize="13"/>
+
+        <Label Content="CURP:" HorizontalAlignment="Left" Margin="614,98,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <Label x:Name="lbCURP" HorizontalAlignment="Left" Margin="668,96,0,0" VerticalAlignment="Top" Width="186" Height="26" FontSize="13"/>
+
+        <Label Content="Titulo:" HorizontalAlignment="Left" Margin="192,259,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <TextBlock x:Name="tbNombreTitulo" HorizontalAlignment="Left" Margin="308,252,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="100" Height="32" FontSize="10" TextDecorations="Underline" Foreground="Chocolate" MouseLeftButtonDown="clickAbrirArchivoTitulo"/>
+        <Image Source="/Recursos/img_PDF.png" HorizontalAlignment="Left" Height="35" Margin="254,247,0,0" VerticalAlignment="Top" Width="36"/>
+
+        <Label Content="Contrato:" HorizontalAlignment="Left" Margin="426,258,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <TextBlock x:Name="tbNombreContrato" HorizontalAlignment="Left" Margin="538,252,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="104" Height="32" FontSize="10" TextDecorations="Underline" Foreground="Chocolate" MouseLeftButtonDown="clickAbrirArchivoContrato"/>
+        <Image Source="/Recursos/img_PDF.png" HorizontalAlignment="Left" Height="36" Margin="492,252,0,0" VerticalAlignment="Top" Width="36"/>
+
+        <Label Content="Acta de Na-&#xA;cimiento:" HorizontalAlignment="Left" Margin="258,312,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <TextBlock x:Name="tbNombreActa" HorizontalAlignment="Left" Margin="376,310,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="96" Height="32" FontSize="10" TextDecorations="Underline" Foreground="Chocolate" MouseLeftButtonDown="clickAbrirArchivoActaNacimiento"/>
+        <Image Source="/Recursos/img_PDF.png" HorizontalAlignment="Left" Height="35" Margin="330,314,0,0" VerticalAlignment="Top" Width="36"/>
+
+        <Label Content="INE:" HorizontalAlignment="Left" Margin="489,314,0,0" VerticalAlignment="Top"/>
+        <TextBlock x:Name="tbNombreINE" HorizontalAlignment="Left" Margin="602,306,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="98" Height="32" FontSize="10" TextDecorations="Underline" Foreground="Chocolate" MouseLeftButtonDown="clickAbrirArchivoINE"/>
+        <Image Source="/Recursos/img_PDF.png" HorizontalAlignment="Left" Height="36" Margin="558,308,0,0" VerticalAlignment="Top" Width="34"/>
+
+        <Label Content="CURP Doc-&#xA;umento:" HorizontalAlignment="Left" Margin="644,253,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <TextBlock x:Name="tbNombreCURP" HorizontalAlignment="Left" Margin="760,251,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="96" Height="32" FontSize="10" TextDecorations="Underline" Foreground="Chocolate" MouseLeftButtonDown="clickAbrirArchivoCURPDoc"/>
+        <Image Source="/Recursos/img_PDF.png" HorizontalAlignment="Left" Height="34" Margin="710,253,0,0" VerticalAlignment="Top" Width="34"/>
+
+        <Label Content="Foto:" HorizontalAlignment="Left" Margin="182,98,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <Image x:Name="imgFoto" Source="/Recursos/imagen_persona.png" HorizontalAlignment="Left" Height="145" Margin="224,91,0,0" VerticalAlignment="Top" Width="146" Stretch="UniformToFill"/>
+        <TextBlock x:Name="tbNombreFoto" HorizontalAlignment="Left" Margin="241,68,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="134" Height="14" FontSize="10" Foreground="#fafbfb"/>
+
+        <Button Content="Cancelar Baja" HorizontalAlignment="Left" Margin="188,626,0,0" VerticalAlignment="Top" Width="640" Background="#6D1814" BorderBrush="#6D1814" Click="ClickCancelarBaja"/>
+
+        <Button Background="#fafbfb" BorderBrush="#fafbfb" HorizontalAlignment="Left" Margin="184,24,0,0" VerticalAlignment="Top" Width="50" Height="50" Padding="1" Click="ClickRetroceder" >
+            <Image Source="/Recursos/retroceder.png" Width="48" Height="48"></Image>
+        </Button>
+
+        <Label Content="Datos de la Baja" HorizontalAlignment="Center" Margin="0,373,0,0" VerticalAlignment="Top" FontSize="18" RenderTransformOrigin="0.649,2.117" FontWeight="Bold"/>
+        <Label Content="Motivo:" HorizontalAlignment="Left" Margin="201,420,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <Label x:Name="lbMotivo" HorizontalAlignment="Left" Margin="259,418,0,0" VerticalAlignment="Top" Width="152" Height="24" FontSize="13"/>
+
+        <Label Content="Descripción detallada del motivo:" HorizontalAlignment="Left" Margin="201,462,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <TextBox x:Name="tbDescripcion" TextWrapping="Wrap" MinWidth="280" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Text="" BorderBrush="#382322" Margin="205,489,476,85" IsReadOnly="True"/>
+
+        <Label Content="Documento Probatorio" HorizontalAlignment="Left" Margin="658,412,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <TextBlock x:Name="txbDocProbatorio" HorizontalAlignment="Left" Margin="671,568,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="113" Height="27" FontSize="10" TextDecorations="Underline" Foreground="Chocolate" MouseLeftButtonDown="clickAbrirArchivoDocProb" />
+        <Image Source="/Recursos/img_PDF.png" HorizontalAlignment="Left" Height="90" Margin="682,468,0,0" VerticalAlignment="Top" Width="79" RenderTransformOrigin="0.543,0.644"/>
+
+
+
+    </Grid>
+</Window>

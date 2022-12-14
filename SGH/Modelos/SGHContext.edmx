@@ -1,0 +1,1288 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SGHModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Administrador">
+          <Key>
+            <PropertyRef Name="RFC" />
+          </Key>
+          <Property Name="RFC" Type="varchar" MaxLength="13" Nullable="false" />
+          <Property Name="NombreCompleto" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Contrasenia" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Telefono" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Correo" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Rol" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Clave_Escuela" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Baja">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Motivo" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="DocumentoProbatorio" Type="varbinary(max)" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ID_Persona" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Calificacion">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CantidadParciales" Type="int" Nullable="false" />
+          <Property Name="EvalFinal" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="PromedioParcial" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="PromedioFinal" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="NRC_Materia" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Matricula_Estudiante" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Calificacion_Parcial">
+          <Key>
+            <PropertyRef Name="ID_Calificacion_Parcial" />
+          </Key>
+          <Property Name="ID_Calificacion_Parcial" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ID_Cali" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CaliParcial" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Parcial" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Escuela">
+          <Key>
+            <PropertyRef Name="Clave" />
+          </Key>
+          <Property Name="Clave" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Direccion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Estudiante">
+          <Key>
+            <PropertyRef Name="Matricula" />
+          </Key>
+          <Property Name="Matricula" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="NumSeguroSocial" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DocCurpTutor" Type="varbinary(max)" Nullable="false" />
+          <Property Name="DocCertificadoSecundaria" Type="varbinary(max)" Nullable="false" />
+          <Property Name="DocCartaBuenaConducta" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ID_Persona" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ID_Grupo" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Grupo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Semestre" Type="int" Nullable="false" />
+          <Property Name="Letra" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Grupo_Salon">
+          <Key>
+            <PropertyRef Name="ID_Grupo_Salon" />
+          </Key>
+          <Property Name="ID_Grupo_Salon" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ID_Grupo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Codigo_Salon" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Materia">
+          <Key>
+            <PropertyRef Name="NRC" />
+          </Key>
+          <Property Name="NRC" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="NumSesiones" Type="int" Nullable="false" />
+          <Property Name="Semestre" Type="int" Nullable="false" />
+          <Property Name="Color" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Materia_Sesion">
+          <Key>
+            <PropertyRef Name="ID_Materia_Sesion" />
+          </Key>
+          <Property Name="ID_Materia_Sesion" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ID_Profesor_Materia" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ID_Sesion" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PeriodoEscolar">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AnioFinal" Type="int" Nullable="false" />
+          <Property Name="AnioInicio" Type="int" Nullable="false" />
+          <Property Name="MesFinal" Type="int" Nullable="false" />
+          <Property Name="MesInicio" Type="int" Nullable="false" />
+          <Property Name="Clave_Escuela" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PeriodoEscolar_Semestre">
+          <Key>
+            <PropertyRef Name="ID_Periodo_Semestre" />
+          </Key>
+          <Property Name="ID_Periodo_Semestre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ID_PeriodoEscolar" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Semestre" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Persona">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ActaNacimiento" Type="varbinary(max)" />
+          <Property Name="ApellidoPaterno" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ApellidoMaterno" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Curp" Type="varchar" MaxLength="18" Nullable="false" />
+          <Property Name="DocCurp" Type="varbinary(max)" />
+          <Property Name="Estado" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Foto" Type="image" />
+          <Property Name="TipoSangre" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Clave_Escuela" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Profesor">
+          <Key>
+            <PropertyRef Name="RFC" />
+          </Key>
+          <Property Name="RFC" Type="varchar" MaxLength="13" Nullable="false" />
+          <Property Name="Titulo" Type="varbinary(max)" />
+          <Property Name="Carrera" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="INE" Type="varbinary(max)" />
+          <Property Name="DocContrato" Type="varbinary(max)" />
+          <Property Name="ID_Persona" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Profesor_Materia">
+          <Key>
+            <PropertyRef Name="ID_Profesor_Materia" />
+          </Key>
+          <Property Name="ID_Profesor_Materia" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="RFC_Profesor" Type="varchar" MaxLength="13" Nullable="false" />
+          <Property Name="NRC_Materia" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Salon">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Cupo" Type="int" Nullable="false" />
+          <Property Name="Estado" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sesion">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DiaSemana" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="HoraFinal" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="HoraInicio" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ID_Grupo" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Administrador_Escuela">
+          <End Role="Escuela" Type="Self.Escuela" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Administrador" Type="Self.Administrador" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Escuela">
+              <PropertyRef Name="Clave" />
+            </Principal>
+            <Dependent Role="Administrador">
+              <PropertyRef Name="Clave_Escuela" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Baja_Persona">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Baja" Type="Self.Baja" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Baja">
+              <PropertyRef Name="ID_Persona" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Calificacion_Estudiante">
+          <End Role="Estudiante" Type="Self.Estudiante" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Calificacion" Type="Self.Calificacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estudiante">
+              <PropertyRef Name="Matricula" />
+            </Principal>
+            <Dependent Role="Calificacion">
+              <PropertyRef Name="Matricula_Estudiante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Calificacion_Materia">
+          <End Role="Materia" Type="Self.Materia" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Calificacion" Type="Self.Calificacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Materia">
+              <PropertyRef Name="NRC" />
+            </Principal>
+            <Dependent Role="Calificacion">
+              <PropertyRef Name="NRC_Materia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Calificacion_Parcial_Calificacion">
+          <End Role="Calificacion" Type="Self.Calificacion" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Calificacion_Parcial" Type="Self.Calificacion_Parcial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Calificacion">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Calificacion_Parcial">
+              <PropertyRef Name="ID_Cali" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Estudiante_Grupo">
+          <End Role="Grupo" Type="Self.Grupo" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Estudiante" Type="Self.Estudiante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grupo">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Estudiante">
+              <PropertyRef Name="ID_Grupo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Estudiante_Persona">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Estudiante" Type="Self.Estudiante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Estudiante">
+              <PropertyRef Name="ID_Persona" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Grupo_Salon_Grupo">
+          <End Role="Grupo" Type="Self.Grupo" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Grupo_Salon" Type="Self.Grupo_Salon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grupo">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Grupo_Salon">
+              <PropertyRef Name="ID_Grupo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Grupo_Salon_Salon">
+          <End Role="Salon" Type="Self.Salon" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Grupo_Salon" Type="Self.Grupo_Salon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Salon">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Grupo_Salon">
+              <PropertyRef Name="Codigo_Salon" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Materia_Sesion_Materia">
+          <End Role="Profesor_Materia" Type="Self.Profesor_Materia" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Materia_Sesion" Type="Self.Materia_Sesion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profesor_Materia">
+              <PropertyRef Name="ID_Profesor_Materia" />
+            </Principal>
+            <Dependent Role="Materia_Sesion">
+              <PropertyRef Name="ID_Profesor_Materia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Materia_Sesion_Sesion">
+          <End Role="Sesion" Type="Self.Sesion" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Materia_Sesion" Type="Self.Materia_Sesion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sesion">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Materia_Sesion">
+              <PropertyRef Name="ID_Sesion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PeriodoEscolar_Escuela">
+          <End Role="Escuela" Type="Self.Escuela" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PeriodoEscolar" Type="Self.PeriodoEscolar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Escuela">
+              <PropertyRef Name="Clave" />
+            </Principal>
+            <Dependent Role="PeriodoEscolar">
+              <PropertyRef Name="Clave_Escuela" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PeriodoEscolar_Semestre_PeriodoEscolar">
+          <End Role="PeriodoEscolar" Type="Self.PeriodoEscolar" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PeriodoEscolar_Semestre" Type="Self.PeriodoEscolar_Semestre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PeriodoEscolar">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PeriodoEscolar_Semestre">
+              <PropertyRef Name="ID_PeriodoEscolar" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Persona_Escuela">
+          <End Role="Escuela" Type="Self.Escuela" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Persona" Type="Self.Persona" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Escuela">
+              <PropertyRef Name="Clave" />
+            </Principal>
+            <Dependent Role="Persona">
+              <PropertyRef Name="Clave_Escuela" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Profesor_Materia_Materia">
+          <End Role="Materia" Type="Self.Materia" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Profesor_Materia" Type="Self.Profesor_Materia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Materia">
+              <PropertyRef Name="NRC" />
+            </Principal>
+            <Dependent Role="Profesor_Materia">
+              <PropertyRef Name="NRC_Materia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Profesor_Materia_Profesor">
+          <End Role="Profesor" Type="Self.Profesor" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Profesor_Materia" Type="Self.Profesor_Materia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profesor">
+              <PropertyRef Name="RFC" />
+            </Principal>
+            <Dependent Role="Profesor_Materia">
+              <PropertyRef Name="RFC_Profesor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Profesor_Profesor">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Profesor" Type="Self.Profesor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Profesor">
+              <PropertyRef Name="ID_Persona" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sesion_Grupo">
+          <End Role="Grupo" Type="Self.Grupo" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Sesion" Type="Self.Sesion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grupo">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Sesion">
+              <PropertyRef Name="ID_Grupo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SGHModelStoreContainer">
+          <EntitySet Name="Administrador" EntityType="Self.Administrador" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Baja" EntityType="Self.Baja" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Calificacion" EntityType="Self.Calificacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Calificacion_Parcial" EntityType="Self.Calificacion_Parcial" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Escuela" EntityType="Self.Escuela" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Estudiante" EntityType="Self.Estudiante" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Grupo" EntityType="Self.Grupo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Grupo_Salon" EntityType="Self.Grupo_Salon" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Materia" EntityType="Self.Materia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Materia_Sesion" EntityType="Self.Materia_Sesion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PeriodoEscolar" EntityType="Self.PeriodoEscolar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PeriodoEscolar_Semestre" EntityType="Self.PeriodoEscolar_Semestre" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Persona" EntityType="Self.Persona" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Profesor" EntityType="Self.Profesor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Profesor_Materia" EntityType="Self.Profesor_Materia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Salon" EntityType="Self.Salon" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sesion" EntityType="Self.Sesion" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Administrador_Escuela" Association="Self.FK_Administrador_Escuela">
+            <End Role="Escuela" EntitySet="Escuela" />
+            <End Role="Administrador" EntitySet="Administrador" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Baja_Persona" Association="Self.FK_Baja_Persona">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Baja" EntitySet="Baja" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Calificacion_Estudiante" Association="Self.FK_Calificacion_Estudiante">
+            <End Role="Estudiante" EntitySet="Estudiante" />
+            <End Role="Calificacion" EntitySet="Calificacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Calificacion_Materia" Association="Self.FK_Calificacion_Materia">
+            <End Role="Materia" EntitySet="Materia" />
+            <End Role="Calificacion" EntitySet="Calificacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Calificacion_Parcial_Calificacion" Association="Self.FK_Calificacion_Parcial_Calificacion">
+            <End Role="Calificacion" EntitySet="Calificacion" />
+            <End Role="Calificacion_Parcial" EntitySet="Calificacion_Parcial" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Estudiante_Grupo" Association="Self.FK_Estudiante_Grupo">
+            <End Role="Grupo" EntitySet="Grupo" />
+            <End Role="Estudiante" EntitySet="Estudiante" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Estudiante_Persona" Association="Self.FK_Estudiante_Persona">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Estudiante" EntitySet="Estudiante" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Grupo_Salon_Grupo" Association="Self.FK_Grupo_Salon_Grupo">
+            <End Role="Grupo" EntitySet="Grupo" />
+            <End Role="Grupo_Salon" EntitySet="Grupo_Salon" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Grupo_Salon_Salon" Association="Self.FK_Grupo_Salon_Salon">
+            <End Role="Salon" EntitySet="Salon" />
+            <End Role="Grupo_Salon" EntitySet="Grupo_Salon" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Materia_Sesion_Materia" Association="Self.FK_Materia_Sesion_Materia">
+            <End Role="Profesor_Materia" EntitySet="Profesor_Materia" />
+            <End Role="Materia_Sesion" EntitySet="Materia_Sesion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Materia_Sesion_Sesion" Association="Self.FK_Materia_Sesion_Sesion">
+            <End Role="Sesion" EntitySet="Sesion" />
+            <End Role="Materia_Sesion" EntitySet="Materia_Sesion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PeriodoEscolar_Escuela" Association="Self.FK_PeriodoEscolar_Escuela">
+            <End Role="Escuela" EntitySet="Escuela" />
+            <End Role="PeriodoEscolar" EntitySet="PeriodoEscolar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PeriodoEscolar_Semestre_PeriodoEscolar" Association="Self.FK_PeriodoEscolar_Semestre_PeriodoEscolar">
+            <End Role="PeriodoEscolar" EntitySet="PeriodoEscolar" />
+            <End Role="PeriodoEscolar_Semestre" EntitySet="PeriodoEscolar_Semestre" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Persona_Escuela" Association="Self.FK_Persona_Escuela">
+            <End Role="Escuela" EntitySet="Escuela" />
+            <End Role="Persona" EntitySet="Persona" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Profesor_Materia_Materia" Association="Self.FK_Profesor_Materia_Materia">
+            <End Role="Materia" EntitySet="Materia" />
+            <End Role="Profesor_Materia" EntitySet="Profesor_Materia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Profesor_Materia_Profesor" Association="Self.FK_Profesor_Materia_Profesor">
+            <End Role="Profesor" EntitySet="Profesor" />
+            <End Role="Profesor_Materia" EntitySet="Profesor_Materia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Profesor_Profesor" Association="Self.FK_Profesor_Profesor">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Profesor" EntitySet="Profesor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sesion_Grupo" Association="Self.FK_Sesion_Grupo">
+            <End Role="Grupo" EntitySet="Grupo" />
+            <End Role="Sesion" EntitySet="Sesion" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SGHModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Administrador">
+          <Key>
+            <PropertyRef Name="RFC" />
+          </Key>
+          <Property Name="RFC" Type="String" MaxLength="13" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NombreCompleto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Contrasenia" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Telefono" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Correo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Rol" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Clave_Escuela" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Escuela" Relationship="Self.FK_Administrador_Escuela" FromRole="Administrador" ToRole="Escuela" />
+        </EntityType>
+        <EntityType Name="Baja">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Motivo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DocumentoProbatorio" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ID_Persona" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Persona" Relationship="Self.FK_Baja_Persona" FromRole="Baja" ToRole="Persona" />
+        </EntityType>
+        <EntityType Name="Calificacion">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CantidadParciales" Type="Int32" Nullable="false" />
+          <Property Name="EvalFinal" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="PromedioParcial" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="PromedioFinal" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="NRC_Materia" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Matricula_Estudiante" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Estudiante" Relationship="Self.FK_Calificacion_Estudiante" FromRole="Calificacion" ToRole="Estudiante" />
+          <NavigationProperty Name="Materia" Relationship="Self.FK_Calificacion_Materia" FromRole="Calificacion" ToRole="Materia" />
+          <NavigationProperty Name="Calificacion_Parcial" Relationship="Self.FK_Calificacion_Parcial_Calificacion" FromRole="Calificacion" ToRole="Calificacion_Parcial" />
+        </EntityType>
+        <EntityType Name="Calificacion_Parcial">
+          <Key>
+            <PropertyRef Name="ID_Calificacion_Parcial" />
+          </Key>
+          <Property Name="ID_Calificacion_Parcial" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ID_Cali" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CaliParcial" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Parcial" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Calificacion" Relationship="Self.FK_Calificacion_Parcial_Calificacion" FromRole="Calificacion_Parcial" ToRole="Calificacion" />
+        </EntityType>
+        <EntityType Name="Escuela">
+          <Key>
+            <PropertyRef Name="Clave" />
+          </Key>
+          <Property Name="Clave" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Administradors" Relationship="Self.FK_Administrador_Escuela" FromRole="Escuela" ToRole="Administrador" />
+          <NavigationProperty Name="PeriodoEscolars" Relationship="Self.FK_PeriodoEscolar_Escuela" FromRole="Escuela" ToRole="PeriodoEscolar" />
+          <NavigationProperty Name="Personas" Relationship="Self.FK_Persona_Escuela" FromRole="Escuela" ToRole="Persona" />
+        </EntityType>
+        <EntityType Name="Estudiante">
+          <Key>
+            <PropertyRef Name="Matricula" />
+          </Key>
+          <Property Name="Matricula" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NumSeguroSocial" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DocCurpTutor" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="DocCertificadoSecundaria" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="DocCartaBuenaConducta" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="ID_Persona" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ID_Grupo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Calificacions" Relationship="Self.FK_Calificacion_Estudiante" FromRole="Estudiante" ToRole="Calificacion" />
+          <NavigationProperty Name="Grupo" Relationship="Self.FK_Estudiante_Grupo" FromRole="Estudiante" ToRole="Grupo" />
+          <NavigationProperty Name="Persona" Relationship="Self.FK_Estudiante_Persona" FromRole="Estudiante" ToRole="Persona" />
+        </EntityType>
+        <EntityType Name="Grupo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Semestre" Type="Int32" Nullable="false" />
+          <Property Name="Letra" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Estudiantes" Relationship="Self.FK_Estudiante_Grupo" FromRole="Grupo" ToRole="Estudiante" />
+          <NavigationProperty Name="Grupo_Salon" Relationship="Self.FK_Grupo_Salon_Grupo" FromRole="Grupo" ToRole="Grupo_Salon" />
+          <NavigationProperty Name="Sesions" Relationship="Self.FK_Sesion_Grupo" FromRole="Grupo" ToRole="Sesion" />
+        </EntityType>
+        <EntityType Name="Grupo_Salon">
+          <Key>
+            <PropertyRef Name="ID_Grupo_Salon" />
+          </Key>
+          <Property Name="ID_Grupo_Salon" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ID_Grupo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Codigo_Salon" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Grupo" Relationship="Self.FK_Grupo_Salon_Grupo" FromRole="Grupo_Salon" ToRole="Grupo" />
+          <NavigationProperty Name="Salon" Relationship="Self.FK_Grupo_Salon_Salon" FromRole="Grupo_Salon" ToRole="Salon" />
+        </EntityType>
+        <EntityType Name="Materia">
+          <Key>
+            <PropertyRef Name="NRC" />
+          </Key>
+          <Property Name="NRC" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NumSesiones" Type="Int32" Nullable="false" />
+          <Property Name="Semestre" Type="Int32" Nullable="false" />
+          <Property Name="Color" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Calificacions" Relationship="Self.FK_Calificacion_Materia" FromRole="Materia" ToRole="Calificacion" />
+          <NavigationProperty Name="Profesor_Materia" Relationship="Self.FK_Profesor_Materia_Materia" FromRole="Materia" ToRole="Profesor_Materia" />
+        </EntityType>
+        <EntityType Name="Materia_Sesion">
+          <Key>
+            <PropertyRef Name="ID_Materia_Sesion" />
+          </Key>
+          <Property Name="ID_Materia_Sesion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ID_Profesor_Materia" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ID_Sesion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Profesor_Materia" Relationship="Self.FK_Materia_Sesion_Materia" FromRole="Materia_Sesion" ToRole="Profesor_Materia" />
+          <NavigationProperty Name="Sesion" Relationship="Self.FK_Materia_Sesion_Sesion" FromRole="Materia_Sesion" ToRole="Sesion" />
+        </EntityType>
+        <EntityType Name="PeriodoEscolar">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AnioFinal" Type="Int32" Nullable="false" />
+          <Property Name="AnioInicio" Type="Int32" Nullable="false" />
+          <Property Name="MesFinal" Type="Int32" Nullable="false" />
+          <Property Name="MesInicio" Type="Int32" Nullable="false" />
+          <Property Name="Clave_Escuela" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Escuela" Relationship="Self.FK_PeriodoEscolar_Escuela" FromRole="PeriodoEscolar" ToRole="Escuela" />
+          <NavigationProperty Name="PeriodoEscolar_Semestre" Relationship="Self.FK_PeriodoEscolar_Semestre_PeriodoEscolar" FromRole="PeriodoEscolar" ToRole="PeriodoEscolar_Semestre" />
+        </EntityType>
+        <EntityType Name="PeriodoEscolar_Semestre">
+          <Key>
+            <PropertyRef Name="ID_Periodo_Semestre" />
+          </Key>
+          <Property Name="ID_Periodo_Semestre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ID_PeriodoEscolar" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Semestre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="PeriodoEscolar" Relationship="Self.FK_PeriodoEscolar_Semestre_PeriodoEscolar" FromRole="PeriodoEscolar_Semestre" ToRole="PeriodoEscolar" />
+        </EntityType>
+        <EntityType Name="Persona">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ActaNacimiento" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="ApellidoPaterno" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ApellidoMaterno" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Curp" Type="String" MaxLength="18" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DocCurp" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Estado" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Foto" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="TipoSangre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Clave_Escuela" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Bajas" Relationship="Self.FK_Baja_Persona" FromRole="Persona" ToRole="Baja" />
+          <NavigationProperty Name="Escuela" Relationship="Self.FK_Persona_Escuela" FromRole="Persona" ToRole="Escuela" />
+          <NavigationProperty Name="Estudiantes" Relationship="Self.FK_Estudiante_Persona" FromRole="Persona" ToRole="Estudiante" />
+          <NavigationProperty Name="Profesors" Relationship="Self.FK_Profesor_Profesor" FromRole="Persona" ToRole="Profesor" />
+        </EntityType>
+        <EntityType Name="Profesor">
+          <Key>
+            <PropertyRef Name="RFC" />
+          </Key>
+          <Property Name="RFC" Type="String" MaxLength="13" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Titulo" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Carrera" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="INE" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="DocContrato" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="ID_Persona" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Persona" Relationship="Self.FK_Profesor_Profesor" FromRole="Profesor" ToRole="Persona" />
+          <NavigationProperty Name="Profesor_Materia" Relationship="Self.FK_Profesor_Materia_Profesor" FromRole="Profesor" ToRole="Profesor_Materia" />
+        </EntityType>
+        <EntityType Name="Profesor_Materia">
+          <Key>
+            <PropertyRef Name="ID_Profesor_Materia" />
+          </Key>
+          <Property Name="ID_Profesor_Materia" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RFC_Profesor" Type="String" MaxLength="13" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NRC_Materia" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Materia" Relationship="Self.FK_Profesor_Materia_Materia" FromRole="Profesor_Materia" ToRole="Materia" />
+          <NavigationProperty Name="Materia_Sesion" Relationship="Self.FK_Materia_Sesion_Materia" FromRole="Profesor_Materia" ToRole="Materia_Sesion" />
+          <NavigationProperty Name="Profesor" Relationship="Self.FK_Profesor_Materia_Profesor" FromRole="Profesor_Materia" ToRole="Profesor" />
+        </EntityType>
+        <EntityType Name="Salon">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Cupo" Type="Int32" Nullable="false" />
+          <Property Name="Estado" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Grupo_Salon" Relationship="Self.FK_Grupo_Salon_Salon" FromRole="Salon" ToRole="Grupo_Salon" />
+        </EntityType>
+        <EntityType Name="Sesion">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DiaSemana" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="HoraFinal" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="HoraInicio" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ID_Grupo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Grupo" Relationship="Self.FK_Sesion_Grupo" FromRole="Sesion" ToRole="Grupo" />
+          <NavigationProperty Name="Materia_Sesion" Relationship="Self.FK_Materia_Sesion_Sesion" FromRole="Sesion" ToRole="Materia_Sesion" />
+        </EntityType>
+        <Association Name="FK_Administrador_Escuela">
+          <End Role="Escuela" Type="Self.Escuela" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Administrador" Type="Self.Administrador" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Escuela">
+              <PropertyRef Name="Clave" />
+            </Principal>
+            <Dependent Role="Administrador">
+              <PropertyRef Name="Clave_Escuela" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Baja_Persona">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Baja" Type="Self.Baja" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Baja">
+              <PropertyRef Name="ID_Persona" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Calificacion_Estudiante">
+          <End Role="Estudiante" Type="Self.Estudiante" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Calificacion" Type="Self.Calificacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estudiante">
+              <PropertyRef Name="Matricula" />
+            </Principal>
+            <Dependent Role="Calificacion">
+              <PropertyRef Name="Matricula_Estudiante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Calificacion_Materia">
+          <End Role="Materia" Type="Self.Materia" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Calificacion" Type="Self.Calificacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Materia">
+              <PropertyRef Name="NRC" />
+            </Principal>
+            <Dependent Role="Calificacion">
+              <PropertyRef Name="NRC_Materia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Calificacion_Parcial_Calificacion">
+          <End Role="Calificacion" Type="Self.Calificacion" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Calificacion_Parcial" Type="Self.Calificacion_Parcial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Calificacion">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Calificacion_Parcial">
+              <PropertyRef Name="ID_Cali" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PeriodoEscolar_Escuela">
+          <End Role="Escuela" Type="Self.Escuela" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PeriodoEscolar" Type="Self.PeriodoEscolar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Escuela">
+              <PropertyRef Name="Clave" />
+            </Principal>
+            <Dependent Role="PeriodoEscolar">
+              <PropertyRef Name="Clave_Escuela" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Persona_Escuela">
+          <End Role="Escuela" Type="Self.Escuela" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Persona" Type="Self.Persona" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Escuela">
+              <PropertyRef Name="Clave" />
+            </Principal>
+            <Dependent Role="Persona">
+              <PropertyRef Name="Clave_Escuela" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Estudiante_Grupo">
+          <End Role="Grupo" Type="Self.Grupo" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Estudiante" Type="Self.Estudiante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grupo">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Estudiante">
+              <PropertyRef Name="ID_Grupo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Estudiante_Persona">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Estudiante" Type="Self.Estudiante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Estudiante">
+              <PropertyRef Name="ID_Persona" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Grupo_Salon_Grupo">
+          <End Role="Grupo" Type="Self.Grupo" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Grupo_Salon" Type="Self.Grupo_Salon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grupo">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Grupo_Salon">
+              <PropertyRef Name="ID_Grupo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sesion_Grupo">
+          <End Role="Grupo" Type="Self.Grupo" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Sesion" Type="Self.Sesion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grupo">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Sesion">
+              <PropertyRef Name="ID_Grupo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Grupo_Salon_Salon">
+          <End Role="Salon" Type="Self.Salon" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Grupo_Salon" Type="Self.Grupo_Salon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Salon">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="Grupo_Salon">
+              <PropertyRef Name="Codigo_Salon" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Profesor_Materia_Materia">
+          <End Role="Materia" Type="Self.Materia" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Profesor_Materia" Type="Self.Profesor_Materia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Materia">
+              <PropertyRef Name="NRC" />
+            </Principal>
+            <Dependent Role="Profesor_Materia">
+              <PropertyRef Name="NRC_Materia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Materia_Sesion_Materia">
+          <End Role="Profesor_Materia" Type="Self.Profesor_Materia" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Materia_Sesion" Type="Self.Materia_Sesion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profesor_Materia">
+              <PropertyRef Name="ID_Profesor_Materia" />
+            </Principal>
+            <Dependent Role="Materia_Sesion">
+              <PropertyRef Name="ID_Profesor_Materia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Materia_Sesion_Sesion">
+          <End Role="Sesion" Type="Self.Sesion" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Materia_Sesion" Type="Self.Materia_Sesion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sesion">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Materia_Sesion">
+              <PropertyRef Name="ID_Sesion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PeriodoEscolar_Semestre_PeriodoEscolar">
+          <End Role="PeriodoEscolar" Type="Self.PeriodoEscolar" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PeriodoEscolar_Semestre" Type="Self.PeriodoEscolar_Semestre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PeriodoEscolar">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PeriodoEscolar_Semestre">
+              <PropertyRef Name="ID_PeriodoEscolar" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Profesor_Profesor">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Profesor" Type="Self.Profesor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Profesor">
+              <PropertyRef Name="ID_Persona" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Profesor_Materia_Profesor">
+          <End Role="Profesor" Type="Self.Profesor" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Profesor_Materia" Type="Self.Profesor_Materia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profesor">
+              <PropertyRef Name="RFC" />
+            </Principal>
+            <Dependent Role="Profesor_Materia">
+              <PropertyRef Name="RFC_Profesor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SGHContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Administradors" EntityType="Self.Administrador" />
+          <EntitySet Name="Bajas" EntityType="Self.Baja" />
+          <EntitySet Name="Calificacions" EntityType="Self.Calificacion" />
+          <EntitySet Name="Calificacion_Parcial" EntityType="Self.Calificacion_Parcial" />
+          <EntitySet Name="Escuelas" EntityType="Self.Escuela" />
+          <EntitySet Name="Estudiantes" EntityType="Self.Estudiante" />
+          <EntitySet Name="Grupoes" EntityType="Self.Grupo" />
+          <EntitySet Name="Grupo_Salon" EntityType="Self.Grupo_Salon" />
+          <EntitySet Name="Materias" EntityType="Self.Materia" />
+          <EntitySet Name="Materia_Sesion" EntityType="Self.Materia_Sesion" />
+          <EntitySet Name="PeriodoEscolars" EntityType="Self.PeriodoEscolar" />
+          <EntitySet Name="PeriodoEscolar_Semestre" EntityType="Self.PeriodoEscolar_Semestre" />
+          <EntitySet Name="Personas" EntityType="Self.Persona" />
+          <EntitySet Name="Profesors" EntityType="Self.Profesor" />
+          <EntitySet Name="Profesor_Materia" EntityType="Self.Profesor_Materia" />
+          <EntitySet Name="Salons" EntityType="Self.Salon" />
+          <EntitySet Name="Sesions" EntityType="Self.Sesion" />
+          <AssociationSet Name="FK_Administrador_Escuela" Association="Self.FK_Administrador_Escuela">
+            <End Role="Escuela" EntitySet="Escuelas" />
+            <End Role="Administrador" EntitySet="Administradors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Baja_Persona" Association="Self.FK_Baja_Persona">
+            <End Role="Persona" EntitySet="Personas" />
+            <End Role="Baja" EntitySet="Bajas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Calificacion_Estudiante" Association="Self.FK_Calificacion_Estudiante">
+            <End Role="Estudiante" EntitySet="Estudiantes" />
+            <End Role="Calificacion" EntitySet="Calificacions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Calificacion_Materia" Association="Self.FK_Calificacion_Materia">
+            <End Role="Materia" EntitySet="Materias" />
+            <End Role="Calificacion" EntitySet="Calificacions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Calificacion_Parcial_Calificacion" Association="Self.FK_Calificacion_Parcial_Calificacion">
+            <End Role="Calificacion" EntitySet="Calificacions" />
+            <End Role="Calificacion_Parcial" EntitySet="Calificacion_Parcial" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PeriodoEscolar_Escuela" Association="Self.FK_PeriodoEscolar_Escuela">
+            <End Role="Escuela" EntitySet="Escuelas" />
+            <End Role="PeriodoEscolar" EntitySet="PeriodoEscolars" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Persona_Escuela" Association="Self.FK_Persona_Escuela">
+            <End Role="Escuela" EntitySet="Escuelas" />
+            <End Role="Persona" EntitySet="Personas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Estudiante_Grupo" Association="Self.FK_Estudiante_Grupo">
+            <End Role="Grupo" EntitySet="Grupoes" />
+            <End Role="Estudiante" EntitySet="Estudiantes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Estudiante_Persona" Association="Self.FK_Estudiante_Persona">
+            <End Role="Persona" EntitySet="Personas" />
+            <End Role="Estudiante" EntitySet="Estudiantes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Grupo_Salon_Grupo" Association="Self.FK_Grupo_Salon_Grupo">
+            <End Role="Grupo" EntitySet="Grupoes" />
+            <End Role="Grupo_Salon" EntitySet="Grupo_Salon" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sesion_Grupo" Association="Self.FK_Sesion_Grupo">
+            <End Role="Grupo" EntitySet="Grupoes" />
+            <End Role="Sesion" EntitySet="Sesions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Grupo_Salon_Salon" Association="Self.FK_Grupo_Salon_Salon">
+            <End Role="Salon" EntitySet="Salons" />
+            <End Role="Grupo_Salon" EntitySet="Grupo_Salon" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Profesor_Materia_Materia" Association="Self.FK_Profesor_Materia_Materia">
+            <End Role="Materia" EntitySet="Materias" />
+            <End Role="Profesor_Materia" EntitySet="Profesor_Materia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Materia_Sesion_Materia" Association="Self.FK_Materia_Sesion_Materia">
+            <End Role="Profesor_Materia" EntitySet="Profesor_Materia" />
+            <End Role="Materia_Sesion" EntitySet="Materia_Sesion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Materia_Sesion_Sesion" Association="Self.FK_Materia_Sesion_Sesion">
+            <End Role="Sesion" EntitySet="Sesions" />
+            <End Role="Materia_Sesion" EntitySet="Materia_Sesion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PeriodoEscolar_Semestre_PeriodoEscolar" Association="Self.FK_PeriodoEscolar_Semestre_PeriodoEscolar">
+            <End Role="PeriodoEscolar" EntitySet="PeriodoEscolars" />
+            <End Role="PeriodoEscolar_Semestre" EntitySet="PeriodoEscolar_Semestre" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Profesor_Profesor" Association="Self.FK_Profesor_Profesor">
+            <End Role="Persona" EntitySet="Personas" />
+            <End Role="Profesor" EntitySet="Profesors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Profesor_Materia_Profesor" Association="Self.FK_Profesor_Materia_Profesor">
+            <End Role="Profesor" EntitySet="Profesors" />
+            <End Role="Profesor_Materia" EntitySet="Profesor_Materia" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SGHModelStoreContainer" CdmEntityContainer="SGHContext">
+          <EntitySetMapping Name="Administradors">
+            <EntityTypeMapping TypeName="SGHModel.Administrador">
+              <MappingFragment StoreEntitySet="Administrador">
+                <ScalarProperty Name="RFC" ColumnName="RFC" />
+                <ScalarProperty Name="NombreCompleto" ColumnName="NombreCompleto" />
+                <ScalarProperty Name="Contrasenia" ColumnName="Contrasenia" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="Rol" ColumnName="Rol" />
+                <ScalarProperty Name="Clave_Escuela" ColumnName="Clave_Escuela" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bajas">
+            <EntityTypeMapping TypeName="SGHModel.Baja">
+              <MappingFragment StoreEntitySet="Baja">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Motivo" ColumnName="Motivo" />
+                <ScalarProperty Name="DocumentoProbatorio" ColumnName="DocumentoProbatorio" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="ID_Persona" ColumnName="ID_Persona" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Calificacions">
+            <EntityTypeMapping TypeName="SGHModel.Calificacion">
+              <MappingFragment StoreEntitySet="Calificacion">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CantidadParciales" ColumnName="CantidadParciales" />
+                <ScalarProperty Name="EvalFinal" ColumnName="EvalFinal" />
+                <ScalarProperty Name="PromedioParcial" ColumnName="PromedioParcial" />
+                <ScalarProperty Name="PromedioFinal" ColumnName="PromedioFinal" />
+                <ScalarProperty Name="NRC_Materia" ColumnName="NRC_Materia" />
+                <ScalarProperty Name="Matricula_Estudiante" ColumnName="Matricula_Estudiante" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Calificacion_Parcial">
+            <EntityTypeMapping TypeName="SGHModel.Calificacion_Parcial">
+              <MappingFragment StoreEntitySet="Calificacion_Parcial">
+                <ScalarProperty Name="ID_Calificacion_Parcial" ColumnName="ID_Calificacion_Parcial" />
+                <ScalarProperty Name="ID_Cali" ColumnName="ID_Cali" />
+                <ScalarProperty Name="CaliParcial" ColumnName="CaliParcial" />
+                <ScalarProperty Name="Parcial" ColumnName="Parcial" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Escuelas">
+            <EntityTypeMapping TypeName="SGHModel.Escuela">
+              <MappingFragment StoreEntitySet="Escuela">
+                <ScalarProperty Name="Clave" ColumnName="Clave" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Estudiantes">
+            <EntityTypeMapping TypeName="SGHModel.Estudiante">
+              <MappingFragment StoreEntitySet="Estudiante">
+                <ScalarProperty Name="Matricula" ColumnName="Matricula" />
+                <ScalarProperty Name="NumSeguroSocial" ColumnName="NumSeguroSocial" />
+                <ScalarProperty Name="DocCurpTutor" ColumnName="DocCurpTutor" />
+                <ScalarProperty Name="DocCertificadoSecundaria" ColumnName="DocCertificadoSecundaria" />
+                <ScalarProperty Name="DocCartaBuenaConducta" ColumnName="DocCartaBuenaConducta" />
+                <ScalarProperty Name="ID_Persona" ColumnName="ID_Persona" />
+                <ScalarProperty Name="ID_Grupo" ColumnName="ID_Grupo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Grupoes">
+            <EntityTypeMapping TypeName="SGHModel.Grupo">
+              <MappingFragment StoreEntitySet="Grupo">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Semestre" ColumnName="Semestre" />
+                <ScalarProperty Name="Letra" ColumnName="Letra" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Grupo_Salon">
+            <EntityTypeMapping TypeName="SGHModel.Grupo_Salon">
+              <MappingFragment StoreEntitySet="Grupo_Salon">
+                <ScalarProperty Name="ID_Grupo_Salon" ColumnName="ID_Grupo_Salon" />
+                <ScalarProperty Name="ID_Grupo" ColumnName="ID_Grupo" />
+                <ScalarProperty Name="Codigo_Salon" ColumnName="Codigo_Salon" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Materias">
+            <EntityTypeMapping TypeName="SGHModel.Materia">
+              <MappingFragment StoreEntitySet="Materia">
+                <ScalarProperty Name="NRC" ColumnName="NRC" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="NumSesiones" ColumnName="NumSesiones" />
+                <ScalarProperty Name="Semestre" ColumnName="Semestre" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Materia_Sesion">
+            <EntityTypeMapping TypeName="SGHModel.Materia_Sesion">
+              <MappingFragment StoreEntitySet="Materia_Sesion">
+                <ScalarProperty Name="ID_Materia_Sesion" ColumnName="ID_Materia_Sesion" />
+                <ScalarProperty Name="ID_Profesor_Materia" ColumnName="ID_Profesor_Materia" />
+                <ScalarProperty Name="ID_Sesion" ColumnName="ID_Sesion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PeriodoEscolars">
+            <EntityTypeMapping TypeName="SGHModel.PeriodoEscolar">
+              <MappingFragment StoreEntitySet="PeriodoEscolar">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="AnioFinal" ColumnName="AnioFinal" />
+                <ScalarProperty Name="AnioInicio" ColumnName="AnioInicio" />
+                <ScalarProperty Name="MesFinal" ColumnName="MesFinal" />
+                <ScalarProperty Name="MesInicio" ColumnName="MesInicio" />
+                <ScalarProperty Name="Clave_Escuela" ColumnName="Clave_Escuela" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PeriodoEscolar_Semestre">
+            <EntityTypeMapping TypeName="SGHModel.PeriodoEscolar_Semestre">
+              <MappingFragment StoreEntitySet="PeriodoEscolar_Semestre">
+                <ScalarProperty Name="ID_Periodo_Semestre" ColumnName="ID_Periodo_Semestre" />
+                <ScalarProperty Name="ID_PeriodoEscolar" ColumnName="ID_PeriodoEscolar" />
+                <ScalarProperty Name="Semestre" ColumnName="Semestre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Personas">
+            <EntityTypeMapping TypeName="SGHModel.Persona">
+              <MappingFragment StoreEntitySet="Persona">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="ActaNacimiento" ColumnName="ActaNacimiento" />
+                <ScalarProperty Name="ApellidoPaterno" ColumnName="ApellidoPaterno" />
+                <ScalarProperty Name="ApellidoMaterno" ColumnName="ApellidoMaterno" />
+                <ScalarProperty Name="Curp" ColumnName="Curp" />
+                <ScalarProperty Name="DocCurp" ColumnName="DocCurp" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Foto" ColumnName="Foto" />
+                <ScalarProperty Name="TipoSangre" ColumnName="TipoSangre" />
+                <ScalarProperty Name="Clave_Escuela" ColumnName="Clave_Escuela" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Profesors">
+            <EntityTypeMapping TypeName="SGHModel.Profesor">
+              <MappingFragment StoreEntitySet="Profesor">
+                <ScalarProperty Name="RFC" ColumnName="RFC" />
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+                <ScalarProperty Name="Carrera" ColumnName="Carrera" />
+                <ScalarProperty Name="INE" ColumnName="INE" />
+                <ScalarProperty Name="DocContrato" ColumnName="DocContrato" />
+                <ScalarProperty Name="ID_Persona" ColumnName="ID_Persona" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Profesor_Materia">
+            <EntityTypeMapping TypeName="SGHModel.Profesor_Materia">
+              <MappingFragment StoreEntitySet="Profesor_Materia">
+                <ScalarProperty Name="ID_Profesor_Materia" ColumnName="ID_Profesor_Materia" />
+                <ScalarProperty Name="RFC_Profesor" ColumnName="RFC_Profesor" />
+                <ScalarProperty Name="NRC_Materia" ColumnName="NRC_Materia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Salons">
+            <EntityTypeMapping TypeName="SGHModel.Salon">
+              <MappingFragment StoreEntitySet="Salon">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Cupo" ColumnName="Cupo" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sesions">
+            <EntityTypeMapping TypeName="SGHModel.Sesion">
+              <MappingFragment StoreEntitySet="Sesion">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="DiaSemana" ColumnName="DiaSemana" />
+                <ScalarProperty Name="HoraFinal" ColumnName="HoraFinal" />
+                <ScalarProperty Name="HoraInicio" ColumnName="HoraInicio" />
+                <ScalarProperty Name="ID_Grupo" ColumnName="ID_Grupo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

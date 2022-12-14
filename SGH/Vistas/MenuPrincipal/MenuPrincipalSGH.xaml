@@ -1,0 +1,309 @@
+﻿<Window x:Class="SGH.Vistas.MenuPrincipal.MenuPrincipalSGH"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SGH.Vistas.MenuPrincipal"
+        xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+        mc:Ignorable="d"
+        Title="Menu Principal" Height="700" Width="1000" WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Icon="/Recursos/Logo_sgh.png">
+    <Grid>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,0,732,0">
+            <StackPanel>
+                <StackPanel.Background>
+                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                        <GradientStop Color="#6B4240" Offset="0.5" />
+                        <GradientStop Color="#B8726E" Offset="1" />
+                    </LinearGradientBrush>
+                </StackPanel.Background>
+
+                <ToggleButton x:Name="toggleAdministrador" Width="100" Height="100" Content="K" Foreground="white" FontSize="50"
+                          Background="#B8A6A5" Style="{StaticResource MaterialDesignActionToggleButton}" 
+                          IsEnabled="False" Margin="0 50 0 13" ToolTip="MaterialDesignActionToggleButton"  />
+
+                <TextBlock Name="textBlockAdministrador" FontFamily="Roboto" FontSize="17" VerticalAlignment="Center"
+                       HorizontalAlignment="Center" Text="Nombre usuario"
+                       Foreground="White" Margin="0 0 0 30"/>
+
+                <!--#region Horarios-->
+                <Expander x:Name="menuHorario" Background="Transparent" Foreground="white" BorderThickness=".3"
+                    HorizontalAlignment="Stretch" BorderBrush="#382322">
+                    <Expander.Header>
+
+                        <TextBlock FontFamily="Roboto" FontSize="17" VerticalAlignment="Center"
+                               FontWeight="Medium" HorizontalAlignment="Left">                        
+                        <Image Source="/Recursos/Calendar.png" Height="30" Margin="0 5 10 0" />                       
+                        <TextBlock Margin="0 -6 0 0">
+                            Horarios
+                        </TextBlock>
+                    </TextBlock>
+                    </Expander.Header>
+
+                    <StackPanel
+                    Orientation="Vertical"
+                    TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
+                    Margin="24,8,24,16">
+
+                        <Button x:Name="asignacionMateriasButton" FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
+                            Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
+                            BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                       
+                            Foreground="White" FontSize="14" Content="Asignación de Materias"
+                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Cursor="Hand"                                   
+                        />
+
+                        <Button FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
+                            Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
+                            BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                        
+                            Foreground="White" Content="Consulta de Horarios" FontSize="14" Click="ClickConsultaHorarios"
+                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                    
+                        />
+
+                        <Button x:Name="generarHorarioButton" FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
+                            Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
+                            BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                         
+                            Foreground="White" Content="Generación de Horarios" FontSize="14" Click="ClickGeneracionHorarios"
+                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                   
+                        />
+
+                    </StackPanel>
+                </Expander>
+                <!--#endregion-->
+
+                <!--#region Grupos-->
+                <Expander x:Name="menuGrupos" Background="Transparent" Foreground="white" BorderThickness=".3"
+                    HorizontalAlignment="Stretch" BorderBrush="#382322" >
+                    <Expander.Header>
+
+                        <TextBlock FontFamily="Roboto" FontSize="17" VerticalAlignment="Center"
+                               FontWeight="Medium" HorizontalAlignment="Left">                        
+                        <Image Source="/Recursos/Group.png" Height="30" Margin="0 5 10 0" />                       
+                        <TextBlock Margin="0 -6 0 0">
+                            Grupos
+                        </TextBlock>
+                    </TextBlock>
+                    </Expander.Header>
+
+                    <StackPanel
+                    Orientation="Vertical"
+                    TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
+                    Margin="24,8,24,16">
+
+                        <Button x:Name="consultarGruposButton" FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
+                            Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
+                            BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                       
+                            Foreground="White" FontSize="14" Content="Consultar Grupos" Click="ClickConsultarGrupos"
+                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                   
+                        />
+
+                        <Button x:Name="agregarGruposButton" FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
+                            Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
+                            BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                       
+                            Foreground="White" FontSize="14" Content="Generación de Grupos" Click="ClickAgregarGrupos"
+                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                   
+                        />
+
+                        <Button x:Name="eliminarGruposButton" FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
+                            Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
+                            BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                       
+                            Foreground="White" FontSize="14" Content="Eliminar Grupos" Click="ClickEliminarGrupos"
+                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                   
+                        />
+
+                        <Button x:Name="crearPeriodoEscolarButton" FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
+                            Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
+                            BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                         
+                            Foreground="White" Content="Crear Periodo Escolar" FontSize="14"
+                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                   
+                        />
+                    </StackPanel>
+                </Expander>
+                <!--#endregion-->
+
+                <!--#region Profesores-->
+                <Expander x:Name="menuProfesores" Background="Transparent" Foreground="white" BorderThickness=".3"
+                    HorizontalAlignment="Stretch" BorderBrush="#382322" >
+                    <Expander.Header>
+
+                        <TextBlock FontFamily="Roboto" FontSize="17" VerticalAlignment="Center"
+                               FontWeight="Medium" HorizontalAlignment="Left">                        
+                        <Image Source="/Recursos/Teacher.png" Height="30" Margin="0 5 10 0" />                       
+                        <TextBlock Margin="0 -6 0 0">
+                            Profesores
+                        </TextBlock>
+                    </TextBlock>
+                    </Expander.Header>
+
+                    <StackPanel
+                    Orientation="Vertical"
+                    TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
+                    Margin="24,8,24,16">
+
+                        <Button FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
+                            Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
+                            BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                       
+                            Foreground="White" FontSize="14" Content="Consultar Profesores"
+                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Click="ClickConsultarProfesores" Cursor="Hand"                                   
+                        />
+
+                        <Button FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
+                            Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
+                            BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                        
+                            Foreground="White" Content="Registrar Profesor" FontSize="14"
+                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Click="ClickRegistrarProfesor"                                   
+                        />
+                    </StackPanel>
+                </Expander>
+                <!--#endregion-->
+
+                <!--#region Estudiantes-->
+                <Expander x:Name="menuEstudiantes" Background="Transparent" Foreground="white" BorderThickness=".3"
+                    HorizontalAlignment="Stretch" BorderBrush="#382322" >
+                    <Expander.Header>
+
+                        <TextBlock FontFamily="Roboto" FontSize="17" VerticalAlignment="Center"
+                               FontWeight="Medium" HorizontalAlignment="Left">                        
+                        <Image Source="/Recursos/Cap.png" Height="30" Margin="0 5 10 0" />                       
+                        <TextBlock Margin="0 -6 0 0">
+                            Estudiantes
+                        </TextBlock>
+                    </TextBlock>
+                    </Expander.Header>
+
+                    <StackPanel
+                    Orientation="Vertical"
+                    TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
+                    Margin="24,8,24,16">
+
+                        <Button FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
+                            Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
+                            BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                       
+                            Foreground="White" FontSize="14" Content="Consultar Estudiantes"
+                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Click="clickConsultarEstudiantes"                                   
+                        />
+
+                        <Button FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
+                            Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
+                            BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                        
+                            Foreground="White" Content="Registrar Estudiante" FontSize="14"
+                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Click="clickRegistrarEstudiante"                                   
+                        />
+                    </StackPanel>
+                </Expander>
+                <!--#endregion-->
+
+                <!--#region Plan de estudios-->
+                <Expander x:Name="menuPlanEstudio" Background="Transparent" Foreground="white" BorderThickness=".3"
+                    HorizontalAlignment="Stretch" BorderBrush="#382322" Visibility="Collapsed" >
+                    <Expander.Header>
+
+                        <TextBlock FontFamily="Roboto" FontSize="17" VerticalAlignment="Center"
+                               FontWeight="Medium" HorizontalAlignment="Left">                        
+                        <Image Source="/Recursos/Open-book.png" Height="30" Margin="0 5 10 0" />                       
+                        <TextBlock Margin="0 -6 0 0">
+                            Plan de estudios
+                        </TextBlock>
+                    </TextBlock>
+                    </Expander.Header>
+
+                    <StackPanel
+                    Orientation="Vertical"
+                    TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
+                    Margin="24,8,24,16">
+
+                        <Button FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
+                            Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
+                            BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                       
+                            Foreground="White" FontSize="14" Content="Consultar Plan de Estudios"
+                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                   
+                        />
+
+                        <Button FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
+                            Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
+                            BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                        
+                            Foreground="White" Content="Registrar Plan de Estudios" FontSize="14"
+                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                   
+                        />
+
+                        <Button FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
+                            Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
+                            BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                         
+                            Foreground="White" Content="Eliminar Plan de Estudios" FontSize="14"
+                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"                                   
+                        />
+
+                    </StackPanel>
+                </Expander>
+                <!--#endregion-->
+
+                <!--#region Calificaciones-->
+                <Expander x:Name="menuCalificaciones" Background="Transparent" Foreground="white" BorderThickness=".3"
+                    HorizontalAlignment="Stretch" BorderBrush="#382322">
+                    <Expander.Header>
+
+                        <TextBlock FontFamily="Roboto" FontSize="17" VerticalAlignment="Center"
+                               FontWeight="Medium" HorizontalAlignment="Left">                        
+                        <Image Source="/Recursos/Score.png" Height="30" Margin="0 5 10 0" />                       
+                        <TextBlock Margin="0 -6 0 0">
+                            Calificaciones
+                        </TextBlock>
+                    </TextBlock>
+                    </Expander.Header>
+
+                    <StackPanel
+                    Orientation="Vertical"
+                    TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
+                    Margin="24,8,24,16">
+
+                        <Button FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
+                            Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
+                            BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                       
+                            Foreground="White" FontSize="14" Content="De un estudiante" 
+                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Click="ClickCalificacionesEstudiante"                                   
+                        />
+
+                        <Button FontFamily="Roboto" Margin="0 0 0 10" HorizontalAlignment="Left"
+                            Style="{StaticResource MaterialDesignFlatLightButton}" Width="200" FontWeight="Normal"
+                            BorderThickness="0 0 0 1" BorderBrush="#B8A6A5" HorizontalContentAlignment="Left"                                                        
+                            Foreground="White" Content="De un grupo" FontSize="14"
+                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Click="ClickCalificacionesGrupo"                                   
+                        />
+
+                    </StackPanel>
+                </Expander>
+                <!--#endregion-->
+
+                <!--#region Salir-->
+                <Button
+                    Style="{StaticResource MaterialDesignFlatLightButton}"                    
+                    Foreground="White" FontWeight="Normal"
+                    HorizontalContentAlignment="Left" Height="55" BorderBrush="#382322" BorderThickness="0 0 0 .3"
+                    IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Click="LogOut">
+
+                    <TextBlock FontFamily="Roboto" FontSize="17" VerticalAlignment="Center"
+                               FontWeight="Medium" HorizontalAlignment="Left">                        
+                        <Image Source="/Recursos/Logout.png" Height="30" Margin="10 5 10 0" />                       
+                        <TextBlock Margin="0 -6 0 0">
+                            Salir
+                        </TextBlock>
+                    </TextBlock>
+                </Button>
+                <!--#endregion-->
+
+            </StackPanel>
+        </ScrollViewer>
+        <Label Content="Bienvenido" HorizontalAlignment="Left" Margin="381,0,0,0" VerticalAlignment="Center" FontSize="100" FontWeight="Bold"/>
+
+
+    </Grid>
+</Window>
+    

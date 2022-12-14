@@ -1,0 +1,49 @@
+﻿<Window x:Class="SGH.Vistas.Estudiantes.Estudiantes"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SGH.Vistas.Estudiantes"
+        mc:Ignorable="d"
+        Title="Estudiantes" Height="700" Width="1000" WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Icon="/Recursos/Logo_sgh.png">
+    <Grid>
+
+        <Label  Content="Estudiantes" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" FontSize="24" Margin="438,10,0,0"/>
+        <Label  Content="Estado" HorizontalAlignment="Left" Margin="369,103,0,0" VerticalAlignment="Top" FontSize="15"/>
+        <ComboBox x:Name="cbEstado" HorizontalAlignment="Left" Margin="429,102,0,0" VerticalAlignment="Top" Width="72">
+            <ComboBoxItem Content="Activo"/>
+            <ComboBoxItem Content="Baja"/>
+        </ComboBox>
+        <TextBox x:Name="txbBuscador" HorizontalAlignment="Left" Margin="196,170,0,0" TextWrapping="Wrap" Text="Buscar por nombre o matricula" VerticalAlignment="Top" Width="535" MouseDown="clickEnBuscador"/>
+        <DataGrid x:Name="dgEstudiantes" Margin="192,222,162,79" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" ItemsSource="{Binding DatosTabla}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Nombre Completo" Width="*" Binding="{Binding NombreCompleto}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Matricula" Width="*" Binding="{Binding Matricula}"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button x:Name="btnAgregar" Content="Agregar" HorizontalAlignment="Left" Margin="740,624,0,0" VerticalAlignment="Top" Width="100" Background="#6D1814" BorderBrush="#6D1814" Click="ClickAgregar" />
+        <Button x:Name="btnDarDeBaja" Content="Dar de baja" HorizontalAlignment="Left" Margin="198,624,0,0" VerticalAlignment="Top" Background="#6C2A27" BorderBrush="#6C2A27" Click="ClickDarDeBaja"/>
+        <Button x:Name="btnEditar" Content="Editar" HorizontalAlignment="Left" Margin="370,624,0,0" VerticalAlignment="Top" Width="106" RenderTransformOrigin="0.5,0.5" Background="#6B4240" BorderBrush="#6B4240" Click="ClickEditar"/>
+        <Button  Content="Buscar" HorizontalAlignment="Left" Margin="753,170,0,0" VerticalAlignment="Top" Width="85" Background="#6B4240" BorderBrush="#6B4240" Click="ClickBuscar"/>
+        <Label Content="Filtros" HorizontalAlignment="Left" Margin="472,52,0,0" VerticalAlignment="Top" FontSize="18" RenderTransformOrigin="0.649,2.117" FontWeight="Bold"/>
+        <Label Content="Buscador" HorizontalAlignment="Left" Margin="459,140,0,0" VerticalAlignment="Top" FontSize="18" RenderTransformOrigin="0.649,2.117" FontWeight="Bold"/>
+        <Button x:Name="btnCancelarBaja" Content="Cancelar Baja" HorizontalAlignment="Left" Margin="414,624,0,0" VerticalAlignment="Top" Background="#6C2A27" BorderBrush="#6C2A27" Click="ClickCancelarBaja"/>
+        <Button  Content="Aplicar Filtro" HorizontalAlignment="Left" Margin="581,102,0,0" VerticalAlignment="Top" Width="128" Background="#6B4240" BorderBrush="#6B4240" Click="ClickAplicarFiltros"/>
+        <Button  Content="Limpiar Filtro" HorizontalAlignment="Left" Margin="731,102,0,0" VerticalAlignment="Top" Width="128" Background="#6B4240" BorderBrush="#6B4240" Click="ClickLimpiarFiltros" />
+        <Button x:Name="btnConsultar" Content="Consultar" HorizontalAlignment="Left" Margin="581,624,0,0" VerticalAlignment="Top" Width="106" RenderTransformOrigin="0.5,0.5" Background="#6C2A27" BorderBrush="#6C2A27" Click="ClickConsultar"/>
+        <Button x:Name="btnConsultarBaja" Content="Consultar" HorizontalAlignment="Left" Margin="545,624,0,0" VerticalAlignment="Top" Background="#6C2A27" BorderBrush="#6C2A27" Click="ClickConsultarBaja"/>
+        <Button Background="#fafbfb" BorderBrush="#fafbfb" HorizontalAlignment="Left" Margin="118,14,0,0" VerticalAlignment="Top" Width="50" Height="50" Padding="1" Click="clickRetroceder">
+            <Image Source="/Recursos/retroceder.png" Width="48" Height="48"></Image>
+        </Button>
+
+    </Grid>
+</Window>
