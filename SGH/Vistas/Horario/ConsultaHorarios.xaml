@@ -26,7 +26,7 @@
 
         <StackPanel>
 
-            <TextBlock Margin="0 55 0 0" HorizontalAlignment="Center" FontSize="45"
+            <TextBlock Margin="0 40 0 0" HorizontalAlignment="Center" FontSize="45"
                 FontFamily="roboto" Text="Consulta Horarios" FontWeight="Medium"      
                 TextWrapping="Wrap" VerticalAlignment="Center"/>
 
@@ -38,16 +38,26 @@
                 Width="788" Height="45" materialDesign:TextFieldAssist.UnderlineBrush="#6B4240"
                 materialDesign:HintAssist.Foreground="Black" SelectionChanged="SeleccionGrupo" />
 
-            <Grid Name="gridBoard" Height="441" Width="788" Margin="0 25 0 0">
+            <Button x:Name="botonEditarHorario" HorizontalAlignment="Center" Margin="0 14 0 0" Background="#6B4240"
+                    BorderBrush="#6B4240" Height="30" Width="788" Foreground="White"
+                    Style="{StaticResource MaterialDesignRaisedButton}"                
+                    materialDesign:ButtonAssist.CornerRadius="5"
+                    ToolTip="Editar" Click="EditarHorario"
+                    IsEnabled="False"
+                    >
+                <TextBlock
+                      Text="Editar"/>
+            </Button>
 
-                <ListBox Name="listBoxConsultaHorario" MouseUp="SeleccionElemento" Margin="0,0,0,-18" Padding="0" BorderThickness="1" >
+            <Grid Name="gridBoard" Height="400" Width="788" Margin="0 25 0 0">
+
+                <ListBox Name="listBoxConsultaHorario" Margin="0,0,0,-18" Padding="0" BorderThickness="1" >
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <UniformGrid Columns="6" Rows="15"/>
                         </ItemsPanelTemplate>
                     </ListBox.ItemsPanel>
                 </ListBox>
-
 
             </Grid>
 

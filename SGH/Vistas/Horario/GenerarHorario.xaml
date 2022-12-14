@@ -64,10 +64,5 @@
         <Ellipse
                 Fill="#D98582" Margin="-96,291,898,119"/>
 
-        <!--<Canvas>
-            <Ellipse Fill="Gainsboro" Canvas.Left="109" Canvas.Top="474" Width="200" Height="200" />
-        </Canvas>-->
-
-
     </Grid>
 </Window>

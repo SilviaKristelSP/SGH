@@ -129,13 +129,13 @@ namespace SGH.Utiles
                 }
                 
             }
-            try
+            /*try
             {
                 File.WriteAllBytes(fullFilePath, imgByte);
             }catch (System.IO.IOException ex)
             {
 
-            }
+            }*/
             
 
             return fullFilePath;

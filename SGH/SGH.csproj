@@ -63,6 +63,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
@@ -91,8 +92,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DAOs\AdministradorDAO.cs" />
-    <Compile Include="DAOs\BajaDAO.cs" />
+    <Compile Include="DAOs\CalificacionDAO.cs" />
     <Compile Include="DAOs\EstudianteDAO.cs" />
+    <Compile Include="DAOs\GrupoDAO.cs" />
+    <Compile Include="DAOs\BajaDAO.cs" />
     <Compile Include="DAOs\HorarioDAO.cs" />
     <Compile Include="DAOs\MateriaDAO.cs" />
     <Compile Include="DAOs\PersonaDAO.cs" />
@@ -166,6 +169,7 @@
     <Compile Include="Utiles\DatosArchivo.cs" />
     <Compile Include="Utiles\MateriaHorario.cs" />
     <Compile Include="Utiles\Util.cs" />
+    <Compile Include="Validaciones\GrupoValidator.cs" />
     <Compile Include="Validaciones\Verificacion.cs" />
     <Compile Include="Vistas\Calificaciones\BuscadorEstudiante.xaml.cs">
       <DependentUpon>BuscadorEstudiante.xaml</DependentUpon>
@@ -176,6 +180,7 @@
     <Compile Include="Vistas\Calificaciones\CalificacionesGrupal.xaml.cs">
       <DependentUpon>CalificacionesGrupal.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\Calificaciones\CalificacionOrdenada.cs" />
     <Compile Include="Vistas\Estudiantes\AgregarEstudiante.xaml.cs">
       <DependentUpon>AgregarEstudiante.xaml</DependentUpon>
     </Compile>
@@ -195,11 +200,20 @@
       <DependentUpon>Estudiantes.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vistas\Excepciones\ErrorAlertException.cs" />
+    <Compile Include="Vistas\Grupos\ConsultarGrupos.xaml.cs">
+      <DependentUpon>ConsultarGrupos.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vistas\Grupos\CrearGrupo.xaml.cs">
       <DependentUpon>CrearGrupo.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Vistas\Grupos\Grupos.xaml.cs">
-      <DependentUpon>Grupos.xaml</DependentUpon>
+    <Compile Include="Vistas\Grupos\EliminarGrupo.xaml.cs">
+      <DependentUpon>EliminarGrupo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Horario\ActualizarHorario.xaml.cs">
+      <DependentUpon>ActualizarHorario.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Horario\ActualizarHorarioRegistro.xaml.cs">
+      <DependentUpon>ActualizarHorarioRegistro.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vistas\Horario\ConsultaHorarios.xaml.cs">
       <DependentUpon>ConsultaHorarios.xaml</DependentUpon>
@@ -289,13 +303,25 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Vistas\Grupos\ConsultarGrupos.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Vistas\Grupos\CrearGrupo.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Vistas\Grupos\Grupos.xaml">
+    <Page Include="Vistas\Grupos\EliminarGrupo.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Vistas\Horario\ActualizarHorario.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vistas\Horario\ActualizarHorarioRegistro.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Vistas\Horario\ConsultaHorarios.xaml">
       <SubType>Designer</SubType>
@@ -403,6 +429,18 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>SGHContext.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <Resource Include="Fuente\Roboto-Black.ttf" />
+    <Resource Include="Fuente\Roboto-BlackItalic.ttf" />
+    <Resource Include="Fuente\Roboto-Bold.ttf" />
+    <Resource Include="Fuente\Roboto-BoldItalic.ttf" />
+    <Resource Include="Fuente\Roboto-Italic.ttf" />
+    <Resource Include="Fuente\Roboto-Light.ttf" />
+    <Resource Include="Fuente\Roboto-LightItalic.ttf" />
+    <Resource Include="Fuente\Roboto-Medium.ttf" />
+    <Resource Include="Fuente\Roboto-MediumItalic.ttf" />
+    <Resource Include="Fuente\Roboto-Regular.ttf" />
+    <Resource Include="Fuente\Roboto-Thin.ttf" />
+    <Resource Include="Fuente\Roboto-ThinItalic.ttf" />
     <None Include="Modelos\SGHContext.edmx.diagram">
       <DependentUpon>SGHContext.edmx</DependentUpon>
     </None>
@@ -443,6 +481,7 @@
     <Folder Include="Vistas\Excepciones\Logs\" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Fuente\LICENSE.txt" />
     <Content Include="Modelos\SGHContext.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>SGHContext.edmx</DependentUpon>

@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using SGH.DAOs;
+using SGH.Horarios;
 using SGH.Modelos;
 using SGH.Utiles;
 using SGH.Vistas.MenuPrincipal;
@@ -43,6 +44,7 @@ namespace SGH.Vistas.Horario.Consulta
         public string colorBase = "#fcf4ca";
         private HorarioDAO horarioDAO = new HorarioDAO();
         private Log log = new Log();
+        private static Grupo grupoEdicion = new Grupo();
 
         public ConsultaHorarios()
         {
@@ -57,7 +59,8 @@ namespace SGH.Vistas.Horario.Consulta
 
             TextBlock comboItem = (TextBlock)gruposComboBox.SelectedItem;
             if (comboItem != null)
-            {                
+            {
+                botonEditarHorario.IsEnabled = true;
                 LimpiarHorario();
                 CargarHorario(comboItem.Text);
             }
@@ -119,8 +122,7 @@ namespace SGH.Vistas.Horario.Consulta
 
                 foreach (var sesion in sesionesGrupo)
                 {
-                    //Console.WriteLine(sesion.ID + " " + sesion.DiaSemana + " " + sesion.HoraInicio + " " + sesion.ID_Grupo);
-
+                    
                     Profesor_Materia profesor_Materia = horarioDAO.GetProfesorMateriaBySesion(sesion.ID);
                     Profesor profesor = horarioDAO.GetProfesorByRFC(profesor_Materia.RFC_Profesor);                    
                     Materia materia = horarioDAO.GetMateriaByNRC(profesor_Materia.NRC_Materia);
@@ -143,10 +145,7 @@ namespace SGH.Vistas.Horario.Consulta
             {
                 MessageBox.Show("Error en la base de datos");
                 log.Add(ex.Message);
-            }
-
-
-            //Console.WriteLine("Tu sesion esta en la posicion: "+ listaHorario[indexColumna]);
+            }            
 
         }         
 
@@ -340,9 +339,7 @@ namespace SGH.Vistas.Horario.Consulta
         public void SeleccionElemento(object sender, RoutedEventArgs e)
         {         
             
-            int posicion = listBoxConsultaHorario.SelectedIndex;
-            //Border borderNuevo = CrearElemento("Hola Mundo", border.Background.ToString());
-            //listBoxConsultaHorario.Items[posicion] = borderNuevo;
+            int posicion = listBoxConsultaHorario.SelectedIndex;            
 
             string hora = GetHora(posicion);
             string dia = GetDia(posicion);
@@ -353,8 +350,7 @@ namespace SGH.Vistas.Horario.Consulta
             }
             else
             {
-                string informacion = hora + " - " + dia;
-                //Console.WriteLine(informacion);
+                string informacion = hora + " - " + dia;                
             }
                       
         }
@@ -584,6 +580,49 @@ namespace SGH.Vistas.Horario.Consulta
             foreach (Window window in Application.Current.Windows.OfType<ConsultaHorarios>())
                 ((ConsultaHorarios)window).Close();
         }
+
+        public void EditarHorario(object sender, RoutedEventArgs e)
+        {
+
+            TextBlock comboItem = (TextBlock)gruposComboBox.SelectedItem;
+
+            if (comboItem != null)
+            {
+                string[] grupoInformacion = comboItem.Text.Split('-');
+                int semestre = Int32.Parse(grupoInformacion[0]);
+                string letra = grupoInformacion[1];
+
+                Grupo grupo = horarioDAO.GetGrupo(letra, semestre);
+                SetGrupo(grupo);
+                ActualizarHorario gui = new ActualizarHorario();
+                Application.Current.MainWindow = gui;
+                Application.Current.MainWindow.Show();
+
+                foreach (Window window in Application.Current.Windows.OfType<ConsultaHorarios>())
+                {
+                    ((ConsultaHorarios)window).Close();
+                }
+            }
+            else
+            {
+                Console.WriteLine("Sin seleccion");
+            }
+
+        }
+
+        public void SetGrupo(Grupo grupo)
+        {
+            grupoEdicion.ID = grupo.ID;
+            grupoEdicion.Semestre = grupo.Semestre;
+            grupoEdicion.Letra = grupo.Letra;
+        }
+
+        public Grupo GetGrupo()
+        {
+            return grupoEdicion;
+        }
+
+
 
     }
 }

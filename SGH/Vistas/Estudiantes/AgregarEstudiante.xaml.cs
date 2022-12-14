@@ -1,26 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using SGH.Modelos;
 using SGH.Vistas.MenuPrincipal;
 using SGH.Vistas.LogIn;
 using SGH.Utiles;
-using Microsoft.Win32;
 using System.IO;
 using SGH.Vistas.Alertas;
 using System.Drawing;
-//using System.Drawing.Imaging;
+using SGH.Vistas.Horario.Consulta;
+using SGH.Calificaciones;
+using System.Drawing.Imaging;
 using SGH.DAOs;
+using SGH.Vistas.Horario;
+using System.Text.RegularExpressions;
 
 namespace SGH.Vistas.Estudiantes
 {
@@ -29,8 +25,6 @@ namespace SGH.Vistas.Estudiantes
     /// </summary>
     public partial class AgregarEstudiante : Window
     {
-
-        private static Administrador administradorMenu = new Administrador();
         private Persona persona = new Persona();
         private Estudiante estudiante = new Estudiante();
         
@@ -38,18 +32,14 @@ namespace SGH.Vistas.Estudiantes
         public AgregarEstudiante()
         {
             InitializeComponent();
-            administradorMenu.Rol = "secretaria";
-            administradorMenu.NombreCompleto = "usuario prueba";
-
-            FiltrarMenus(administradorMenu.Rol);
-            SetInformacionAdministrador(administradorMenu);
             
         }
 
         private void clickAgregarEstudiante(object sender, RoutedEventArgs e)
         {
             String id = "";
-            if (verificarFormulario())
+            if (verificarFormulario() && validarNombreAppelidos(txbNombre.Text) && validarNombreAppelidos(txbApellidoM.Text) 
+                && validarNombreAppelidos(txbApellidoP.Text) && validarCURP(txbCURP.Text) && validarSeguridadSocial(txbNombreSeguridadSocial.Text))
             {
                 id = Util.generarID(50);
 
@@ -60,61 +50,10 @@ namespace SGH.Vistas.Estudiantes
             }
             else
             {
-                mostrarVentanaFormularioVacio();
+                mostrarVentana();
             }
         }
-        private bool verificarFormulario()
-        {
-            bool formularioAprobado = true;
-
-            if (txbNombre.Text.Equals(""))
-            {
-                formularioAprobado = false;
-            }
-            else if (txbApellidoP.Text.Equals(""))
-            {
-                formularioAprobado = false;
-            }
-            else if (txbApellidoM.Text.Equals(""))
-            {
-                formularioAprobado = false;
-            }
-            else if (txbCURP.Text.Equals(""))
-            {
-                formularioAprobado = false;
-            }
-            else if (tbNombreActa.Text.Equals(""))
-            {
-                formularioAprobado = false;
-            }
-            else if (tbNombreCURP.Text.Equals(""))
-            {
-                formularioAprobado = false;
-            }
-            else if (tbNombreCURPTutor.Text.Equals(""))
-            {
-                formularioAprobado = false;
-            }
-            else if (txbNombreSeguridadSocial.Text.Equals(""))
-            {
-                formularioAprobado = false;
-            }
-            else if (tbNombreFoto.Text.Equals(""))
-            {
-                formularioAprobado = false;
-            }
-            else if (tbNombreBuenaConducta.Text.Equals(""))
-            {
-                formularioAprobado = false;
-            }
-            else if (tbNombreCertificadoSecundaria.Text.Equals(""))
-            {
-                formularioAprobado = false;
-            }
-
-            return formularioAprobado;
-        }
-
+        
         private void llenarObjetoPersona(string idPersona)
         {
             persona.Nombre = txbNombre.Text;
@@ -154,7 +93,20 @@ namespace SGH.Vistas.Estudiantes
         }
 
         //Dialogos
-       
+
+        private void mostrarVentana()
+        {
+            if (verificarFormulario())
+            {
+                mostrarVentanaErrosDatos();
+            }
+            else
+            {
+                mostrarVentanaFormularioVacio();
+                
+            }
+        }
+
         private bool mostrarVentanaConfirmacion2()
         {
             Alerta alerta = new Alerta("Cualquier registro en proceso será perdido, ¿está seguro de querer continuar?",
@@ -204,6 +156,18 @@ namespace SGH.Vistas.Estudiantes
         private void mostrarVentanaFormularioVacio()
         {
             Alerta alerta = new Alerta("Debe llenar el formulario para continuar", Alertas.MessageType.Warning,
+                        MessageButtons.Ok, "medium");
+            MessageBoxCustom mensaje = new MessageBoxCustom(alerta);
+            mensaje.ShowDialog();
+            if (mensaje.GetDialog())
+            {
+                mensaje.Close();
+            }
+        }
+
+        private void mostrarVentanaErrosDatos()
+        {
+            Alerta alerta = new Alerta("Los datos ingresados son invalidos", Alertas.MessageType.Warning,
                         MessageButtons.Ok, "medium");
             MessageBoxCustom mensaje = new MessageBoxCustom(alerta);
             mensaje.ShowDialog();
@@ -297,24 +261,6 @@ namespace SGH.Vistas.Estudiantes
             }
         }
 
-        //private BitmapImage convertirABitmapImg(Bitmap bmp, byte[] imagen)
-        //{
-        //    using (var memory = new MemoryStream(imagen))
-        //    {
-        //        bmp.Save(memory, ImageFormat.Png);
-        //        memory.Position = 0;
-
-        //        var bitmapImage = new BitmapImage();
-        //        bitmapImage.BeginInit();
-        //        bitmapImage.StreamSource = memory;
-        //        bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-        //        bitmapImage.EndInit();
-        //        bitmapImage.Freeze();
-
-        //        return bitmapImage;
-        //    }
-        //}
-
 
         private void clickAbrirArchivoCURP(object sender, MouseButtonEventArgs e)
         {
@@ -356,57 +302,181 @@ namespace SGH.Vistas.Estudiantes
             }
         }
 
-        //Funcionalidad MENÚ
-        public void SetInformacionAdministrador(Administrador administrador)
+        //Validaciones
+        private bool verificarFormulario()
         {
+            bool formularioAprobado = true;
 
-            toggleAdministrador.Content = administrador.NombreCompleto.ToUpper().First();
-            textBlockAdministrador.Text = administrador.NombreCompleto;
+            if (txbNombre.Text.Equals(""))
+            {
+                formularioAprobado = false;
+            }
+            else if (txbApellidoP.Text.Equals(""))
+            {
+                formularioAprobado = false;
+            }
+            else if (txbApellidoM.Text.Equals(""))
+            {
+                formularioAprobado = false;
+            }
+            else if (txbCURP.Text.Equals(""))
+            {
+                formularioAprobado = false;
+            }
+            else if (tbNombreActa.Text.Equals(""))
+            {
+                formularioAprobado = false;
+            }
+            else if (tbNombreCURP.Text.Equals(""))
+            {
+                formularioAprobado = false;
+            }
+            else if (tbNombreCURPTutor.Text.Equals(""))
+            {
+                formularioAprobado = false;
+            }
+            else if (txbNombreSeguridadSocial.Text.Equals(""))
+            {
+                formularioAprobado = false;
+            }
+            else if (tbNombreFoto.Text.Equals(""))
+            {
+                formularioAprobado = false;
+            }
+            else if (tbNombreBuenaConducta.Text.Equals(""))
+            {
+                formularioAprobado = false;
+            }
+            else if (tbNombreCertificadoSecundaria.Text.Equals(""))
+            {
+                formularioAprobado = false;
+            }
 
+            return formularioAprobado;
         }
 
-        private void LogOut(object sender, RoutedEventArgs e)
+        public Boolean validarNombreAppelidos(string nombre)
         {
-            LogInSGH logInSGH = new LogInSGH();
-            Application.Current.MainWindow = logInSGH;
+
+            if (Regex.IsMatch(nombre, @"^([a-zA-Z]+)(\s[a-zA-Z]+)*$"))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+        
+        public Boolean validarCURP(string nombre)
+        {
+            if (Regex.IsMatch(nombre, @"[A-Z]{1}[AEIOU]{1}[A-Z]{2}[0-9]{2}" +
+                                "(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])" +
+                                "[HM]{1}" +
+                                "(AS|BC|BS|CC|CS|CH|CL|CM|DF|DG|GT|GR|HG|JC|MC|MN|MS|NT|NL|OC|PL|QT|QR|SP|SL|SR|TC|TS|TL|VZ|YN|ZS|NE)" +
+                                "[B-DF-HJ-NP-TV-Z]{3}" +
+                                "[0-9A-Z]{1}[0-9]{1}$"))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public Boolean validarSeguridadSocial(string nombre)
+        {
+
+            if (Regex.IsMatch(nombre, @"^\d{10}$"))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+        
+
+
+        private void ClickConsultaHorarios(object sender, RoutedEventArgs e)
+        {
+            ConsultaHorarios consultaHorarios = new ConsultaHorarios();
+            Application.Current.MainWindow = consultaHorarios;
             Application.Current.MainWindow.Show();
 
             foreach (Window window in Application.Current.Windows.OfType<MenuPrincipalSGH>())
             {
                 ((MenuPrincipalSGH)window).Close();
             }
-
+            this.Close();
         }
 
-        public void FiltrarMenus(string rol)
+        private void ClickGeneracionHorarios(object sender, RoutedEventArgs e)
         {
-            if (rol == "secretario")
+            GenerarHorario generarHorario = new GenerarHorario();
+            Application.Current.MainWindow = generarHorario;
+            Application.Current.MainWindow.Show();
+
+            foreach (Window window in Application.Current.Windows.OfType<MenuPrincipalSGH>())
             {
-
-                menuCalificaciones.Visibility = Visibility.Visible;
-                menuHorario.Visibility = Visibility.Visible;
-                menuEstudiantes.Visibility = Visibility.Visible;
-                asignacionMateriasButton.Visibility = Visibility.Visible;
-                generarHorarioButton.Visibility = Visibility.Visible;
-
-                menuGrupos.Visibility = Visibility.Collapsed;
-                menuProfesores.Visibility = Visibility.Collapsed;
-
-
+                ((MenuPrincipalSGH)window).Close();
             }
-            else
+            this.Close();
+        }
+
+        private void ClickCalificacionesEstudiante(object sender, RoutedEventArgs e)
+        {
+            BuscadorEstudiante buscadorEstudiante = new BuscadorEstudiante();
+            Application.Current.MainWindow = buscadorEstudiante;
+            Application.Current.MainWindow.Show();
+
+            foreach (Window window in Application.Current.Windows.OfType<MenuPrincipalSGH>())
             {
-                menuEstudiantes.Visibility = Visibility.Visible;
-                menuGrupos.Visibility = Visibility.Visible;
-                menuProfesores.Visibility = Visibility.Visible;
-                menuHorario.Visibility = Visibility.Visible;
-
-                menuCalificaciones.Visibility = Visibility.Collapsed;
-                asignacionMateriasButton.Visibility = Visibility.Collapsed;
-                generarHorarioButton.Visibility = Visibility.Collapsed;
-
-
+                ((MenuPrincipalSGH)window).Close();
             }
+            this.Close();
+        }
+
+        private void ClickCalificacionesGrupo(object sender, RoutedEventArgs e)
+        {
+            CalificacionesGrupal calificacionesGrupal = new CalificacionesGrupal();
+            Application.Current.MainWindow = calificacionesGrupal;
+            Application.Current.MainWindow.Show();
+
+            foreach (Window window in Application.Current.Windows.OfType<MenuPrincipalSGH>())
+            {
+                ((MenuPrincipalSGH)window).Close();
+            }
+            this.Close();
+        }
+
+        private void clickConsultarEstudiantes(object sender, RoutedEventArgs e)
+        {
+            Estudiantes estudiantes = new Estudiantes();
+            Application.Current.MainWindow = estudiantes;
+            Application.Current.MainWindow.Show();
+
+            foreach (Window window in Application.Current.Windows.OfType<MenuPrincipalSGH>())
+            {
+                ((MenuPrincipalSGH)window).Close();
+            }
+            this.Close();
+        }
+
+        private void clickRegistrarEstudiante(object sender, RoutedEventArgs e)
+        {
+            AgregarEstudiante agregarEstudiante = new AgregarEstudiante();
+            Application.Current.MainWindow = agregarEstudiante;
+            Application.Current.MainWindow.Show();
+            foreach (Window window in Application.Current.Windows.OfType<MenuPrincipalSGH>())
+            {
+                ((MenuPrincipalSGH)window).Close();
+            }
+            this.Close();
         }
     }
 }
